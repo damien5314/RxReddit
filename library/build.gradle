@@ -8,22 +8,11 @@ buildscript {
     }
 }
 
-// Required because retrolambda is on maven central
-repositories {
-    mavenCentral()
-}
-
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 
 group = 'com.github.damien5314'
-
-def getLocalProperty(String s) {
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty(s)
-}
 
 retrolambda {
     javaVersion JavaVersion.VERSION_1_7
@@ -42,5 +31,3 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     provided "io.reactivex:rxjava:1.1.0"
 }
-
-sourceSets.main.compileClasspath += [configurations.provided]
