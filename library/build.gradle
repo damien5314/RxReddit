@@ -14,10 +14,6 @@ apply plugin: 'maven'
 
 group = 'com.github.damien5314'
 
-retrolambda {
-    javaVersion JavaVersion.VERSION_1_7
-}
-
 configurations {
     provided
 }
@@ -30,4 +26,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     provided "io.reactivex:rxjava:1.1.0"
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
 }
