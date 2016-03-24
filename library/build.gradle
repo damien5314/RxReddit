@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
+
+// Required because retrolambda is on maven central
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+def getLocalProperty(String s) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty(s)
+}
+
+retrolambda {
+    jdk getLocalProperty("jdk8.dir")
+    oldJdk getLocalProperty("jdk7.dir")
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+configurations {
+    provided
+}
+
+def retrofitVersion = "2.0.0"
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    provided "io.reactivex:rxjava:1.1.0"
+}
+
+sourceSets.main.compileClasspath += [configurations.provided]

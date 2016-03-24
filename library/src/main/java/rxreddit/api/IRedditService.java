@@ -1,0 +1,64 @@
+package rxreddit.api;
+
+import java.util.List;
+import java.util.Map;
+
+import rx.Observable;
+import rxreddit.model.Comment;
+import rxreddit.model.CommentStub;
+import rxreddit.model.FriendInfo;
+import rxreddit.model.Hideable;
+import rxreddit.model.Link;
+import rxreddit.model.Listing;
+import rxreddit.model.ListingResponse;
+import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.Savable;
+import rxreddit.model.Subreddit;
+import rxreddit.model.UserAccessToken;
+import rxreddit.model.UserIdentity;
+import rxreddit.model.UserSettings;
+import rxreddit.model.Votable;
+
+interface IRedditService {
+
+  String getRedirectUri();
+  String getAuthorizationUrl();
+
+  boolean isUserAuthorized();
+
+  Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl);
+  Observable<UserIdentity> getUserIdentity();
+  Observable<UserSettings> getUserSettings();
+  Observable<Void> updateUserSettings(Map<String, String> settings);
+  Observable<ListingResponse> loadLinks(
+      String subreddit, String sort,
+      String timespan, String before, String after);
+  Observable<List<ListingResponse>> loadLinkComments(
+      String subreddit, String article,
+      String sort, String commentId);
+  Observable<MoreChildrenResponse> loadMoreChildren(
+      Link link, CommentStub moreComments,
+      List<String> children, String sort);
+  Observable<UserIdentity> getUserInfo(String username);
+  Observable<FriendInfo> getFriendInfo(String username);
+  Observable<List<Listing>> getUserTrophies(String username);
+  Observable<ListingResponse> loadUserProfile(
+      String show, String username, String sort,
+      String timespan, String before, String after);
+  Observable<Void> addFriend(String username);
+  Observable<Void> deleteFriend(String username);
+  Observable<Void> saveFriendNote(String username, String note);
+  Observable<Subreddit> getSubredditInfo(String subreddit);
+  Observable<Void> vote(Votable votable, int direction);
+  Observable<Void> save(Savable listing, String category, boolean save);
+  Observable<Void> hide(Hideable listing, boolean toHide);
+  Observable<Void> report(String id, String reason);
+  Observable<Comment> addComment(String parentId, String text);
+  Observable<ListingResponse> getInbox(
+      String show, String before, String after);
+  Observable<Void> markAllMessagesRead();
+  Observable<Void> markMessagesRead(String commaSeparatedFullnames);
+  Observable<Void> markMessagesUnread(String commaSeparatedFullnames);
+  Observable<Void> revokeAuthentication();
+
+}
