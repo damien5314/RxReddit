@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">RxReddit</string>
+  <string name="author_formatter">by /u/%s</string>
 </resources>
