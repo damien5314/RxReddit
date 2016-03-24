@@ -26,8 +26,6 @@ def getLocalProperty(String s) {
 }
 
 retrolambda {
-    jdk getLocalProperty("jdk8.dir")
-    oldJdk getLocalProperty("jdk7.dir")
     javaVersion JavaVersion.VERSION_1_7
 }
 
