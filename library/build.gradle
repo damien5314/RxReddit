@@ -15,6 +15,9 @@ repositories {
 
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'maven'
+
+group = 'com.github.damien5314'
 
 def getLocalProperty(String s) {
     Properties properties = new Properties()
