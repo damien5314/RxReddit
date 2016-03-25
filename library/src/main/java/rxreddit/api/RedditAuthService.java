@@ -124,7 +124,10 @@ final class RedditAuthService implements IRedditAuthService {
   }
 
   @Override
-  public Observable<UserAccessToken> onAuthCodeReceived(String authCode) {
+  public Observable<UserAccessToken> onAuthCodeReceived(String authCode, String state) {
+    if (!STATE.equals("state")) {
+      return Observable.error(new RuntimeException("State does not match, abort authorization"));
+    }
     String grantType = "authorization_code";
     return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)
         .map(Response::body)

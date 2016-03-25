@@ -65,8 +65,14 @@ final public class RedditService implements IRedditService {
 
   @Override
   public Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl) {
-    String authCode = Util.getUserAuthCodeFromRedirectUri(callbackUrl);
-    return mRedditAuthService.onAuthCodeReceived(authCode);
+    Map<String, String> params = Util.getQueryMap(callbackUrl);
+    if (params.containsKey("error")) {
+      return Observable.error(
+          new RuntimeException("User declined to authenticate application"));
+    }
+    String authCode = params.get("code");
+    String state = params.get("state");
+    return mRedditAuthService.onAuthCodeReceived(authCode, state);
   }
 
   @Override

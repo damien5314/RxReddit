@@ -8,7 +8,7 @@ interface IRedditAuthService {
 
   String getRedirectUri();
   String getAuthorizationUrl();
-  Observable<UserAccessToken> onAuthCodeReceived(String authCode);
+  Observable<UserAccessToken> onAuthCodeReceived(String authCode, String state);
 
   boolean isUserAuthorized();
   AccessToken getAccessToken();
