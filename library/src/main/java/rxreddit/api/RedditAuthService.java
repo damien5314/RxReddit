@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.functions.Action0;
+import rx.functions.Action1;
 import rxreddit.Util;
 import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
@@ -38,6 +38,9 @@ final class RedditAuthService implements IRedditAuthService {
   private RedditAuthAPI mAuthService;
   private AccessTokenManager mAccessTokenManager;
 
+  private UserAccessToken mUserAccessToken;
+  private ApplicationAccessToken mApplicationAccessToken;
+
   public RedditAuthService(
       String clientId, String redirectUri, String deviceId, String userAgent,
       AccessTokenManager atm) {
@@ -54,25 +57,54 @@ final class RedditAuthService implements IRedditAuthService {
   }
 
   @Override
+  public boolean isUserAuthorized() {
+    return getUserAccessToken() != null;
+  }
+
+  @Override
   public AccessToken getAccessToken() {
-    AccessToken token = mAccessTokenManager.getUserAccessToken();
+    AccessToken token = getUserAccessToken();
     if (isValid(token)) return token;
-    token = mAccessTokenManager.getApplicationAccessToken();
+    token = getApplicationAccessToken();
     if (isValid(token)) return token;
     return null;
+  }
+
+  private UserAccessToken getUserAccessToken() {
+    return mUserAccessToken == null ?
+        mAccessTokenManager.getUserAccessToken() : mUserAccessToken;
+  }
+
+  private ApplicationAccessToken getApplicationAccessToken() {
+    return mApplicationAccessToken == null ?
+        mAccessTokenManager.getApplicationAccessToken() : mApplicationAccessToken;
+  }
+
+  private Observable<ApplicationAccessToken> refreshApplicationAccessToken() {
+    return Observable.defer(() -> {
+      ApplicationAccessToken token = getApplicationAccessToken();
+      if (token != null && token.secondsUntilExpiration() > EXPIRATION_THRESHOLD) {
+        return Observable.just(token);
+      } else {
+        String grantType = "https://oauth.reddit.com/grants/installed_client";
+        return mAuthService.getApplicationAuthToken(grantType, mDeviceId)
+            .map(Response::body)
+            .doOnNext(saveApplicationAccessToken());
+      }
+    });
   }
 
   @Override
   public Observable<AccessToken> refreshAccessToken() {
     return refreshUserAccessToken()
         .map(token -> (AccessToken) token)
-        .onErrorResumeNext(getApplicationAccessToken());
+        .onErrorResumeNext(refreshApplicationAccessToken());
   }
 
   @Override
   public Observable<UserAccessToken> refreshUserAccessToken() {
     return Observable.defer(() -> {
-      UserAccessToken token = mAccessTokenManager.getUserAccessToken();
+      UserAccessToken token = getUserAccessToken();
       if (token == null) {
         return Observable.error(
             new IllegalStateException("No user access token available"));
@@ -82,37 +114,36 @@ final class RedditAuthService implements IRedditAuthService {
       }
       String refreshToken = token.getRefreshToken();
       if (refreshToken == null) {
-        mClearIdentity.call();
+        clearUserIdentity();
         return Observable.error(
             new IllegalStateException("No refresh token available"));
       }
       String grantType = "refresh_token";
       return mAuthService.refreshUserAuthToken(grantType, refreshToken)
           .map(Response::body)
-          .doOnNext(mAccessTokenManager.saveUserAccessToken())
-          .doOnError(e -> mClearIdentity.call());
+          .doOnNext(saveUserAccessToken())
+          .doOnError(error -> clearUserIdentity());
     });
   }
 
-  private Observable<ApplicationAccessToken> getApplicationAccessToken() {
-    return Observable.defer(() -> {
-      ApplicationAccessToken token = mAccessTokenManager.getApplicationAccessToken();
-      if (token != null && token.secondsUntilExpiration() > EXPIRATION_THRESHOLD) {
-        return Observable.just(token);
-      } else {
-        String grantType = "https://oauth.reddit.com/grants/installed_client";
-        return mAuthService.getApplicationAuthToken(grantType, mDeviceId)
-            .map(Response::body)
-            .doOnNext(mAccessTokenManager.saveApplicationAccessToken());
-      }
-    });
+  private Action1<UserAccessToken> saveUserAccessToken() {
+    return token -> {
+      mUserAccessToken = token;
+      mAccessTokenManager.saveUserAccessToken(token);
+    };
   }
 
-  private Action0 mClearIdentity = () -> {
+  private Action1<ApplicationAccessToken> saveApplicationAccessToken() {
+    return token -> {
+      mApplicationAccessToken = token;
+      mAccessTokenManager.saveApplicationAccessToken(token);
+    };
+  }
+
+  private void clearUserIdentity() {
+    mUserAccessToken = null;
     mAccessTokenManager.clearSavedUserAccessToken();
-    // TODO Wipe identity during clear
-//    mIdentityManager.clearSavedUserIdentity();
-  };
+  }
 
   @Override
   public String getRedirectUri() {
@@ -133,17 +164,12 @@ final class RedditAuthService implements IRedditAuthService {
     String grantType = "authorization_code";
     return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)
         .map(Response::body)
-        .doOnNext(mAccessTokenManager.saveUserAccessToken());
-  }
-
-  @Override
-  public boolean isUserAuthorized() {
-    return mAccessTokenManager.getUserAccessToken() != null;
+        .doOnNext(saveUserAccessToken());
   }
 
   @Override
   public Observable<Void> revokeAuthentication() {
-    AccessToken token = mAccessTokenManager.getUserAccessToken();
+    AccessToken token = getUserAccessToken();
     mAccessTokenManager.clearSavedUserAccessToken();
     return revokeAuthToken(token);
   }
