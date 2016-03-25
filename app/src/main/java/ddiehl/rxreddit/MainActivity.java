@@ -1,7 +1,5 @@
 package ddiehl.rxreddit;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import ddiehl.rxreddit.sample.BuildConfig;
 import ddiehl.rxreddit.sample.R;
@@ -23,6 +20,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxreddit.android.AndroidAccessTokenManager;
+import rxreddit.android.Util;
 import rxreddit.api.RedditService;
 import rxreddit.model.Link;
 
@@ -46,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
     mRedditService = new RedditService(
         BuildConfig.REDDIT_APP_ID,
         BuildConfig.REDDIT_REDIRECT_URI,
-        getDeviceId(),
-        String.format("android:ddiehl.rxreddit.sampleapp:%s", BuildConfig.VERSION_NAME),
+        Util.getDeviceId(this),
+        Util.getUserAgent(
+            "android", "ddiehl.rxreddit.sampleapp", BuildConfig.VERSION_NAME, "damien5314"),
         new AndroidAccessTokenManager(this)
     );
   }
@@ -128,17 +127,5 @@ public class MainActivity extends AppCompatActivity {
           String.format(
               itemView.getContext().getString(R.string.author_formatter), link.getAuthor()));
     }
-  }
-
-  private String getDeviceId() {
-    final String PREFS_DEVICE_ID = "prefs_device_id";
-    final String PREF_DEVICE_ID = "device_id";
-    SharedPreferences sp = getSharedPreferences(PREFS_DEVICE_ID, Context.MODE_PRIVATE);
-    String deviceId = sp.getString(PREF_DEVICE_ID, null);
-    if (deviceId == null) {
-      deviceId = UUID.randomUUID().toString();
-      sp.edit().putString(PREF_DEVICE_ID, deviceId).apply();
-    }
-    return deviceId;
   }
 }
