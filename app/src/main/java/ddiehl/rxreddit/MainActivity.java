@@ -76,17 +76,13 @@ public class MainActivity extends AppCompatActivity {
 
   private Action1<List<Link>> onLinksLoaded() {
     return links -> {
-      Log.d("RxReddit", "SUCCESS");
       mData.addAll(links);
       mLinkAdapter.notifyDataSetChanged();
     };
   }
 
   private Action1<Throwable> onError() {
-    return error -> {
-      Log.e("RxReddit", "ERROR", error);
-      Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT);
-    };
+    return error -> Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT);
   }
 
   private static final class LinkAdapter extends RecyclerView.Adapter<LinkViewHolder> {

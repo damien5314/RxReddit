@@ -23,7 +23,6 @@ interface IRedditService {
 
   String getRedirectUri();
   String getAuthorizationUrl();
-
   boolean isUserAuthorized();
 
   Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl);

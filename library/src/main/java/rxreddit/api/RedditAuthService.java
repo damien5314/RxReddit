@@ -86,9 +86,11 @@ final class RedditAuthService implements IRedditAuthService {
       }
       String grantType = "refresh_token";
       return mAuthService.refreshUserAuthToken(grantType, refreshToken)
-          .map(Response::body)
+          .flatMap(response -> Observable.defer(() -> {
+            if (response.isSuccessful()) return Observable.just(response.body());
+            else return Observable.error(new RuntimeException(response.errorBody().toString()));
+          }))
           .doOnNext(mAccessTokenManager.saveUserAccessToken())
-          // FIXME We should actually be discarding this in onNext when response code != 2xx
           .doOnError(e -> mClearIdentity.call());
     });
   }
@@ -126,7 +128,7 @@ final class RedditAuthService implements IRedditAuthService {
   @Override
   public Observable<UserAccessToken> onAuthCodeReceived(String authCode, String state) {
     if (!STATE.equals("state")) {
-      return Observable.error(new RuntimeException("State does not match, abort authorization"));
+      return Observable.error(new RuntimeException("State does not match, abort authentication"));
     }
     String grantType = "authorization_code";
     return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)
