@@ -144,11 +144,12 @@ final class RedditAuthService implements IRedditAuthService {
   @Override
   public Observable<Void> revokeAuthentication() {
     AccessToken token = mAccessTokenManager.getUserAccessToken();
-    if (token != null) return revokeAuthToken(token);
-    else return Observable.just(null);
+    mAccessTokenManager.clearSavedUserAccessToken();
+    return revokeAuthToken(token);
   }
 
   private Observable<Void> revokeAuthToken(AccessToken token) {
+    if (token == null) return Observable.error(new IllegalStateException("token == null"));
     return Observable.merge(
         mAuthService.revokeUserAuthToken(token.getToken(), "access_token"),
         mAuthService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token"));
