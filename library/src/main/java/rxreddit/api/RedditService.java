@@ -65,7 +65,7 @@ final public class RedditService implements IRedditService {
 
   @Override
   public Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl) {
-    Map<String, String> params = Util.getQueryMap(callbackUrl);
+    Map<String, String> params = Util.getQueryParametersFromUrl(callbackUrl);
     if (params.containsKey("error")) {
       return Observable.error(
           new RuntimeException("User declined to authenticate application"));

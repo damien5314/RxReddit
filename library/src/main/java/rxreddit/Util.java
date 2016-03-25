@@ -106,8 +106,8 @@ public class Util {
     return UUID.randomUUID().toString();
   }
 
-  public static Map<String, String> getQueryMap(String callbackUrl) {
-    URI uri = URI.create(callbackUrl);
+  public static Map<String, String> getQueryParametersFromUrl(String url) {
+    URI uri = URI.create(url);
     String query = uri.getQuery();
     String[] params = query.split("&");
     Map<String, String> paramMap = new HashMap<>();
