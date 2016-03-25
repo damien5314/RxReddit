@@ -68,7 +68,7 @@ final public class RedditService implements IRedditService {
     Map<String, String> params = Util.getQueryParametersFromUrl(callbackUrl);
     if (params.containsKey("error")) {
       return Observable.error(
-          new RuntimeException("User declined to authenticate application"));
+          new IllegalStateException("User declined to authenticate application"));
     }
     String authCode = params.get("code");
     String state = params.get("state");
@@ -167,7 +167,8 @@ final public class RedditService implements IRedditService {
   @Override
   public Observable<Void> saveFriendNote(String username, String note) {
     if (Util.isEmpty(note)) {
-      return Observable.error(new RuntimeException("User note should be non-empty"));
+      return Observable.error(
+          new IllegalStateException("User note should be non-empty"));
     }
     String json = new Gson().toJson(new Friend(note));
     return requireUserAccessToken().flatMap(token ->

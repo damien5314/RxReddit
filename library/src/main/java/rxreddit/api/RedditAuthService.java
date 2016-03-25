@@ -74,7 +74,8 @@ final class RedditAuthService implements IRedditAuthService {
     return Observable.defer(() -> {
       UserAccessToken token = mAccessTokenManager.getUserAccessToken();
       if (token == null) {
-        return Observable.error(new RuntimeException("No user access token available"));
+        return Observable.error(
+            new IllegalStateException("No user access token available"));
       }
       if (token.secondsUntilExpiration() > EXPIRATION_THRESHOLD) {
         return Observable.just(token);
@@ -82,14 +83,12 @@ final class RedditAuthService implements IRedditAuthService {
       String refreshToken = token.getRefreshToken();
       if (refreshToken == null) {
         mClearIdentity.call();
-        return Observable.error(new RuntimeException("No refresh token available"));
+        return Observable.error(
+            new IllegalStateException("No refresh token available"));
       }
       String grantType = "refresh_token";
       return mAuthService.refreshUserAuthToken(grantType, refreshToken)
-          .flatMap(response -> Observable.defer(() -> {
-            if (response.isSuccessful()) return Observable.just(response.body());
-            else return Observable.error(new RuntimeException(response.errorBody().toString()));
-          }))
+          .map(Response::body)
           .doOnNext(mAccessTokenManager.saveUserAccessToken())
           .doOnError(e -> mClearIdentity.call());
     });
@@ -127,8 +126,9 @@ final class RedditAuthService implements IRedditAuthService {
 
   @Override
   public Observable<UserAccessToken> onAuthCodeReceived(String authCode, String state) {
-    if (!STATE.equals("state")) {
-      return Observable.error(new RuntimeException("State does not match, abort authentication"));
+    if (!STATE.equals(state)) {
+      return Observable.error(
+          new IllegalStateException("State does not match, abort authentication"));
     }
     String grantType = "authorization_code";
     return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)

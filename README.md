@@ -1,18 +1,18 @@
 # RxReddit
 
-This is a Java API wrapper for reddit, extracted from one of my Android applications. I did this because it was a bit difficult to get started with the reddit API myself, and thought it would be good to expose the functionality as a library that might benefit other developers.
+This is a Java API wrapper for reddit, extracted from one of my other projects. As such the API was written with a specific use case in mind, but if there is another use case you want supported, feel free to open an issue.
 
-You are still subject to reddit's API access rules while using this library. Please read the [API documentation](https://github.com/reddit/reddit/wiki/API) before use to ensure you are complying with reddit's terms and conditions.
+You are still subject to reddit's API access rules while using RxReddit. Please read the [API documentation](https://github.com/reddit/reddit/wiki/API) before use to ensure you are complying with reddit's terms and conditions.
 
 ## Register your app
 All apps must be registered with a reddit account in order to access the API. This process will get you your app ID and redirect URI which are required for using this library. Follow the instructions [here](https://www.reddit.com/prefs/apps) to register your app.
 
-Note: So far I have only tested this library with apps of "installed" type. For the other types, there might need to be some enhancements made to support applications with secrets.
+Note: So far I have only tested this library with apps of "installed" type. If you need support for apps with secrets, open an enhancement request and we can look into it.
 
 ## Overview
 This library depends internally on [Retrofit 2](http://square.github.io/retrofit/) and [RxJava](https://github.com/ReactiveX/RxJava). You will get these dependencies for free after importing RxReddit.
 
-The main class in this library is `RedditService`. Clients can make requests to the reddit API through an instance of this class. The class is heavy, and authentication state is cached separately for each instance, so I recommend wrapping this in a singleton helper class for use throughout your app.
+Clients can make requests to the reddit API through an instance of `RedditService`. The class is heavy, and authentication state is cached separately for each instance, so I recommend making your instance a singleton.
 
 The constructor for `RedditService` takes a few parameters:
 
@@ -35,6 +35,8 @@ A user agent string to be sent with all API requests. Create this in the form of
 
 In order to use endpoints requiring a user context (voting on submissions, submitting new comments, etc) you must present the authorization page to your users, then pass the callback URL back to `RedditService` once the user authorizes your app. The library will automatically extract the authorization code from the callback URL and use this to authenticate the user.
 
+Attempting to access an authenticated API without being in authenticated will result in an `IllegalStateException` that can be handled in the Observable's `onError` callback. You can verify the service is in authenticated state by calling `RedditService::isUserAuthorized`.
+
 ## Gradle
 
 [![Release](https://jitpack.io/v/damien5314/RxReddit.svg)](https://jitpack.io/#damien5314/RxReddit)
@@ -47,6 +49,5 @@ allprojects {
 }
 dependencies {
   compile "com.github.damien5314:RxReddit:0.1"
-  compile "io.reactivex:rxjava:1.1.0"
 }
 ```
