@@ -1,4 +1,4 @@
-package ddiehl.rxreddit;
+package rxreddit.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
