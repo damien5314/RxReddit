@@ -71,13 +71,17 @@ final class RedditAuthService implements IRedditAuthService {
   }
 
   private UserAccessToken getUserAccessToken() {
-    return mUserAccessToken == null ?
-        mAccessTokenManager.getUserAccessToken() : mUserAccessToken;
+    if (mUserAccessToken == null) {
+      mUserAccessToken = mAccessTokenManager.getUserAccessToken();
+    }
+    return mUserAccessToken;
   }
 
   private ApplicationAccessToken getApplicationAccessToken() {
-    return mApplicationAccessToken == null ?
-        mAccessTokenManager.getApplicationAccessToken() : mApplicationAccessToken;
+    if (mApplicationAccessToken == null) {
+      mApplicationAccessToken = mAccessTokenManager.getApplicationAccessToken();
+    }
+    return mApplicationAccessToken;
   }
 
   private Observable<ApplicationAccessToken> refreshApplicationAccessToken() {
@@ -128,15 +132,15 @@ final class RedditAuthService implements IRedditAuthService {
 
   private Action1<UserAccessToken> saveUserAccessToken() {
     return token -> {
-      mUserAccessToken = token;
       mAccessTokenManager.saveUserAccessToken(token);
+      mUserAccessToken = mAccessTokenManager.getUserAccessToken();
     };
   }
 
   private Action1<ApplicationAccessToken> saveApplicationAccessToken() {
     return token -> {
-      mApplicationAccessToken = token;
       mAccessTokenManager.saveApplicationAccessToken(token);
+      mApplicationAccessToken = mAccessTokenManager.getApplicationAccessToken();
     };
   }
 
@@ -168,8 +172,9 @@ final class RedditAuthService implements IRedditAuthService {
   }
 
   @Override
-  public Observable<Void> revokeAuthentication() {
+  public Observable<Void> revokeUserAuthentication() {
     AccessToken token = getUserAccessToken();
+    mUserAccessToken = null;
     mAccessTokenManager.clearSavedUserAccessToken();
     return revokeAuthToken(token);
   }

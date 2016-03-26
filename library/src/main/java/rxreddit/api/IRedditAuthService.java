@@ -14,6 +14,6 @@ interface IRedditAuthService {
   AccessToken getAccessToken();
   Observable<AccessToken> refreshAccessToken();
   Observable<UserAccessToken> refreshUserAccessToken();
-  Observable<Void> revokeAuthentication();
+  Observable<Void> revokeUserAuthentication();
 
 }

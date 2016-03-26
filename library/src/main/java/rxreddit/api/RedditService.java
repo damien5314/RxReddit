@@ -250,7 +250,7 @@ final public class RedditService implements IRedditService {
 
   @Override
   public Observable<Void> revokeAuthentication() {
-    return mRedditAuthService.revokeAuthentication();
+    return mRedditAuthService.revokeUserAuthentication();
   }
 
   private Observable<AccessToken> requireAccessToken() {
