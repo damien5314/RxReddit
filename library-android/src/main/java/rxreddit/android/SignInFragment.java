@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 
 import java.util.Map;
 
-public class WebViewFragment extends Fragment {
+public class SignInFragment extends Fragment {
   public static final String EXTRA_CALLBACK_URL = "extra_callback_url";
   private static final String ARG_URL = "arg_url";
 
@@ -26,12 +26,12 @@ public class WebViewFragment extends Fragment {
   private String mRedirectUri;
   private WebView mWebView;
 
-  public WebViewFragment() { }
+  public SignInFragment() { }
 
-  public static WebViewFragment newInstance(String url) {
+  public static SignInFragment newInstance(String url) {
     Bundle args = new Bundle();
     args.putString(ARG_URL, url);
-    WebViewFragment fragment = new WebViewFragment();
+    SignInFragment fragment = new SignInFragment();
     fragment.setArguments(args);
     return fragment;
   }
