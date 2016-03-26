@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 0.4 *(2016-03-26)*
+----------------------------------
+* Added Android extension module
+
 Version 0.3 *(2016-03-25)*
 ----------------------------------
 * Fixed issue clearing AccessToken when calling `RedditService::revokeAuthentication`.
