@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
   private Action1<List<Link>> onLinksLoaded() {
     return links -> {
+      mData.clear();
       mData.addAll(links);
       mLinkAdapter.notifyDataSetChanged();
     };
