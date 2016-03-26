@@ -22,7 +22,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rxreddit.android.SignInFragment;
+import rxreddit.android.SignInActivity;
 import rxreddit.api.RedditService;
 import rxreddit.model.Link;
 import rxreddit.model.UserAccessToken;
@@ -106,7 +106,7 @@ public class SubredditActivity extends AppCompatActivity {
   }
 
   private void handleSignIn(Intent data) {
-    String url = data.getStringExtra(SignInFragment.EXTRA_CALLBACK_URL);
+    String url = data.getStringExtra(SignInActivity.EXTRA_CALLBACK_URL);
     if (url != null) {
       mRedditService.processAuthenticationCallback(url)
           .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

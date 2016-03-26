@@ -12,7 +12,7 @@ import rxreddit.model.CommentStub;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 
-public class Util {
+public class RxRedditUtil {
 
   /**
    * Flattens list of comments, marking each comment with depth
@@ -30,7 +30,8 @@ public class Util {
         }
         comment.setDepth(comment.getDepth() + 1); // Increase depth by 1
         if (comment.getReplies() != null) {
-          commentList.addAll(i + 1, comment.getReplies().getData().getChildren()); // Add all of the replies to commentList
+          // Add all of the replies to commentList
+          commentList.addAll(i + 1, comment.getReplies().getData().getChildren());
           comment.setReplies(null); // Remove replies for comment
         }
       } else { // Listing is a CommentStub
@@ -117,5 +118,10 @@ public class Util {
       paramMap.put(param.substring(0, mid), param.substring(mid+1));
     }
     return paramMap;
+  }
+
+  public static String getUserAgent(
+      String platform, String pkgName, String versionName, String username) {
+    return String.format("%s:%s:%s (by /u/%s)", platform, pkgName, versionName, username);
   }
 }

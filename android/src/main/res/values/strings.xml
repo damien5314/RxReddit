@@ -1,4 +1,3 @@
 <resources>
-  <string name="app_name">RxReddit</string>
   <string name="rxr_action_refresh">refresh</string>
 </resources>

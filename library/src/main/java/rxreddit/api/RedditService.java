@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rxreddit.Util;
+import rxreddit.RxRedditUtil;
 import rxreddit.model.AbsComment;
 import rxreddit.model.AccessToken;
 import rxreddit.model.Comment;
@@ -65,7 +65,7 @@ final public class RedditService implements IRedditService {
 
   @Override
   public Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl) {
-    Map<String, String> params = Util.getQueryParametersFromUrl(callbackUrl);
+    Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(callbackUrl);
     if (params.containsKey("error")) {
       return Observable.error(
           new IllegalStateException("User declined to authenticate application"));
@@ -117,7 +117,7 @@ final public class RedditService implements IRedditService {
   public Observable<MoreChildrenResponse> loadMoreChildren(
       Link link, CommentStub parentStub, List<String> childrenIds, String sort) {
     return requireAccessToken().flatMap(token ->
-        mAPI.getMoreChildren(link.getFullName(), Util.join(",", childrenIds), sort)
+        mAPI.getMoreChildren(link.getFullName(), RxRedditUtil.join(",", childrenIds), sort)
             .map(Response::body));
   }
 
@@ -166,7 +166,7 @@ final public class RedditService implements IRedditService {
 
   @Override
   public Observable<Void> saveFriendNote(String username, String note) {
-    if (Util.isEmpty(note)) {
+    if (RxRedditUtil.isEmpty(note)) {
       return Observable.error(
           new IllegalStateException("User note should be non-empty"));
     }

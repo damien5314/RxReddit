@@ -18,9 +18,10 @@ import android.widget.ProgressBar;
 
 import java.util.Map;
 
+import rxreddit.RxRedditUtil;
+
 public class SignInFragment extends Fragment {
-  public static final String EXTRA_CALLBACK_URL = "extra_callback_url";
-  private static final String ARG_URL = "arg_url";
+  private static final String ARG_AUTH_URL = "arg_url";
 
   private String mAuthorizationUrl;
   private String mRedirectUri;
@@ -30,7 +31,7 @@ public class SignInFragment extends Fragment {
 
   public static SignInFragment newInstance(String url) {
     Bundle args = new Bundle();
-    args.putString(ARG_URL, url);
+    args.putString(ARG_AUTH_URL, url);
     SignInFragment fragment = new SignInFragment();
     fragment.setArguments(args);
     return fragment;
@@ -39,33 +40,25 @@ public class SignInFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    getActivity().setTitle(R.string.app_name);
     setRetainInstance(true);
     setHasOptionsMenu(true);
 
     Bundle args = getArguments();
 
-    mAuthorizationUrl = args.getString(ARG_URL);
-    Map<String, String> params = rxreddit.Util.getQueryParametersFromUrl(mAuthorizationUrl);
+    mAuthorizationUrl = args.getString(ARG_AUTH_URL);
+    Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(mAuthorizationUrl);
     mRedirectUri = params.get("redirect_uri");
   }
 
   @Override @SuppressWarnings("SetJavaScriptEnabled")
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View v = inflater.inflate(R.layout.web_view_fragment, container, false);
+    View v = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
 
     mWebView = (WebView) v.findViewById(R.id.rxr_web_view);
 
     final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.rxr_progress_bar);
     progressBar.setMax(100);
-
-//    WebSettings settings = mWebView.getSettings();
-//    settings.setJavaScriptEnabled(true);
-//    settings.setUseWideViewPort(true);
-//    settings.setLoadWithOverviewMode(true);
-//    settings.setDomStorageEnabled(true);
-//    disableWebViewZoomControls(mWebView);
 
     mWebView.setWebViewClient(new WebViewClient() {
       @Override
@@ -73,7 +66,7 @@ public class SignInFragment extends Fragment {
         if (url.contains(mRedirectUri)
             && !url.equals(mAuthorizationUrl)) {
           Intent data = new Intent();
-          data.putExtra(EXTRA_CALLBACK_URL, url);
+          data.putExtra(SignInActivity.EXTRA_CALLBACK_URL, url);
           getActivity().setResult(Activity.RESULT_OK, data);
           getActivity().finish();
           return true;
@@ -125,7 +118,7 @@ public class SignInFragment extends Fragment {
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
-    inflater.inflate(R.menu.web_view, menu);
+    inflater.inflate(R.menu.rxr_web_view, menu);
   }
 
   @Override

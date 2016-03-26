@@ -1,18 +1,16 @@
-package ddiehl.rxreddit;
+package rxreddit.android;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import ddiehl.rxreddit.sample.R;
-import rxreddit.android.SignInFragment;
-
 public class SignInActivity extends AppCompatActivity {
   public static final String EXTRA_AUTH_URL = "rxr_extra_auth_url";
+  public static final String EXTRA_CALLBACK_URL = "rxr_extra_callback_url";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sign_in);
+    setContentView(R.layout.rxr_activity_sign_in);
 
     Bundle extras = getIntent().getExtras();
     if (extras != null) {

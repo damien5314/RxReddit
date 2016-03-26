@@ -2,11 +2,10 @@ package rxreddit.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import java.util.UUID;
 
-public class Util {
+public class AndroidUtil {
 
   public static String getDeviceId(Context context) {
     final String PREFS_DEVICE_ID = "prefs_device_id";
@@ -15,14 +14,8 @@ public class Util {
     String deviceId = sp.getString(PREF_DEVICE_ID, null);
     if (deviceId == null) {
       deviceId = UUID.randomUUID().toString();
-      SharedPreferences.Editor e = sp.edit().putString(PREF_DEVICE_ID, deviceId);
-      if (Build.VERSION.SDK_INT >= 9) e.apply(); else e.commit();
+      sp.edit().putString(PREF_DEVICE_ID, deviceId).apply();
     }
     return deviceId;
-  }
-
-  public static String getUserAgent(
-      String platform, String pkgName, String versionName, String username) {
-    return String.format("%s:%s:%s (by /u/%s)", platform, pkgName, versionName, username);
   }
 }

@@ -48,6 +48,8 @@ allprojects {
   }
 }
 dependencies {
-  compile "com.github.damien5314:RxReddit:0.1"
+  compile "com.github.damien5314.RxReddit:library:0.+"
 }
 ```
+
+Check out the [Android extension module](/android) for information about using classes and utilities related to Android applications.

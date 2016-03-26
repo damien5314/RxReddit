@@ -14,7 +14,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.functions.Action1;
-import rxreddit.Util;
+import rxreddit.RxRedditUtil;
 import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
 import rxreddit.model.UserAccessToken;
@@ -22,8 +22,8 @@ import rxreddit.model.UserAccessToken;
 final class RedditAuthService implements IRedditAuthService {
   private static final String RESPONSE_TYPE = "code";
   private static final String DURATION = "permanent";
-  private static final String STATE = Util.getRandomString();
-  private static final String SCOPE = Util.join(",",
+  private static final String STATE = RxRedditUtil.getRandomString();
+  private static final String SCOPE = RxRedditUtil.join(",",
       new String[] {
           "identity", "mysubreddits", "privatemessages", "read", "report", "save",
           "submit", "vote", "history", "account", "subscribe" });
