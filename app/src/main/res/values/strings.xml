@@ -1,4 +1,9 @@
 <resources>
   <string name="app_name">RxReddit</string>
   <string name="author_formatter">by /u/%s</string>
+  <string name="rxr_error_during_authentication">error_during_authentication</string>
+  <string name="username_formatter">joined %s</string>
+  <string name="get_identity_error">error getting user identity</string>
+  <string name="link_karma_formatter">%d link karma</string>
+  <string name="comment_karma_formatter">%d comment karma</string>
 </resources>
