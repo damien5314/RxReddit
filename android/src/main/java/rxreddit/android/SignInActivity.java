@@ -21,7 +21,7 @@ public class SignInActivity extends AppCompatActivity {
 
   private void showSignInFragment(String authUrl) {
     if (authUrl != null) {
-      getFragmentManager().beginTransaction()
+      getSupportFragmentManager().beginTransaction()
           .replace(R.id.fragment, SignInFragment.newInstance(authUrl))
           .commit();
     }
