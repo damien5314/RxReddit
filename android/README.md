@@ -11,6 +11,8 @@ compile "com.github.damien5314.RxReddit:android:0.+"
 
 To generate a device ID that is automatically stored in your app's `SharedPreferences` and reused on subsequent launches, you can use `AndroidUtil.getDeviceId(Context)`.
 
+[AndroidAccessTokenManager](/android/src/main/java/rxreddit/android/AndroidAccessTokenManager.java) is an `AccessTokenManager` implementation you can pass into the constructor of `RedditService` to persist access tokens through `SharedPreferences`.
+
 Launching `SignInActivity` will display a `WebView` using the authorization URL passed as an extra.
 
 ```java
@@ -42,15 +44,9 @@ Make sure you have `android.permission.INTERNET` and `SignInActivity` declared i
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
   <uses-permission android:name="android.permission.INTERNET" />
-
   <application>
-
     <activity android:name="rxreddit.android.SignInActivity" />
-
   </application>
-
 </manifest>
-
 ```

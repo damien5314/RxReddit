@@ -2,7 +2,6 @@ package rxreddit.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import rxreddit.api.AccessTokenManager;
 import rxreddit.model.ApplicationAccessToken;
@@ -66,44 +65,40 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
     if (token.getRefreshToken() == null && saved != null) {
       token.setRefreshToken(saved.getRefreshToken());
     }
-    SharedPreferences.Editor editor =
-        mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit();
-    editor.putString(PREF_ACCESS_TOKEN, token.getToken())
+    mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
+        .putString(PREF_ACCESS_TOKEN, token.getToken())
         .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
         .putString(PREF_TOKEN_TYPE, token.getTokenType())
         .putLong(PREF_EXPIRATION, token.getExpiration())
-        .putString(PREF_SCOPE, token.getScope());
-    if (Build.VERSION.SDK_INT >= 9) editor.apply(); else editor.commit();
+        .putString(PREF_SCOPE, token.getScope())
+        .apply();
   }
 
   @Override
   public void saveApplicationAccessToken(ApplicationAccessToken token) {
-    SharedPreferences.Editor editor = mContext.getSharedPreferences(
-        PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE).edit();
-    editor
+    mContext.getSharedPreferences(
+        PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
         .putString(PREF_ACCESS_TOKEN, token.getToken())
         .putString(PREF_TOKEN_TYPE, token.getTokenType())
         .putLong(PREF_EXPIRATION, token.getExpiration())
         .putString(PREF_SCOPE, token.getScope())
-        .putString(PREF_REFRESH_TOKEN, token.getRefreshToken());
-    if (Build.VERSION.SDK_INT >= 9) editor.apply(); else editor.commit();
+        .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
+        .apply();
   }
 
   @Override
   public void clearSavedUserAccessToken() {
-    SharedPreferences.Editor editor =
-        mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE)
-            .edit()
-            .clear();
-    if (Build.VERSION.SDK_INT >= 9) editor.apply(); else editor.commit();
+    mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE)
+        .edit()
+        .clear()
+        .apply();
   }
 
   @Override
   public void clearSavedApplicationAccessToken() {
-    SharedPreferences.Editor editor =
-        mContext.getSharedPreferences(PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE)
-            .edit()
-            .clear();
-    if (Build.VERSION.SDK_INT >= 9) editor.apply(); else editor.commit();
+    mContext.getSharedPreferences(PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE)
+        .edit()
+        .clear()
+        .apply();
   }
 }
