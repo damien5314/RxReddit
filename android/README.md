@@ -7,6 +7,8 @@ Add the dependency via gradle:
 ```gradle
 compile "com.github.damien5314.RxReddit:library:0.+"
 compile "com.github.damien5314.RxReddit:android:0.+"
+// If you want to use the mock module, you can exclude it from release builds
+debugCompile "com.github.damien5314.RxReddit:mock:0.+"
 ```
 
 To generate a device ID that is automatically stored in your app's `SharedPreferences` and reused on subsequent launches, you can use `AndroidUtil.getDeviceId(Context)`.

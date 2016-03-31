@@ -36,7 +36,8 @@ import rxreddit.model.UserIdentity;
 import rxreddit.model.UserSettings;
 import rxreddit.model.Votable;
 
-final public class RedditService implements IRedditService {
+public class RedditService implements IRedditService {
+  static final String BASE_URL = "https://oauth.reddit.com";
   
   private RedditAPI mAPI;
   private IRedditAuthService mRedditAuthService;
@@ -262,29 +263,37 @@ final public class RedditService implements IRedditService {
   }
 
   private RedditAPI buildApi(String userAgent) {
+    OkHttpClient client = getOkHttpClient(userAgent);
+    Gson gson = getGson();
+    Retrofit restAdapter = new Retrofit.Builder()
+        .client(client)
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .build();
+    return restAdapter.create(RedditAPI.class);
+  }
+
+  protected OkHttpClient getOkHttpClient(String userAgent) {
 //    final int cacheSize = 10 * 1024 * 1024; // 10 MiB
 //    File cache = new File(
 //        HoldTheNarwhal.getContext().getCacheDir().getAbsolutePath(), "htn-http-cache");
-    OkHttpClient client = new OkHttpClient.Builder()
+    return new OkHttpClient.Builder()
 //        .cache(new Cache(cache, cacheSize))
         .addNetworkInterceptor(new UserAgentInterceptor(userAgent))
         .addNetworkInterceptor(new RawResponseInterceptor())
         .addNetworkInterceptor(getUserAuthInterceptor())
         .build();
-    Gson gson = new GsonBuilder()
+  }
+
+  protected Gson getGson() {
+    return new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .excludeFieldsWithoutExposeAnnotation()
         .registerTypeAdapter(ListingResponse.class, new ListingResponseDeserializer())
         .registerTypeAdapter(Listing.class, new ListingDeserializer())
         .registerTypeAdapter(AbsComment.class, new CommentDeserializer())
         .create();
-    Retrofit restAdapter = new Retrofit.Builder()
-        .client(client)
-        .baseUrl("https://oauth.reddit.com")
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-        .build();
-    return restAdapter.create(RedditAPI.class);
   }
 
   private Interceptor getUserAuthInterceptor() {

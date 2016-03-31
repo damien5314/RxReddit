@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.5 *(2016-03-30)*
+----------------------------------
+* Added mock service module
+* Switched to using `android.support.v4.app.Fragment` for Android WebView
+
 Version 0.4 *(2016-03-26)*
 ----------------------------------
 * Added Android extension module
