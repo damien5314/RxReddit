@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 0.6 *(2016-03-31)*
+----------------------------------
+* Fixed null response from `RedditServiceMock::processAuthenticationCallback`
+
 Version 0.5 *(2016-03-30)*
 ----------------------------------
 * Added mock service module
