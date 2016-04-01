@@ -60,7 +60,16 @@ public class RedditServiceMock extends RedditService {
 
   @Override
   public Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl) {
-    return null;
+    mAuthorized = true;
+    UserAccessToken response = new UserAccessToken();
+    response.setToken("1234567-ADmpkqak1aTo71ABCDECvAXiXGk");
+    response.setTokenType("bearer");
+    // Set expiration of token to 1 hour from now
+    response.setExpiration(System.currentTimeMillis() + 3600);
+    response.setRefreshToken("1234567-_dYROLO4pgfABCDEr1jm-12345");
+    response.setScope("account history identity mysubreddits privatemessages read report save " +
+        "submit subscribe vote");
+    return Observable.just(response);
   }
 
   @Override
