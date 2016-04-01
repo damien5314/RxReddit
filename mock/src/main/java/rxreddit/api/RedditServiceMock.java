@@ -11,22 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
+import rxreddit.RxRedditUtil;
 import rxreddit.model.AddCommentResponse;
 import rxreddit.model.Comment;
-import rxreddit.model.CommentStub;
 import rxreddit.model.FriendInfo;
-import rxreddit.model.Hideable;
-import rxreddit.model.Link;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
-import rxreddit.model.Savable;
 import rxreddit.model.Subreddit;
 import rxreddit.model.TrophyResponse;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserSettings;
-import rxreddit.model.Votable;
 
 public class RedditServiceMock extends RedditService {
 
@@ -35,10 +31,15 @@ public class RedditServiceMock extends RedditService {
   // Mock the authentication state
   private boolean mAuthorized = false;
 
-  public RedditServiceMock(
-      String redditAppId, String redirectUri, String deviceId, String userAgent,
-      AccessTokenManager atm) {
-    super(redditAppId, redirectUri, deviceId, userAgent, atm);
+  public RedditServiceMock() {
+    super(
+        "http://127.0.0.1/",
+        "http://127.0.0.1/",
+        "AmkOVyT8Zl5ZIg", // fake app id
+        "http://127.0.0.1/", // redirect uri
+        "dd076025-1631-49a6-b52f-612ba75a4023", // random UUID for device ID
+        RxRedditUtil.getUserAgent("java", "rxreddit", "0.1", "damien5314"),
+        AccessTokenManager.NONE);
   }
 
   @Override
@@ -60,7 +61,16 @@ public class RedditServiceMock extends RedditService {
 
   @Override
   public Observable<UserAccessToken> processAuthenticationCallback(String callbackUrl) {
-    return null;
+    mAuthorized = true;
+    UserAccessToken response = new UserAccessToken();
+    response.setToken("1234567-ADmpkqak1aTo71ABCDECvAXiXGk");
+    response.setTokenType("bearer");
+    // Set expiration of token to 1 hour from now
+    response.setExpiration(System.currentTimeMillis() + 3600);
+    response.setRefreshToken("1234567-_dYROLO4pgfABCDEr1jm-12345");
+    response.setScope("account history identity mysubreddits privatemessages read report save " +
+        "submit subscribe vote");
+    return Observable.just(response);
   }
 
   @Override
@@ -102,8 +112,7 @@ public class RedditServiceMock extends RedditService {
 
   @Override
   public Observable<MoreChildrenResponse> loadMoreChildren(
-      Link link, CommentStub moreComments,
-      List<String> children, String sort) {
+      String linkId, List<String> childrenIds, String sort) {
     MoreChildrenResponse response = mGson.fromJson(
         getReaderForFile("more_comments.json"), MoreChildrenResponse.class);
     return Observable.just(response);
@@ -162,24 +171,23 @@ public class RedditServiceMock extends RedditService {
   }
 
   @Override
-  public Observable<Void> vote(Votable votable, int direction) {
+  public Observable<Void> vote(String fullname, int direction) {
     return Observable.just((Void) null);
   }
 
   @Override
-  public Observable<Void> save(
-      Savable listing, String category, boolean save) {
+  public Observable<Void> save(String fullname, String category, boolean toSave) {
     return Observable.just((Void) null);
   }
 
   @Override
-  public Observable<Void> hide(Hideable listing, boolean toHide) {
+  public Observable<Void> hide(String fullname, boolean toHide) {
     return Observable.just((Void) null);
   }
 
   @Override
   public Observable<Void> report(String id, String reason) {
-    return Observable.just((Void) null);
+    return Observable.error(new UnsupportedOperationException());
   }
 
   @Override
@@ -214,12 +222,28 @@ public class RedditServiceMock extends RedditService {
 
   @Override
   public Observable<Void> revokeAuthentication() {
-    return null;
+    return Observable.just((Void) null);
   }
 
   private Reader getReaderForFile(String filename) {
-    InputStream is;
-    is = RedditServiceMock.class.getClassLoader().getResourceAsStream("api/" + filename);
-    return new InputStreamReader(is);
+//    InputStream is;
+    try {
+      Class clazz = getClass();
+      ClassLoader cl = clazz.getClassLoader();
+//      URL url = clazz.getResource("/mock/" + filename);
+//      URL url = cl.getResource("mock/" + filename);
+//      String path = url.getFile();
+//      File file = new File(url.toURI());
+//      return new FileReader(url.getPath());
+      InputStream ins = cl.getResourceAsStream("mock/" + filename); // works for sample app
+//      InputStream ins = cl.getResourceAsStream("/mock/" + filename); // does not work for sample app
+//      InputStream ins = clazz.getResourceAsStream("mock/" + filename); // does not work for sample app
+//      InputStream ins = clazz.getResourceAsStream("/mock/" + filename); // works for sample app
+      return new InputStreamReader(ins);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+//    return new InputStreamReader(is);
   }
 }

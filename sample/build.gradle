@@ -34,6 +34,7 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile project(':library')
   compile project(':android')
+  debugCompile project(':mock')
   def appcompat_version = "23.2.1"
   compile "com.android.support:appcompat-v7:$appcompat_version"
   compile "com.android.support:recyclerview-v7:$appcompat_version"

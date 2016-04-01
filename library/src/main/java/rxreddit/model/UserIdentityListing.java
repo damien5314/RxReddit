@@ -1,9 +1,6 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
-
 public class UserIdentityListing extends Listing {
-  @Expose
   UserIdentity data;
 
   public UserIdentity getUser() {

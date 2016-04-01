@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+Version 0.7 *(2016-04-07)*
+----------------------------------
+* RedditService is now constructed via a `Builder`
+* API methods now return an `IllegalArgumentException` in `onError` when required parameters are missing
+* API calls now check for HTTP errors consistently, and return these in `onError`
+* Reddit server endpoints can now be configured in RedditService, to substitute mock servers for testing
+* MoreChildren, vote, save, and hide endpoints now take `String`s instead of model objects, for flexibility
+* Added default no-op AccessTokenManager implementation `AccessTokenManager.NONE`
+* Fixed Gson configuration which was causing some fields to be ignored during deserialization of model objects
+
+Version 0.6 *(2016-03-31)*
+----------------------------------
+* Fixed null response from `RedditServiceMock::processAuthenticationCallback`
+
 Version 0.5 *(2016-03-30)*
 ----------------------------------
 * Added mock service module

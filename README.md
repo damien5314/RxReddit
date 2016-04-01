@@ -1,6 +1,6 @@
 # RxReddit
 
-This is a Java API wrapper for reddit, extracted from one of my other projects. As such the API was written with a specific use case in mind, but if there is another use case you want supported, feel free to open an issue.
+This is a Java API wrapper for reddit, extracted from one of my other projects.
 
 You are still subject to reddit's API access rules while using RxReddit. Please read the [API documentation](https://github.com/reddit/reddit/wiki/API) before use to ensure you are complying with reddit's terms and conditions.
 
@@ -14,7 +14,7 @@ This library depends internally on [Retrofit 2](http://square.github.io/retrofit
 
 Clients can make requests to the reddit API through an instance of `RedditService`. The class is heavy, and authentication state is cached separately for each instance, so I recommend making your instance a singleton.
 
-The constructor for `RedditService` takes a few parameters:
+A `RedditService` instance can be configured via `RedditService.Builder`, which requires you to set a few fields:
 
 `String redditAppId`  
 ID obtained from registering your app

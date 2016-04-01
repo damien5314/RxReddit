@@ -1,13 +1,9 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.List;
 
 public class ListingResponse {
-  @Expose
   String kind;
-  @Expose
   ListingResponseData data;
 
   public ListingResponse() { }

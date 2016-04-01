@@ -1,11 +1,9 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class PrivateMessage extends Listing {
-  @Expose
   Data data;
 
   @Override
@@ -86,38 +84,31 @@ public class PrivateMessage extends Listing {
   }
 
   public static class Data extends ListingData {
-    @Expose
     String body;
     @SerializedName("was_comment")
     Boolean wasComment;
     @SerializedName("first_message")
     String firstMessage;
-    @Expose @SerializedName("name")
+    @SerializedName("name")
     String fullname;
     @SerializedName("first_message_name")
     String firstMessageName;
-    @Expose 
+
     Long created;
-    @Expose
     String dest;
-    @Expose
     String author;
-    @Expose @SerializedName("created_utc")
+    @SerializedName("created_utc")
     Long createdUtc;
     @SerializedName("body_html")
     String bodyHtml;
-    @Expose
     String subreddit;
-    @Expose @SerializedName("parent_id")
+    @SerializedName("parent_id")
     String parentId;
     String context;
-    @Expose
     ListingResponse replies;
-    @Expose @SerializedName("new")
+    @SerializedName("new")
     Boolean isUnread;
-    @Expose
     String distinguished;
-    @Expose
     String subject;
   }
 }

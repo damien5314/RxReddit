@@ -1,13 +1,11 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class Link extends Listing implements Votable, Savable, Hideable {
-  @Expose
   Data data;
 
   @Override
@@ -234,23 +232,17 @@ public class Link extends Listing implements Votable, Savable, Hideable {
   }
 
   public static class Data extends ListingData {
-    @Expose
     private Preview preview; // New field for preview images
-    @Expose
     private String domain;
     @SerializedName("banned_by")
     private Object bannedBy;
     @SerializedName("media_embed")
     private MediaEmbed mediaEmbed;
-    @Expose
     private String subreddit;
     @SerializedName("selftext_html")
     private String selftextHtml;
-    @Expose
     private String selftext;
-    @Expose
     private String edited;
-    @Expose
     private Boolean likes;
     @SerializedName("user_reports")
     private List<Object> userReports;
@@ -258,30 +250,25 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     private Object secureMedia;
     @SerializedName("link_flair_text")
     private Object linkFlairText;
-    @Expose
     private Integer gilded;
-    @Expose @SerializedName("archived")
+    @SerializedName("archived")
     private Boolean isArchived;
     private Boolean clicked;
     @SerializedName("report_reasons")
     private Object reportReasons;
-    @Expose
     private String author;
-    @Expose @SerializedName("num_comments")
+    @SerializedName("num_comments")
     private Integer numComments;
-    @Expose
     private Integer score;
     @SerializedName("approved_by")
     private Object approvedBy;
-    @Expose @SerializedName("over_18")
+    @SerializedName("over_18")
     private Boolean over18;
-    @Expose
     private Boolean hidden;
-    @Expose
     private String thumbnail;
     @SerializedName("subreddit_id")
     private String subredditId;
-    @Expose @SerializedName("hide_score")
+    @SerializedName("hide_score")
     private Boolean hideScore;
     @SerializedName("link_flair_css_class")
     private Object linkFlairCssClass;
@@ -290,24 +277,18 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     private Integer downs;
     @SerializedName("secure_media_embed")
     private SecureMediaEmbed secureMediaEmbed;
-    @Expose
     private Boolean saved;
-    @Expose
     private Boolean stickied;
-    @Expose @SerializedName("is_self")
+    @SerializedName("is_self")
     private Boolean isSelf;
-    @Expose
     private String permalink;
     private Double created;
-    @Expose
     private String url;
     @SerializedName("author_flair_text")
     private Object authorFlairText;
-    @Expose
     private String title;
-    @Expose @SerializedName("created_utc")
+    @SerializedName("created_utc")
     private Double createdUtc;
-    @Expose
     private String distinguished;
     private Media media;
     @SerializedName("mod_reports")
@@ -320,13 +301,9 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     public static class SecureMediaEmbed { }
 
     public static class MediaEmbed {
-      @Expose
       private String content;
-      @Expose
       private Integer width;
-      @Expose
       private Boolean scrolling;
-      @Expose
       private Integer height;
 
       public String getContent() {
@@ -347,9 +324,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     }
 
     public static class Media {
-      @Expose
       private Oembed oembed;
-      @Expose
       private String type;
 
       public Oembed getOembed() {
@@ -361,29 +336,22 @@ public class Link extends Listing implements Votable, Savable, Hideable {
       }
 
       public static class Oembed {
-        @Expose @SerializedName("provider_url")
+        @SerializedName("provider_url")
         private String providerUrl;
-        @Expose
         private String description;
-        @Expose
         private String title;
-        @Expose
         private String type;
-        @Expose @SerializedName("thumbnail_width")
+        @SerializedName("thumbnail_width")
         private Integer thumbnailWidth;
-        @Expose
         private Integer height;
-        @Expose
         private Integer width;
-        @Expose
         private String html;
-        @Expose
         private String version;
-        @Expose @SerializedName("provider_name")
+        @SerializedName("provider_name")
         private String providerName;
-        @Expose @SerializedName("thumbnail_url")
+        @SerializedName("thumbnail_url")
         private String thumbnailUrl;
-        @Expose @SerializedName("thumbnail_height")
+        @SerializedName("thumbnail_height")
         private Integer thumbnailHeight;
 
         public String getProviderUrl() {
@@ -438,14 +406,12 @@ public class Link extends Listing implements Votable, Savable, Hideable {
   }
 
   public static class Preview {
-    @Expose
     List<Image> images;
 
     public static class Image {
-      @Expose
       Res source;
-      @Expose List<Res> resolutions;
-      @Expose Variants variants;
+      List<Res> resolutions;
+      Variants variants;
       String id;
 
       public Res getSource() {
@@ -465,13 +431,13 @@ public class Link extends Listing implements Votable, Savable, Hideable {
       }
 
       public static class Variants {
-        @Expose public Image nsfw;
+        public Image nsfw;
       }
 
       public static class Res {
-        @Expose String url;
-        @Expose int width;
-        @Expose int height;
+        String url;
+        int width;
+        int height;
 
         public String getUrl() {
           return url;

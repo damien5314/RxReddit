@@ -1,0 +1,8 @@
+{
+  "json":  {
+    "errors": ["generic test error"],
+    "data":  {
+      "things": []
+    }
+  }
+}

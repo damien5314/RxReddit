@@ -1,6 +1,5 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public abstract class AbsComment extends Listing {
@@ -28,6 +27,6 @@ public abstract class AbsComment extends Listing {
   }
 
   public static abstract class Data extends ListingData {
-    @Expose @SerializedName("parent_id") String parentId;
+    @SerializedName("parent_id") String parentId;
   }
 }

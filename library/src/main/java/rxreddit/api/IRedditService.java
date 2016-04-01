@@ -5,19 +5,14 @@ import java.util.Map;
 
 import rx.Observable;
 import rxreddit.model.Comment;
-import rxreddit.model.CommentStub;
 import rxreddit.model.FriendInfo;
-import rxreddit.model.Hideable;
-import rxreddit.model.Link;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
-import rxreddit.model.Savable;
 import rxreddit.model.Subreddit;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserSettings;
-import rxreddit.model.Votable;
 
 interface IRedditService {
 
@@ -36,8 +31,7 @@ interface IRedditService {
       String subreddit, String article,
       String sort, String commentId);
   Observable<MoreChildrenResponse> loadMoreChildren(
-      Link link, CommentStub moreComments,
-      List<String> children, String sort);
+      String linkId, List<String> childrenIds, String sort);
   Observable<UserIdentity> getUserInfo(String username);
   Observable<FriendInfo> getFriendInfo(String username);
   Observable<List<Listing>> getUserTrophies(String username);
@@ -48,9 +42,9 @@ interface IRedditService {
   Observable<Void> deleteFriend(String username);
   Observable<Void> saveFriendNote(String username, String note);
   Observable<Subreddit> getSubredditInfo(String subreddit);
-  Observable<Void> vote(Votable votable, int direction);
-  Observable<Void> save(Savable listing, String category, boolean save);
-  Observable<Void> hide(Hideable listing, boolean toHide);
+  Observable<Void> vote(String fullname, int direction);
+  Observable<Void> save(String fullname, String category, boolean toSave);
+  Observable<Void> hide(String fullname, boolean toHide);
   Observable<Void> report(String id, String reason);
   Observable<Comment> addComment(String parentId, String text);
   Observable<ListingResponse> getInbox(

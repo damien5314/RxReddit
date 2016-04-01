@@ -19,11 +19,14 @@ import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
 import rxreddit.model.UserAccessToken;
 
+import static rxreddit.api.RedditService.responseToBody;
+
 final class RedditAuthService implements IRedditAuthService {
-  private static final String RESPONSE_TYPE = "code";
-  private static final String DURATION = "permanent";
-  private static final String STATE = RxRedditUtil.getRandomString();
-  private static final String SCOPE = RxRedditUtil.join(",",
+  static final String BASE_URL = "https://www.reddit.com";
+  static final String RESPONSE_TYPE = "code";
+  static final String DURATION = "permanent";
+  static final String STATE = RxRedditUtil.getRandomString();
+  static final String SCOPE = RxRedditUtil.join(",",
       new String[] {
           "identity", "mysubreddits", "privatemessages", "read", "report", "save",
           "submit", "vote", "history", "account", "subscribe" });
@@ -42,7 +45,7 @@ final class RedditAuthService implements IRedditAuthService {
   private ApplicationAccessToken mApplicationAccessToken;
 
   public RedditAuthService(
-      String clientId, String redirectUri, String deviceId, String userAgent,
+      String baseUrl, String clientId, String redirectUri, String deviceId, String userAgent,
       AccessTokenManager atm) {
     mRedirectUri = redirectUri;
     mDeviceId = deviceId;
@@ -52,7 +55,7 @@ final class RedditAuthService implements IRedditAuthService {
         String.format("https://www.reddit.com/api/v1/authorize.compact?client_id=%s" +
                 "&response_type=%s&duration=%s&state=%s&redirect_uri=%s&scope=%s",
             clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, SCOPE);
-    mAuthService = buildApi();
+    mAuthService = buildApi(baseUrl);
     mAccessTokenManager = atm;
   }
 
@@ -92,7 +95,7 @@ final class RedditAuthService implements IRedditAuthService {
       } else {
         String grantType = "https://oauth.reddit.com/grants/installed_client";
         return mAuthService.getApplicationAuthToken(grantType, mDeviceId)
-            .map(Response::body)
+            .flatMap(responseToBody())
             .doOnNext(saveApplicationAccessToken());
       }
     });
@@ -124,7 +127,7 @@ final class RedditAuthService implements IRedditAuthService {
       }
       String grantType = "refresh_token";
       return mAuthService.refreshUserAuthToken(grantType, refreshToken)
-          .map(Response::body)
+          .flatMap(responseToBody())
           .doOnNext(saveUserAccessToken())
           .doOnError(error -> clearUserIdentity());
     });
@@ -132,15 +135,21 @@ final class RedditAuthService implements IRedditAuthService {
 
   private Action1<UserAccessToken> saveUserAccessToken() {
     return token -> {
+      if (token.getRefreshToken() == null) {
+        UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
+        if (storedToken != null) {
+          token.setRefreshToken(storedToken.getRefreshToken());
+        }
+      }
+      mUserAccessToken = token;
       mAccessTokenManager.saveUserAccessToken(token);
-      mUserAccessToken = mAccessTokenManager.getUserAccessToken();
     };
   }
 
   private Action1<ApplicationAccessToken> saveApplicationAccessToken() {
     return token -> {
+      mApplicationAccessToken = token;
       mAccessTokenManager.saveApplicationAccessToken(token);
-      mApplicationAccessToken = mAccessTokenManager.getApplicationAccessToken();
     };
   }
 
@@ -182,22 +191,24 @@ final class RedditAuthService implements IRedditAuthService {
   private Observable<Void> revokeAuthToken(AccessToken token) {
     if (token == null) return Observable.error(new IllegalStateException("token == null"));
     return Observable.merge(
-        mAuthService.revokeUserAuthToken(token.getToken(), "access_token"),
-        mAuthService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token"));
+        mAuthService.revokeUserAuthToken(token.getToken(), "access_token")
+            .flatMap(responseToBody()),
+        mAuthService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token")
+            .flatMap(responseToBody())
+    );
   }
 
-  private RedditAuthAPI buildApi() {
+  private RedditAuthAPI buildApi(String baseUrl) {
     OkHttpClient client = new OkHttpClient.Builder()
         .addNetworkInterceptor(new UserAgentInterceptor(mUserAgent))
         .addNetworkInterceptor(getHttpAuthInterceptor())
         .build();
     Gson gson = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .excludeFieldsWithoutExposeAnnotation()
         .create();
     Retrofit restAdapter = new Retrofit.Builder()
         .client(client)
-        .baseUrl("https://www.reddit.com")
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();

@@ -1,6 +1,5 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -8,20 +7,20 @@ import java.util.Date;
 public abstract class AccessToken {
   private long mCreated = new Date().getTime();
 
-  @Expose @SerializedName("access_token")
+  @SerializedName("access_token")
   protected String mToken;
 
-  @Expose @SerializedName("token_type")
+  @SerializedName("token_type")
   protected String mTokenType;
 
-  @Expose @SerializedName("expires_in")
+  @SerializedName("expires_in")
   protected long mSecondsToExpiration;
   protected long mExpiration; // UTC
 
-  @Expose @SerializedName("scope")
+  @SerializedName("scope")
   protected String mScope;
 
-  @Expose @SerializedName("refresh_token")
+  @SerializedName("refresh_token")
   protected String mRefreshToken;
 
   public String getToken() {

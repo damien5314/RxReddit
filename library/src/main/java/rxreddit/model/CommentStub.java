@@ -1,12 +1,9 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class CommentStub extends AbsComment {
-  @Expose
   Data data;
 
   @Override
@@ -51,8 +48,8 @@ public class CommentStub extends AbsComment {
   }
 
   public static class Data extends AbsComment.Data {
-    @Expose private Integer count;
-    @Expose private List<String> children;
+    private Integer count;
+    private List<String> children;
   }
 
   @Override

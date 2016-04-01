@@ -1,25 +1,23 @@
 package rxreddit.test
 
-import rxreddit.RxRedditUtil
-import rxreddit.api.RedditService
-import rxreddit.api.RedditServiceMock
+import okhttp3.mockwebserver.MockResponse
+import okio.Buffer
+import org.junit.Assert.assertEquals
+import rx.observers.TestSubscriber
+import rxreddit.api._RedditServiceTests
 
-fun getRedditService(): RedditService {
-  return RedditService(
-      "AmkOVyT8Zl5ZIg", // fake app id
-      "http://127.0.0.1/", // redirect uri
-      "dd076025-1631-49a6-b52f-612ba75a4023", // random UUID for device ID
-      RxRedditUtil.getUserAgent("java", "rxreddit", "0.1", "damien5314"),
-      null
-  )
+fun <T> TestSubscriber<T>.assertSuccessfulEvents(expected: Int) {
+  assertNoErrors()
+  assertCompleted()
+  assertUnsubscribed()
+  assertEquals("unexpected number of onNext events", expected, onNextEvents.size)
 }
 
-fun getRedditServiceMock(): RedditServiceMock {
-  return RedditServiceMock(
-      "AmkOVyT8Zl5ZIg", // fake app id
-      "http://127.0.0.1/", // redirect uri
-      "dd076025-1631-49a6-b52f-612ba75a4023", // random UUID for device ID
-      RxRedditUtil.getUserAgent("java", "rxreddit", "0.1", "damien5314"),
-      null
-  )
+fun <T> TestSubscriber<T>.assertErrorEvents(expected: Int) {
+  assertNoValues()
+  assertUnsubscribed()
+  assertEquals("unexpected number of onError events", expected, onErrorEvents.size)
 }
+
+fun MockResponse.setBodyFromFile(filename: String): MockResponse = setBody(
+    Buffer().readFrom(_RedditServiceTests::class.java.classLoader.getResourceAsStream(filename)))

@@ -18,14 +18,17 @@ public class RedditServiceProvider {
     if (_instance == null) {
       synchronized (RedditServiceProvider.class) {
         if (_instance == null) {
-          _instance = new RedditService(
-              BuildConfig.REDDIT_APP_ID,
-              BuildConfig.REDDIT_REDIRECT_URI,
-              AndroidUtil.getDeviceId(context),
-              RxRedditUtil.getUserAgent(
-                  "android", "ddiehl.rxreddit.sampleapp", BuildConfig.VERSION_NAME, "damien5314"),
-              new AndroidAccessTokenManager(context)
-          );
+//          _instance = new RedditServiceMock();
+          _instance = new RedditService.Builder()
+              .baseUrl("https://oauth.reddit.com")
+              .baseAuthUrl("https://www.reddit.com")
+              .appId(BuildConfig.REDDIT_APP_ID)
+              .redirectUri(BuildConfig.REDDIT_REDIRECT_URI)
+              .deviceId(AndroidUtil.getDeviceId(context))
+              .userAgent(RxRedditUtil.getUserAgent(
+                  "android", "ddiehl.rxreddit.sampleapp", BuildConfig.VERSION_NAME, "damien5314"))
+              .accessTokenManager(new AndroidAccessTokenManager(context))
+              .build();
         }
       }
     }

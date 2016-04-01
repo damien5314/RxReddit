@@ -8,7 +8,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class Subreddit extends Listing {
-  @Expose Data data;
+  Data data;
 
   @Override
   public String getId() {
@@ -337,118 +337,118 @@ public class Subreddit extends Listing {
 
   public static class Data extends ListingData {
 
-    @Expose @SerializedName("banner_img")
+    @SerializedName("banner_img")
     String bannerImage;
 
-    @Expose @SerializedName("submit_text_html")
+    @SerializedName("submit_text_html")
     String submitTextHtml;
 
-    @Expose @SerializedName("user_is_banned")
+    @SerializedName("user_is_banned")
     Boolean userIsBanned;
 
-    @Expose @SerializedName("user_is_contributor")
+    @SerializedName("user_is_contributor")
     Boolean userIsContributor;
 
-    @Expose @SerializedName("submit_text")
+    @SerializedName("submit_text")
     String submitText;
 
-    @Expose @SerializedName("display_name")
+    @SerializedName("display_name")
     String displayName;
 
-    @Expose @SerializedName("header_img")
+    @SerializedName("header_img")
     String headerImageUrl;
 
-    @Expose @SerializedName("description_html")
+    @SerializedName("description_html")
     String descriptionHtml;
 
-    @Expose @SerializedName("title")
+    @SerializedName("title")
     String title;
 
-    @Expose @SerializedName("collapse_deleted_comments")
+    @SerializedName("collapse_deleted_comments")
     Boolean collapseDeletedComments;
 
-    @Expose @SerializedName("public_description")
+    @SerializedName("public_description")
     String publicDescription;
 
-    @Expose @SerializedName("over18")
+    @SerializedName("over18")
     Boolean over18;
 
-    @Expose @SerializedName("public_description_html")
+    @SerializedName("public_description_html")
     String publicDescriptionHtml;
 
-    @Expose @SerializedName("icon_size")
+    @SerializedName("icon_size")
     List<Integer> iconSize = new ArrayList<>();
 
-    @Expose @SerializedName("icon_img")
+    @SerializedName("icon_img")
     String iconImg;
 
-    @Expose @SerializedName("header_title")
+    @SerializedName("header_title")
     String headerTitle;
 
-    @Expose @SerializedName("description")
+    @SerializedName("description")
     String description;
 
-    @Expose @SerializedName("user_is_muted")
+    @SerializedName("user_is_muted")
     Boolean userIsMuted;
 
-    @Expose @SerializedName("submit_link_label")
+    @SerializedName("submit_link_label")
     String submitLinkLabel;
 
-    @Expose @SerializedName("header_size")
+    @SerializedName("header_size")
     Integer[] headerSize;
 
-    @Expose @SerializedName("public_traffic")
+    @SerializedName("public_traffic")
     Boolean publicTraffic;
 
-    @Expose @SerializedName("accounts_active")
+    @SerializedName("accounts_active")
     Integer accountsActive;
 
-    @Expose @SerializedName("subscribers")
+    @SerializedName("subscribers")
     Integer subscribers;
 
-    @Expose @SerializedName("submit_text_label")
+    @SerializedName("submit_text_label")
     String submitTextLabel;
 
-    @Expose @SerializedName("lang")
+    @SerializedName("lang")
     String lang;
 
-    @Expose @SerializedName("name")
+    @SerializedName("name")
     String name;
 
-    @Expose @SerializedName("created")
+    @SerializedName("created")
     Long created;
 
-    @Expose @SerializedName("url")
+    @SerializedName("url")
     String url;
 
-    @Expose @SerializedName("quarantine")
+    @SerializedName("quarantine")
     Boolean quarantine;
 
-    @Expose @SerializedName("hide_ads")
+    @SerializedName("hide_ads")
     Boolean hideAds;
 
-    @Expose @SerializedName("created_utc")
+    @SerializedName("created_utc")
     Long createdUtc;
 
-    @Expose @SerializedName("banner_size")
+    @SerializedName("banner_size")
     List<Integer> bannerSize = new ArrayList<>();
 
-    @Expose @SerializedName("user_is_moderator")
+    @SerializedName("user_is_moderator")
     Boolean userIsModerator;
 
-    @Expose @SerializedName("user_sr_theme_enabled")
+    @SerializedName("user_sr_theme_enabled")
     Boolean userSrThemeEnabled;
 
-    @Expose @SerializedName("comment_score_hide_mins")
+    @SerializedName("comment_score_hide_mins")
     Integer commentScoreHideMins;
 
-    @Expose @SerializedName("subreddit_type")
+    @SerializedName("subreddit_type")
     String subredditType;
 
-    @Expose @SerializedName("submission_type")
+    @SerializedName("submission_type")
     String submissionType;
 
-    @Expose @SerializedName("user_is_subscriber")
+    @SerializedName("user_is_subscriber")
     Boolean userIsSubscriber;
   }
 }

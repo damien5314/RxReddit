@@ -1,13 +1,11 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class Comment extends AbsComment implements Votable, Savable {
-  @Expose
   Data data;
   private boolean isCollapsed = false;
 
@@ -236,71 +234,60 @@ public class Comment extends AbsComment implements Votable, Savable {
 
   public static class Data extends AbsComment.Data {
     // Attributes specific to listing views
-    @Expose @SerializedName("link_title")
+    @SerializedName("link_title")
     private String linkTitle;
     @SerializedName("removal_reason")
     private String removalReason;
-    @Expose @SerializedName("link_author")
+    @SerializedName("link_author")
     private String linkAuthor;
-    @Expose @SerializedName("link_url")
+    @SerializedName("link_url")
     private String linkUrl;
 
     // Attributes common to all comment views
-    @Expose
     private ListingResponse replies;
     @SerializedName("subreddit_id")
     private String subredditId;
     @SerializedName("banned_by")
     private Object bannedBy;
-    @Expose @SerializedName("link_id")
+    @SerializedName("link_id")
     private String linkId;
-    @Expose @SerializedName("likes")
+    @SerializedName("likes")
     private Boolean isLiked;
     @SerializedName("user_reports")
     private List<Object> userReports;
-    @Expose
     private Boolean saved;
-    @Expose
     private Integer gilded;
-    @Expose @SerializedName("archived")
+    @SerializedName("archived")
     private Boolean isArchived;
     @SerializedName("report_reasons")
     private Object reportReasons;
-    @Expose
     private String author;
-    @Expose
     private Integer score;
     @SerializedName("approved_by")
     private Object approvedBy;
     private int controversiality;
-    @Expose
     private String body;
-    @Expose
     private String edited;
     @SerializedName("author_flair_css_class")
     private String AuthorFlairCssClass;
     private int downs;
     @SerializedName("body_html")
     private String bodyHtml;
-    @Expose
     private String subreddit;
-    @Expose @SerializedName("score_hidden")
+    @SerializedName("score_hidden")
     private Boolean hideScore;
     private double created;
     @SerializedName("author_flair_text")
     private String authorFlairText;
-    @Expose @SerializedName("created_utc")
+    @SerializedName("created_utc")
     private double createUtc;
     private int ups;
     @SerializedName("mod_reports")
     private List<Object> modReports;
     @SerializedName("num_reports")
     private Object numReports;
-    @Expose
     private String distinguished;
-    @Expose
     private String subject;
-    @Expose
     private String context;
   }
 

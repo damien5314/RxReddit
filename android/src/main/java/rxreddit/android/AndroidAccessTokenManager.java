@@ -60,11 +60,6 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
 
   @Override
   public void saveUserAccessToken(UserAccessToken token) {
-    UserAccessToken saved = getSavedUserAccessToken();
-    // Swap in the saved refresh token if we didn't get a new one
-    if (token.getRefreshToken() == null && saved != null) {
-      token.setRefreshToken(saved.getRefreshToken());
-    }
     mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
         .putString(PREF_ACCESS_TOKEN, token.getToken())
         .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())

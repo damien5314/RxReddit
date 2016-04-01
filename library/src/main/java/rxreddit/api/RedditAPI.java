@@ -47,7 +47,7 @@ interface RedditAPI {
   Observable<Response<UserSettings>> getUserSettings();
 
   @PATCH("/api/v1/me/prefs")
-  Observable<Void> updateUserSettings(@Body RequestBody json);
+  Observable<Response<Void>> updateUserSettings(@Body RequestBody json);
 
   @GET("/{sort}.json")
   Observable<Response<ListingResponse>> getLinks(
@@ -92,29 +92,29 @@ interface RedditAPI {
       @Path("username") String username);
 
   @POST("/api/vote")
-  Observable<Void> vote(
+  Observable<Response<Void>> vote(
       @Query("id") String id,
       @Query("dir") int dir);
 
   @POST("/api/save")
-  Observable<Void> save(
+  Observable<Response<Void>> save(
       @Query("id") String id,
       @Query("category") String category);
 
   @POST("/api/unsave")
-  Observable<Void> unsave(
+  Observable<Response<Void>> unsave(
       @Query("id") String id);
 
   @POST("/api/hide")
-  Observable<Void> hide(
+  Observable<Response<Void>> hide(
       @Query("id") String id);
 
   @POST("/api/unhide")
-  Observable<Void> unhide(
+  Observable<Response<Void>> unhide(
       @Query("id") String id);
 
   @POST("/api/report?api_type=json")
-  Observable<Void> report(
+  Observable<Response<Void>> report(
       @Query("thing_id") String id,
       @Query("reason") String reason,
       @Query("otherReason") String otherReason);
@@ -126,29 +126,29 @@ interface RedditAPI {
       @Field("text") String commentText);
 
   @PUT("/api/v1/me/friends/{username}")
-  Observable<Void> addFriend(
+  Observable<Response<Void>> addFriend(
       @Path("username") String username,
       @Body RequestBody json);
 
   @DELETE("/api/v1/me/friends/{username}")
-  Observable<Void> deleteFriend(
+  Observable<Response<Void>> deleteFriend(
       @Path("username") String username);
 
   @GET("/message/{show}")
-  Observable<ListingResponse> getInbox(
+  Observable<Response<ListingResponse>> getInbox(
       @Path("show") String show,
       @Query("before") String before,
       @Query("after") String after);
 
   @POST("/api/read_all_messages")
-  Observable<Void> markAllMessagesRead();
+  Observable<Response<Void>> markAllMessagesRead();
 
   @POST("/api/read_message")
-  Observable<Void> markMessagesRead(
+  Observable<Response<Void>> markMessagesRead(
       @Query("id") String commaSeparatedFullnames);
 
   @POST("/api/unread_message")
-  Observable<Void> markMessagesUnread(
+  Observable<Response<Void>> markMessagesUnread(
       @Query("id") String commaSeparatedFullnames);
 
 }

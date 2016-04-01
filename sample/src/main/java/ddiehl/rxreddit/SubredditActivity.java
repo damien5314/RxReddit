@@ -106,6 +106,7 @@ public class SubredditActivity extends AppCompatActivity {
   }
 
   private void handleSignIn(Intent data) {
+    if (data == null) return;
     String url = data.getStringExtra(SignInActivity.EXTRA_CALLBACK_URL);
     if (url != null) {
       mRedditService.processAuthenticationCallback(url)

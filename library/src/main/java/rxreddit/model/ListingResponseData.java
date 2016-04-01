@@ -1,16 +1,11 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class ListingResponseData {
-  @Expose
   List<Listing> children;
-  @Expose
   String after;
-  @Expose
   String before;
   String modhash;
 

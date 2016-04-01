@@ -1,11 +1,7 @@
 package rxreddit.model;
 
-import com.google.gson.annotations.Expose;
-
 public class TrophyResponse {
-  @Expose
   private String kind;
-  @Expose
   private TrophyResponseData data;
 
   public String getKind() {
