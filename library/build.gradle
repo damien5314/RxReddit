@@ -28,14 +28,6 @@ dependencies {
   testCompile 'org.hamcrest:hamcrest-library:1.3'
 }
 
-sourceSets {
-  test {
-    resources {
-      srcDir("tests")
-    }
-  }
-}
-
 retrolambda {
   javaVersion JavaVersion.VERSION_1_7
 }
