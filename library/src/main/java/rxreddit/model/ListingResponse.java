@@ -3,10 +3,12 @@ package rxreddit.model;
 import java.util.List;
 
 public class ListingResponse {
+
   String kind;
   ListingResponseData data;
 
-  public ListingResponse() { }
+  public ListingResponse() {
+  }
 
   public ListingResponse(List<Listing> messageList) {
     data = new ListingResponseData(messageList);

@@ -1,0 +1,7 @@
+{
+	"access_token": "8178811-8bVDUYkQP75LxMghABfzlCNGLpk",
+	"token_type": "bearer",
+	"expires_in": -60,
+	"scope": "account history identity mysubreddits privatemessages read report save submit subscribe vote",
+	"refresh_token": null
+}

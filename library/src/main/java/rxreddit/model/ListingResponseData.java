@@ -4,12 +4,14 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class ListingResponseData {
+
   List<Listing> children;
   String after;
   String before;
   String modhash;
 
-  public ListingResponseData() { }
+  public ListingResponseData() {
+  }
 
   public ListingResponseData(List<Listing> messageList) {
     children = messageList;

@@ -350,6 +350,10 @@ public class RedditService implements IRedditService {
         .create();
   }
 
+  protected IRedditAuthService getAuthService() {
+    return mRedditAuthService;
+  }
+
   private Interceptor getUserAuthInterceptor() {
     return chain -> {
       Request originalRequest = chain.request();

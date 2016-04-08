@@ -8,7 +8,6 @@ import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -68,9 +67,7 @@ final class RedditAuthService implements IRedditAuthService {
   public AccessToken getAccessToken() {
     AccessToken token = getUserAccessToken();
     if (isValid(token)) return token;
-    token = getApplicationAccessToken();
-    if (isValid(token)) return token;
-    return null;
+    return getApplicationAccessToken();
   }
 
   private UserAccessToken getUserAccessToken() {
@@ -121,7 +118,7 @@ final class RedditAuthService implements IRedditAuthService {
       }
       String refreshToken = token.getRefreshToken();
       if (refreshToken == null) {
-        clearUserIdentity();
+        clearUserAccessToken();
         return Observable.error(
             new IllegalStateException("No refresh token available"));
       }
@@ -129,7 +126,9 @@ final class RedditAuthService implements IRedditAuthService {
       return mAuthService.refreshUserAuthToken(grantType, refreshToken)
           .flatMap(responseToBody())
           .doOnNext(saveUserAccessToken())
-          .doOnError(error -> clearUserIdentity());
+          // FIXME: Should we be clearing access token for all errors?
+          // Maybe just HTTP 403
+          .doOnError(error -> clearUserAccessToken());
     });
   }
 
@@ -153,7 +152,7 @@ final class RedditAuthService implements IRedditAuthService {
     };
   }
 
-  private void clearUserIdentity() {
+  private void clearUserAccessToken() {
     mUserAccessToken = null;
     mAccessTokenManager.clearSavedUserAccessToken();
   }
@@ -176,7 +175,7 @@ final class RedditAuthService implements IRedditAuthService {
     }
     String grantType = "authorization_code";
     return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)
-        .map(Response::body)
+        .flatMap(responseToBody())
         .doOnNext(saveUserAccessToken());
   }
 

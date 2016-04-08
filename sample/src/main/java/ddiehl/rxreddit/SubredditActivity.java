@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import rxreddit.model.Link;
 import rxreddit.model.UserAccessToken;
 
 public class SubredditActivity extends AppCompatActivity {
+
+  private static final String TAG = SubredditActivity.class.getSimpleName();
   private static final int RC_SIGN_IN = 0x0000001;
 
   private FloatingActionButton mFAB;
@@ -68,7 +71,7 @@ public class SubredditActivity extends AppCompatActivity {
     mRedditService.loadLinks("androiddev", "top", "week", null, null)
 
         // Set timeout if you wish
-        .timeout(5, TimeUnit.SECONDS)
+        .timeout(15, TimeUnit.SECONDS)
 
         // Subscribe on proper threads
         .subscribeOn(Schedulers.io())
@@ -92,7 +95,10 @@ public class SubredditActivity extends AppCompatActivity {
   }
 
   private Action1<Throwable> onError() {
-    return error -> Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT);
+    return error -> {
+      Log.e(TAG, "Error loading links", error);
+      Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT).show();
+    };
   }
 
   @Override
@@ -123,9 +129,11 @@ public class SubredditActivity extends AppCompatActivity {
   }
 
   private Action1<Throwable> onAuthenticationError() {
-    return error ->
-        Snackbar.make(mFAB, R.string.rxr_error_during_authentication, Snackbar.LENGTH_SHORT)
-        .show();
+    return error -> {
+      Log.e(TAG, "Error during authentication", error);
+      Snackbar.make(mFAB, R.string.rxr_error_during_authentication, Snackbar.LENGTH_SHORT)
+          .show();
+    };
   }
 
   private static final class LinkAdapter extends RecyclerView.Adapter<LinkViewHolder> {

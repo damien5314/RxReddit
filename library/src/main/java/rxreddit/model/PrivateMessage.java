@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class PrivateMessage extends Listing {
+
   Data data;
 
   @Override
@@ -84,6 +85,7 @@ public class PrivateMessage extends Listing {
   }
 
   public static class Data extends ListingData {
+
     String body;
     @SerializedName("was_comment")
     Boolean wasComment;

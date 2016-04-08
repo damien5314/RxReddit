@@ -6,305 +6,84 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class Link extends Listing implements Votable, Savable, Hideable {
-  Data data;
 
-  @Override
-  public String getId() {
-    return data.id;
-  }
-
-  public String getDomain() {
-    return data.domain;
-  }
-
-  public Data.MediaEmbed getMediaEmbed() {
-    return data.mediaEmbed;
-  }
-
-  public String getSubreddit() {
-    return data.subreddit;
-  }
-
-  public String getSelftextHtml() {
-    return data.selftextHtml;
-  }
-
-  public String getSelftext() {
-    return data.selftext;
-  }
-
-  public String isEdited() {
-    return data.edited;
-  }
-
-  @Override
-  public Boolean isLiked() {
-    return data.likes;
-  }
-
-  @Override
-  public void isLiked(Boolean b) {
-    data.likes = b;
-  }
-
-  public List<Object> getUserReports() {
-    return data.userReports;
-  }
-
-  public Object getSecureMedia() {
-    return data.secureMedia;
-  }
-
-  public Object getLinkFlairText() {
-    return data.linkFlairText;
-  }
-
-  public Integer getGilded() {
-    return data.gilded;
-  }
-
-  @Override
-  public boolean isArchived() {
-    return data.isArchived == null ? false : data.isArchived;
-  }
-
-  public boolean getClicked() {
-    return data.clicked == null ? false : data.clicked;
-  }
-
-  public Object getReportReasons() {
-    return data.reportReasons;
-  }
-
-  public String getAuthor() {
-    return data.author;
-  }
-
-  public Integer getNumComments() {
-    return data.numComments;
-  }
-
-  public Integer getScore() {
-    return data.score;
-  }
-
-  public void setScore(Integer score) {
-    data.score = score;
-  }
-
-  @Override
-  public void applyVote(int direction) {
-    int scoreDiff = direction - getLikedScore();
-    switch (direction) {
-      case 0: isLiked(null); break;
-      case 1: isLiked(true); break;
-      case -1: isLiked(false); break;
-    }
-    if (data.score == null) return;
-    data.score += scoreDiff;
-  }
-
-  private int getLikedScore() {
-    if (isLiked() == null)
-      return 0;
-    else if (isLiked())
-      return 1;
-    else
-      return -1;
-  }
-
-  public Object getApprovedBy() {
-    return data.approvedBy;
-  }
-
-  public boolean getOver18() {
-    return data.over18 == null ? false : data.over18;
-  }
-
-  @Override
-  public boolean isHidden() {
-    return data.hidden == null ? false : data.hidden;
-  }
-
-  @Override
-  public void isHidden(Boolean b) {
-    data.hidden = b;
-  }
-
-  public String getThumbnail() {
-    return data.thumbnail;
-  }
-
-  public String getSubredditId() {
-    return data.subredditId;
-  }
-
-  public boolean isScoreHidden() {
-    return data.hideScore == null ? false : data.hideScore;
-  }
-
-  public Object getLinkFlairCssClass() {
-    return data.linkFlairCssClass;
-  }
-
-  public Object getAuthorFlairCssClass() {
-    return data.authorFlairCssClass;
-  }
-
-  public Integer getDowns() {
-    return data.downs;
-  }
-
-  public Data.SecureMediaEmbed getSecureMediaEmbed() {
-    return data.secureMediaEmbed;
-  }
-
-  @Override
-  public boolean isSaved() {
-    return data.saved == null ? false : data.saved;
-  }
-
-  @Override
-  public void isSaved(boolean b) {
-    data.saved = b;
-  }
-
-  public boolean getStickied() {
-    return data.stickied == null ? false : data.stickied;
-  }
-
-  public boolean isSelf() {
-    return data.isSelf == null ? false : data.isSelf;
-  }
-
-  public String getPermalink() {
-    return data.permalink;
-  }
-
-  public Double getCreated() {
-    return data.created;
-  }
-
-  public String getUrl() {
-    return data.url;
-  }
-
-  public Object getAuthorFlairText() {
-    return data.authorFlairText;
-  }
-
-  public String getTitle() {
-    return data.title;
-  }
-
-  public Double getCreatedUtc() {
-    return data.createdUtc;
-  }
-
-  public String getDistinguished() {
-    return data.distinguished;
-  }
-
-  public Data.Media getMedia() {
-    return data.media;
-  }
-
-  public List<Object> getModReports() {
-    return data.modReports;
-  }
-
-  public boolean getVisited() {
-    return data.visited == null ? false : data.visited;
-  }
-
-  public Object getNumReports() {
-    return data.numReports;
-  }
-
-  public Integer getUps() {
-    return data.ups;
-  }
-
-  public List<Preview.Image> getPreviewImages() {
-    if (data.preview == null)
-      return null;
-    return data.preview.images;
-  }
+  protected Data data;
 
   public static class Data extends ListingData {
-    private Preview preview; // New field for preview images
-    private String domain;
+
+    protected Preview preview; // New field for preview images
+    protected String domain;
     @SerializedName("banned_by")
-    private Object bannedBy;
+    protected String bannedBy;
     @SerializedName("media_embed")
-    private MediaEmbed mediaEmbed;
-    private String subreddit;
+    protected MediaEmbed mediaEmbed;
+    protected String subreddit;
     @SerializedName("selftext_html")
-    private String selftextHtml;
-    private String selftext;
-    private String edited;
-    private Boolean likes;
+    protected String selftextHtml;
+    protected String selftext;
+    protected String edited;
+    protected Boolean likes;
     @SerializedName("user_reports")
-    private List<Object> userReports;
+    protected List<Report> userReports;
     @SerializedName("secure_media")
-    private Object secureMedia;
+    protected SecureMedia secureMedia;
     @SerializedName("link_flair_text")
-    private Object linkFlairText;
-    private Integer gilded;
+    protected String linkFlairText;
+    protected Integer gilded;
     @SerializedName("archived")
-    private Boolean isArchived;
-    private Boolean clicked;
+    protected Boolean isArchived;
+    protected Boolean clicked;
     @SerializedName("report_reasons")
-    private Object reportReasons;
-    private String author;
+    protected String reportReasons;
+    protected String author;
     @SerializedName("num_comments")
-    private Integer numComments;
-    private Integer score;
+    protected Integer numComments;
+    protected Integer score;
     @SerializedName("approved_by")
-    private Object approvedBy;
+    protected String approvedBy;
     @SerializedName("over_18")
-    private Boolean over18;
-    private Boolean hidden;
-    private String thumbnail;
+    protected Boolean over18;
+    protected Boolean hidden;
+    protected String thumbnail;
     @SerializedName("subreddit_id")
-    private String subredditId;
+    protected String subredditId;
     @SerializedName("hide_score")
-    private Boolean hideScore;
+    protected Boolean hideScore;
     @SerializedName("link_flair_css_class")
-    private Object linkFlairCssClass;
+    protected String linkFlairCssClass;
     @SerializedName("author_flair_css_class")
-    private Object authorFlairCssClass;
-    private Integer downs;
+    protected String authorFlairCssClass;
+    protected Integer downs;
     @SerializedName("secure_media_embed")
-    private SecureMediaEmbed secureMediaEmbed;
-    private Boolean saved;
-    private Boolean stickied;
+    protected SecureMediaEmbed secureMediaEmbed;
+    protected Boolean saved;
+    protected Boolean stickied;
     @SerializedName("is_self")
-    private Boolean isSelf;
-    private String permalink;
-    private Double created;
-    private String url;
+    protected Boolean isSelf;
+    protected String permalink;
+    protected Double created;
+    protected String url;
     @SerializedName("author_flair_text")
-    private Object authorFlairText;
-    private String title;
+    protected String authorFlairText;
+    protected String title;
     @SerializedName("created_utc")
-    private Double createdUtc;
-    private String distinguished;
-    private Media media;
+    protected Double createdUtc;
+    protected String distinguished;
+    protected Media media;
     @SerializedName("mod_reports")
-    private List<Object> modReports;
-    private Boolean visited;
+    protected List<Report> modReports;
+    protected Boolean visited;
     @SerializedName("num_reports")
-    private Object numReports;
-    private Integer ups;
+    protected Integer numReports;
+    protected Integer ups;
 
     public static class SecureMediaEmbed { }
 
     public static class MediaEmbed {
-      private String content;
-      private Integer width;
-      private Boolean scrolling;
-      private Integer height;
+      protected String content;
+      protected Integer width;
+      protected Boolean scrolling;
+      protected Integer height;
 
       public String getContent() {
         return content;
@@ -324,8 +103,9 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     }
 
     public static class Media {
-      private Oembed oembed;
-      private String type;
+
+      protected Oembed oembed;
+      protected String type;
 
       public Oembed getOembed() {
         return oembed;
@@ -337,22 +117,22 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
       public static class Oembed {
         @SerializedName("provider_url")
-        private String providerUrl;
-        private String description;
-        private String title;
-        private String type;
+        protected String providerUrl;
+        protected String description;
+        protected String title;
+        protected String type;
         @SerializedName("thumbnail_width")
-        private Integer thumbnailWidth;
-        private Integer height;
-        private Integer width;
-        private String html;
-        private String version;
+        protected Integer thumbnailWidth;
+        protected Integer height;
+        protected Integer width;
+        protected String html;
+        protected String version;
         @SerializedName("provider_name")
-        private String providerName;
+        protected String providerName;
         @SerializedName("thumbnail_url")
-        private String thumbnailUrl;
+        protected String thumbnailUrl;
         @SerializedName("thumbnail_height")
-        private Integer thumbnailHeight;
+        protected Integer thumbnailHeight;
 
         public String getProviderUrl() {
           return providerUrl;
@@ -406,6 +186,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
   }
 
   public static class Preview {
+
     List<Image> images;
 
     public static class Image {
@@ -452,5 +233,227 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         }
       }
     }
+  }
+
+  public static class SecureMedia { }
+
+  public static class Report { }
+
+  @Override
+  public String getId() {
+    return data.id;
+  }
+
+  public String getDomain() {
+    return data.domain;
+  }
+
+  public Data.MediaEmbed getMediaEmbed() {
+    return data.mediaEmbed;
+  }
+
+  public String getSubreddit() {
+    return data.subreddit;
+  }
+
+  public String getSelftextHtml() {
+    return data.selftextHtml;
+  }
+
+  public String getSelftext() {
+    return data.selftext;
+  }
+
+  public String isEdited() {
+    return data.edited;
+  }
+
+  @Override
+  public Boolean isLiked() {
+    return data.likes;
+  }
+
+  @Override
+  public void isLiked(Boolean b) {
+    data.likes = b;
+  }
+
+  public List<Report> getUserReports() {
+    return data.userReports;
+  }
+
+  public SecureMedia getSecureMedia() {
+    return data.secureMedia;
+  }
+
+  public Object getLinkFlairText() {
+    return data.linkFlairText;
+  }
+
+  public Integer getGilded() {
+    return data.gilded;
+  }
+
+  public boolean isArchived() {
+    return data.isArchived == null ? false : data.isArchived;
+  }
+
+  public boolean getClicked() {
+    return data.clicked == null ? false : data.clicked;
+  }
+
+  public Object getReportReasons() {
+    return data.reportReasons;
+  }
+
+  public String getAuthor() {
+    return data.author;
+  }
+
+  public Integer getNumComments() {
+    return data.numComments;
+  }
+
+  public Integer getScore() {
+    return data.score;
+  }
+
+  public void setScore(Integer score) {
+    data.score = score;
+  }
+
+  @Override
+  public void applyVote(int direction) {
+    int scoreDiff = direction - getLikedScore();
+    switch (direction) {
+      case 0: isLiked(null); break;
+      case 1: isLiked(true); break;
+      case -1: isLiked(false); break;
+    }
+    if (data.score == null) return;
+    data.score += scoreDiff;
+  }
+
+  protected int getLikedScore() {
+    if (isLiked() == null)
+      return 0;
+    else if (isLiked())
+      return 1;
+    else
+      return -1;
+  }
+
+  public Object getApprovedBy() {
+    return data.approvedBy;
+  }
+
+  public boolean getOver18() {
+    return data.over18 == null ? false : data.over18;
+  }
+
+  public boolean isHidden() {
+    return data.hidden == null ? false : data.hidden;
+  }
+
+  public void isHidden(Boolean b) {
+    data.hidden = b;
+  }
+
+  public String getThumbnail() {
+    return data.thumbnail;
+  }
+
+  public String getSubredditId() {
+    return data.subredditId;
+  }
+
+  public boolean isScoreHidden() {
+    return data.hideScore == null ? false : data.hideScore;
+  }
+
+  public Object getLinkFlairCssClass() {
+    return data.linkFlairCssClass;
+  }
+
+  public Object getAuthorFlairCssClass() {
+    return data.authorFlairCssClass;
+  }
+
+  public Integer getDowns() {
+    return data.downs;
+  }
+
+  public Data.SecureMediaEmbed getSecureMediaEmbed() {
+    return data.secureMediaEmbed;
+  }
+
+  public boolean isSaved() {
+    return data.saved == null ? false : data.saved;
+  }
+
+  public void isSaved(boolean b) {
+    data.saved = b;
+  }
+
+  public boolean getStickied() {
+    return data.stickied == null ? false : data.stickied;
+  }
+
+  public boolean isSelf() {
+    return data.isSelf == null ? false : data.isSelf;
+  }
+
+  public String getPermalink() {
+    return data.permalink;
+  }
+
+  public Double getCreated() {
+    return data.created;
+  }
+
+  public String getUrl() {
+    return data.url;
+  }
+
+  public Object getAuthorFlairText() {
+    return data.authorFlairText;
+  }
+
+  public String getTitle() {
+    return data.title;
+  }
+
+  public Double getCreatedUtc() {
+    return data.createdUtc;
+  }
+
+  public String getDistinguished() {
+    return data.distinguished;
+  }
+
+  public Data.Media getMedia() {
+    return data.media;
+  }
+
+  public List<Report> getModReports() {
+    return data.modReports;
+  }
+
+  public boolean getVisited() {
+    return data.visited == null ? false : data.visited;
+  }
+
+  public Object getNumReports() {
+    return data.numReports;
+  }
+
+  public Integer getUps() {
+    return data.ups;
+  }
+
+  public List<Preview.Image> getPreviewImages() {
+    if (data.preview == null)
+      return null;
+    return data.preview.images;
   }
 }

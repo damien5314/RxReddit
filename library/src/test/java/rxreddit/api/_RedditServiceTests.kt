@@ -18,7 +18,6 @@ abstract class _RedditServiceTests {
           .redirectUri("http://127.0.0.1/") // redirect uri
           .deviceId("dd076025-1631-49a6-b52f-612ba75a4023") // random UUID for device ID
           .userAgent(RxRedditUtil.getUserAgent("java", "rxreddit", "0.1", "damien5314"))
-          .accessTokenManager(AccessTokenManager.NONE)
           .build()
 
   val HTTP_ERROR_CODE = 500
@@ -35,6 +34,9 @@ abstract class _RedditServiceTests {
 
   protected val TEST_AUTH_CALLBACK_DENIED =
       "${service.redirectUri}?state=${RedditAuthService.STATE}&error=access_denied"
+
+  protected val TEST_AUTH_CALLBACK_BAD_STATE =
+      "${service.redirectUri}?state=longcat&code=$TEST_AUTH_CODE"
 
   protected fun authenticateService() {
     service.processAuthenticationCallback(TEST_AUTH_CALLBACK)
