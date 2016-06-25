@@ -18,11 +18,11 @@ apply plugin: 'me.tatarka.retrolambda'
 group = 'com.github.damien5314'
 
 android {
-  compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+  compileSdkVersion 24
+  buildToolsVersion "23.0.3"
   defaultConfig {
     minSdkVersion 11
-    targetSdkVersion 23
+    targetSdkVersion 24
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
@@ -32,9 +32,7 @@ android {
 
 dependencies {
   compile project(':library')
-  compile 'com.android.support:appcompat-v7:23.2.1'
-  compile "org.parceler:parceler-api:1.1.5"
-  apt "org.parceler:parceler:1.1.5"
+  compile 'com.android.support:appcompat-v7:24.0.0'
 }
 
 retrolambda {
