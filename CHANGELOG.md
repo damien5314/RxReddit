@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.8 *(2016-06-25)*
+----------------------------------
+* Updated Android module targetSdkVersion to 24 (N).
+* Exposed Gson instance used by RedditService Retrofit instance via public getter.
+* Added configuration for using a File-based cache for OkHttp.
+
 Version 0.7 *(2016-04-07)*
 ----------------------------------
 * RedditService is now constructed via a `Builder`
