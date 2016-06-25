@@ -1,12 +1,10 @@
 package rxreddit.model;
 
-public class Listing {
+public abstract class Listing {
 
   protected String kind;
 
-  public String getId() {
-    return null;
-  }
+  public abstract String getId();
 
   public String getFullName() {
     return getKind() + "_" + getId();

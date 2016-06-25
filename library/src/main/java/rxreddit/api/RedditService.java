@@ -4,9 +4,11 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -35,6 +37,7 @@ import rxreddit.model.UserIdentityListing;
 import rxreddit.model.UserSettings;
 
 public class RedditService implements IRedditService {
+
   public static final String BASE_URL = "https://oauth.reddit.com";
 
   private RedditAPI mAPI;
@@ -42,10 +45,10 @@ public class RedditService implements IRedditService {
 
   protected RedditService(
       String baseUrl, String baseAuthUrl, String redditAppId, String redirectUri,
-      String deviceId, String userAgent, AccessTokenManager atm) {
+      String deviceId, String userAgent, AccessTokenManager atm, int cacheSizeBytes, File cacheFile) {
     mRedditAuthService =
         new RedditAuthService(baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm);
-    mAPI = buildApi(baseUrl, userAgent);
+    mAPI = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile);
   }
 
   @Override
@@ -319,9 +322,9 @@ public class RedditService implements IRedditService {
     return mRedditAuthService.refreshUserAccessToken();
   }
 
-  private RedditAPI buildApi(String baseUrl, String userAgent) {
+  private RedditAPI buildApi(String baseUrl, String userAgent, int cacheSizeBytes, File cachePath) {
     Retrofit restAdapter = new Retrofit.Builder()
-        .client(getOkHttpClient(userAgent))
+        .client(getOkHttpClient(userAgent, cacheSizeBytes, cachePath))
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(getGson()))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -329,16 +332,15 @@ public class RedditService implements IRedditService {
     return restAdapter.create(RedditAPI.class);
   }
 
-  protected OkHttpClient getOkHttpClient(String userAgent) {
-//    final int cacheSize = 10 * 1024 * 1024; // 10 MiB
-//    File cache = new File(
-//        HoldTheNarwhal.getContext().getCacheDir().getAbsolutePath(), "htn-http-cache");
-    return new OkHttpClient.Builder()
-//        .cache(new Cache(cache, cacheSize))
+  protected OkHttpClient getOkHttpClient(String userAgent, int cacheSizeBytes, File cachePath) {
+    OkHttpClient.Builder builder = new OkHttpClient.Builder()
         .addNetworkInterceptor(new UserAgentInterceptor(userAgent))
         .addNetworkInterceptor(new RawResponseInterceptor())
-        .addNetworkInterceptor(getUserAuthInterceptor())
-        .build();
+        .addNetworkInterceptor(getUserAuthInterceptor());
+    if (cacheSizeBytes > 0) {
+      builder.cache(new Cache(cachePath, cacheSizeBytes));
+    }
+    return builder.build();
   }
 
   public Gson getGson() {
@@ -383,6 +385,8 @@ public class RedditService implements IRedditService {
     private String mDeviceId;
     private String mUserAgent;
     private AccessTokenManager mAccessTokenManager = AccessTokenManager.NONE;
+    private int mCacheSizeBytes = 0;
+    private File mCacheFile = null;
 
     public Builder baseUrl(String baseUrl) {
       mBaseUrl = baseUrl;
@@ -419,13 +423,20 @@ public class RedditService implements IRedditService {
       return this;
     }
 
+    public Builder cache(int sizeBytes, File path) {
+      mCacheSizeBytes = sizeBytes;
+      mCacheFile = path;
+      return this;
+    }
+
     public RedditService build() {
       if (mAppId == null) throw new IllegalStateException("app id must be set");
       if (mRedirectUri == null) throw new IllegalStateException("redirect uri must be set");
       if (mDeviceId == null) throw new IllegalStateException("device id must be set");
       if (mUserAgent == null) throw new IllegalStateException("user agent must be set");
       return new RedditService(
-          mBaseUrl, mBaseAuthUrl, mAppId, mRedirectUri, mDeviceId, mUserAgent, mAccessTokenManager);
+          mBaseUrl, mBaseAuthUrl, mAppId, mRedirectUri, mDeviceId, mUserAgent,
+          mAccessTokenManager, mCacheSizeBytes, mCacheFile);
     }
   }
 }

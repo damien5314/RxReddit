@@ -39,19 +39,7 @@ public class RedditServiceMock extends RedditService {
         "http://127.0.0.1/", // redirect uri
         "dd076025-1631-49a6-b52f-612ba75a4023", // random UUID for device ID
         RxRedditUtil.getUserAgent("java", "rxreddit", "0.1", "damien5314"),
-        AccessTokenManager.NONE);
-  }
-
-  @Override
-  public String getRedirectUri() {
-    // real implementation is fine
-    return super.getRedirectUri();
-  }
-
-  @Override
-  public String getAuthorizationUrl() {
-    // real implementation is fine
-    return super.getAuthorizationUrl();
+        AccessTokenManager.NONE, 0, null);
   }
 
   @Override
