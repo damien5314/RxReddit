@@ -341,7 +341,7 @@ public class RedditService implements IRedditService {
         .build();
   }
 
-  protected Gson getGson() {
+  public Gson getGson() {
     return new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .registerTypeAdapter(ListingResponse.class, new ListingResponseDeserializer())
