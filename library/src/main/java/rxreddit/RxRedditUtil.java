@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import rxreddit.model.AbsComment;
 import rxreddit.model.Comment;
 import rxreddit.model.CommentStub;
 import rxreddit.model.Listing;
@@ -60,25 +59,6 @@ public class RxRedditUtil {
         moreComments.setDepth(moreComments.getDepth() + 1); // Increase depth by 1
       }
       i++;
-    }
-  }
-
-  /**
-   * Sets depth for comments in a flat comments list
-   */
-  public static void setDepthForCommentsList(List<Listing> comments, int parentDepth) {
-    HashMap<String, Integer> depthMap = new HashMap<>();
-
-    for (Listing listing : comments) {
-      AbsComment comment = (AbsComment) listing;
-      String name = comment.getFullName();
-      String parentId = comment.getParentId();
-      if (depthMap.containsKey(parentId)) {
-        comment.setDepth(depthMap.get(parentId) + 1);
-      } else {
-        comment.setDepth(parentDepth);
-      }
-      depthMap.put(name, comment.getDepth());
     }
   }
 

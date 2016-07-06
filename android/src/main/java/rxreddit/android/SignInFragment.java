@@ -21,13 +21,12 @@ import java.util.Map;
 import rxreddit.RxRedditUtil;
 
 public class SignInFragment extends Fragment {
+
   private static final String ARG_AUTH_URL = "arg_url";
 
   private String mAuthorizationUrl;
   private String mRedirectUri;
   private WebView mWebView;
-
-  public SignInFragment() { }
 
   public static SignInFragment newInstance(String url) {
     Bundle args = new Bundle();
@@ -50,7 +49,7 @@ public class SignInFragment extends Fragment {
     mRedirectUri = params.get("redirect_uri");
   }
 
-  @Override @SuppressWarnings("SetJavaScriptEnabled")
+  @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
