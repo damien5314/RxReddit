@@ -24,10 +24,9 @@ import java.util.Map;
 import rxreddit.RxRedditUtil;
 
 import static android.app.Activity.RESULT_OK;
+import static rxreddit.android.SignInActivity.EXTRA_CALLBACK_URL;
 
 public class SignInFragment extends Fragment {
-
-  public static final String EXTRA_CALLBACK_URL = "rxreddit.android.EXTRA_CALLBACK_URL";
 
   private static final String ARG_AUTH_URL = "ARG_AUTH_URL";
 

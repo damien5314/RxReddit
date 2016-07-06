@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 
 public class SignInActivity extends AppCompatActivity {
 
-  public static final String EXTRA_AUTH_URL = "rxr_extra_auth_url";
-  public static final String EXTRA_CALLBACK_URL = "rxr_extra_callback_url";
+  public static final String EXTRA_AUTH_URL = "rxreddit.android.EXTRA_AUTH_URL";
+  public static final String EXTRA_CALLBACK_URL = "rxreddit.android.EXTRA_CALLBACK_URL";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
