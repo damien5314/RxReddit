@@ -34,7 +34,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     protected Boolean isArchived;
     protected Boolean clicked;
     @SerializedName("report_reasons")
-    protected String reportReasons;
+    protected List<String> reportReasons;
     protected String author;
     @SerializedName("num_comments")
     protected Integer numComments;
@@ -302,7 +302,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     return data.clicked == null ? false : data.clicked;
   }
 
-  public Object getReportReasons() {
+  public List<String> getReportReasons() {
     return data.reportReasons;
   }
 
