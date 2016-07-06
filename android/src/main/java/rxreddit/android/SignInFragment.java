@@ -1,8 +1,9 @@
 package rxreddit.android;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -20,9 +23,13 @@ import java.util.Map;
 
 import rxreddit.RxRedditUtil;
 
+import static android.app.Activity.RESULT_OK;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class SignInFragment extends Fragment {
 
-  private static final String ARG_AUTH_URL = "arg_url";
+  private static final String ARG_AUTH_URL = "ARG_AUTH_URL";
 
   private String mAuthorizationUrl;
   private String mRedirectUri;
@@ -55,6 +62,7 @@ public class SignInFragment extends Fragment {
     View v = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
 
     mWebView = (WebView) v.findViewById(R.id.rxr_web_view);
+    configureWebView(mWebView);
 
     final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.rxr_progress_bar);
     progressBar.setMax(100);
@@ -66,7 +74,7 @@ public class SignInFragment extends Fragment {
             && !url.equals(mAuthorizationUrl)) {
           Intent data = new Intent();
           data.putExtra(SignInActivity.EXTRA_CALLBACK_URL, url);
-          getActivity().setResult(Activity.RESULT_OK, data);
+          getActivity().setResult(RESULT_OK, data);
           getActivity().finish();
           return true;
         }
@@ -78,9 +86,9 @@ public class SignInFragment extends Fragment {
       @Override
       public void onProgressChanged(WebView view, int progress) {
         if (progress == 100) {
-          progressBar.setVisibility(View.INVISIBLE);
+          progressBar.setVisibility(INVISIBLE);
         } else {
-          progressBar.setVisibility(View.VISIBLE);
+          progressBar.setVisibility(VISIBLE);
           progressBar.setProgress(progress);
         }
       }
@@ -104,6 +112,17 @@ public class SignInFragment extends Fragment {
     return v;
   }
 
+  private void configureWebView(@NonNull WebView webView) {
+    CookieManager cookieManager = CookieManager.getInstance();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      cookieManager.removeAllCookies(null);
+    }
+
+    WebSettings ws = webView.getSettings();
+    ws.setSaveFormData(false);
+    ws.setSavePassword(false); // Not needed for API level 18 or greater (deprecated)
+  }
+
   @Override
   public void onDestroyView() {
     if (mWebView != null) {
@@ -122,8 +141,8 @@ public class SignInFragment extends Fragment {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    int i = item.getItemId();
-    if (i == R.id.action_refresh) {
+    int id = item.getItemId();
+    if (id == R.id.action_refresh) {
       mWebView.reload();
       return true;
     }
