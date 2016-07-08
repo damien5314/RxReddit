@@ -28,6 +28,7 @@ public class RedditServiceProvider {
               .userAgent(RxRedditUtil.getUserAgent(
                   "android", "ddiehl.rxreddit.sampleapp", BuildConfig.VERSION_NAME, "damien5314"))
               .accessTokenManager(new AndroidAccessTokenManager(context))
+              .loggingEnabled(true)
               .build();
         }
       }

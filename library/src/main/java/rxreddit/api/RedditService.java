@@ -14,6 +14,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.HttpException;
@@ -45,10 +46,11 @@ public class RedditService implements IRedditService {
 
   protected RedditService(
       String baseUrl, String baseAuthUrl, String redditAppId, String redirectUri,
-      String deviceId, String userAgent, AccessTokenManager atm, int cacheSizeBytes, File cacheFile) {
+      String deviceId, String userAgent, AccessTokenManager atm, int cacheSizeBytes, File cacheFile,
+      boolean loggingEnabled) {
     mRedditAuthService =
-        new RedditAuthService(baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm);
-    mAPI = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile);
+        new RedditAuthService(baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm, loggingEnabled);
+    mAPI = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile, loggingEnabled);
   }
 
   @Override
@@ -322,9 +324,9 @@ public class RedditService implements IRedditService {
     return mRedditAuthService.refreshUserAccessToken();
   }
 
-  private RedditAPI buildApi(String baseUrl, String userAgent, int cacheSizeBytes, File cachePath) {
+  private RedditAPI buildApi(String baseUrl, String userAgent, int cacheSizeBytes, File cachePath, boolean loggingEnabled) {
     Retrofit restAdapter = new Retrofit.Builder()
-        .client(getOkHttpClient(userAgent, cacheSizeBytes, cachePath))
+        .client(getOkHttpClient(userAgent, cacheSizeBytes, cachePath, loggingEnabled))
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(getGson()))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -332,14 +334,22 @@ public class RedditService implements IRedditService {
     return restAdapter.create(RedditAPI.class);
   }
 
-  protected OkHttpClient getOkHttpClient(String userAgent, int cacheSizeBytes, File cachePath) {
+  protected OkHttpClient getOkHttpClient(String userAgent, int cacheSizeBytes, File cachePath, boolean loggingEnabled) {
     OkHttpClient.Builder builder = new OkHttpClient.Builder()
         .addNetworkInterceptor(new UserAgentInterceptor(userAgent))
         .addNetworkInterceptor(new RawResponseInterceptor())
         .addNetworkInterceptor(getUserAuthInterceptor());
+
     if (cacheSizeBytes > 0) {
       builder.cache(new Cache(cachePath, cacheSizeBytes));
     }
+
+    if (loggingEnabled) {
+      HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+      loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+      builder.addInterceptor(loggingInterceptor);
+    }
+
     return builder.build();
   }
 
@@ -387,6 +397,7 @@ public class RedditService implements IRedditService {
     private AccessTokenManager mAccessTokenManager = AccessTokenManager.NONE;
     private int mCacheSizeBytes = 0;
     private File mCacheFile = null;
+    private boolean mLoggingEnabled = false;
 
     public Builder baseUrl(String baseUrl) {
       mBaseUrl = baseUrl;
@@ -429,6 +440,11 @@ public class RedditService implements IRedditService {
       return this;
     }
 
+    public Builder loggingEnabled(boolean enabled) {
+      mLoggingEnabled = enabled;
+      return this;
+    }
+
     public RedditService build() {
       if (mAppId == null) throw new IllegalStateException("app id must be set");
       if (mRedirectUri == null) throw new IllegalStateException("redirect uri must be set");
@@ -436,7 +452,7 @@ public class RedditService implements IRedditService {
       if (mUserAgent == null) throw new IllegalStateException("user agent must be set");
       return new RedditService(
           mBaseUrl, mBaseAuthUrl, mAppId, mRedirectUri, mDeviceId, mUserAgent,
-          mAccessTokenManager, mCacheSizeBytes, mCacheFile);
+          mAccessTokenManager, mCacheSizeBytes, mCacheFile, mLoggingEnabled);
     }
   }
 }

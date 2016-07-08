@@ -8,6 +8,7 @@ import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -45,7 +46,7 @@ final class RedditAuthService implements IRedditAuthService {
 
   public RedditAuthService(
       String baseUrl, String clientId, String redirectUri, String deviceId, String userAgent,
-      AccessTokenManager atm) {
+      AccessTokenManager atm, boolean loggingEnabled) {
     mRedirectUri = redirectUri;
     mDeviceId = deviceId;
     mUserAgent = userAgent;
@@ -54,7 +55,7 @@ final class RedditAuthService implements IRedditAuthService {
         String.format("https://www.reddit.com/api/v1/authorize.compact?client_id=%s" +
                 "&response_type=%s&duration=%s&state=%s&redirect_uri=%s&scope=%s",
             clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, SCOPE);
-    mAuthService = buildApi(baseUrl);
+    mAuthService = buildApi(baseUrl, loggingEnabled);
     mAccessTokenManager = atm;
   }
 
@@ -197,20 +198,28 @@ final class RedditAuthService implements IRedditAuthService {
     );
   }
 
-  private RedditAuthAPI buildApi(String baseUrl) {
-    OkHttpClient client = new OkHttpClient.Builder()
+  private RedditAuthAPI buildApi(String baseUrl, boolean loggingEnabled) {
+    OkHttpClient.Builder okhttp = new OkHttpClient.Builder()
         .addNetworkInterceptor(new UserAgentInterceptor(mUserAgent))
-        .addNetworkInterceptor(getHttpAuthInterceptor())
-        .build();
+        .addNetworkInterceptor(getHttpAuthInterceptor());
+
+    if (loggingEnabled) {
+      HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+      loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+      okhttp.addInterceptor(loggingInterceptor);
+    }
+
     Gson gson = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
+
     Retrofit restAdapter = new Retrofit.Builder()
-        .client(client)
+        .client(okhttp.build())
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
+
     return restAdapter.create(RedditAuthAPI.class);
   }
 
