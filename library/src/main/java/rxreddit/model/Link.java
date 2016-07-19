@@ -7,83 +7,85 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Link extends Listing implements Votable, Savable, Hideable {
 
-  protected Data data;
+  private Data data;
 
   public static class Data extends ListingData {
 
-    protected Preview preview; // New field for preview images
-    protected String domain;
+    private Preview preview; // New field for preview images
+    private String domain;
     @SerializedName("banned_by")
-    protected String bannedBy;
+    private String bannedBy;
     @SerializedName("media_embed")
-    protected MediaEmbed mediaEmbed;
-    protected String subreddit;
+    private MediaEmbed mediaEmbed;
+    private String subreddit;
     @SerializedName("selftext_html")
-    protected String selftextHtml;
-    protected String selftext;
-    protected String edited;
-    protected Boolean likes;
+    private String selftextHtml;
+    private String selftext;
+    private String edited;
+    private Boolean likes;
     @SerializedName("user_reports")
-    protected List<Report> userReports;
+    private List<Report> userReports;
     @SerializedName("secure_media")
-    protected SecureMedia secureMedia;
+    private SecureMedia secureMedia;
     @SerializedName("link_flair_text")
-    protected String linkFlairText;
-    protected Integer gilded;
+    private String linkFlairText;
+    private Integer gilded;
     @SerializedName("archived")
-    protected Boolean isArchived;
-    protected Boolean clicked;
+    private Boolean isArchived;
+    private Boolean clicked;
     @SerializedName("report_reasons")
-    protected List<String> reportReasons;
-    protected String author;
+    private List<String> reportReasons;
+    private String author;
     @SerializedName("num_comments")
-    protected Integer numComments;
-    protected Integer score;
+    private Integer numComments;
+    private Integer score;
     @SerializedName("approved_by")
-    protected String approvedBy;
+    private String approvedBy;
     @SerializedName("over_18")
-    protected Boolean over18;
-    protected Boolean hidden;
-    protected String thumbnail;
+    private Boolean over18;
+    private Boolean hidden;
+    private String thumbnail;
     @SerializedName("subreddit_id")
-    protected String subredditId;
+    private String subredditId;
     @SerializedName("hide_score")
-    protected Boolean hideScore;
+    private Boolean hideScore;
     @SerializedName("link_flair_css_class")
-    protected String linkFlairCssClass;
+    private String linkFlairCssClass;
     @SerializedName("author_flair_css_class")
-    protected String authorFlairCssClass;
-    protected Integer downs;
+    private String authorFlairCssClass;
+    private Integer downs;
     @SerializedName("secure_media_embed")
-    protected SecureMediaEmbed secureMediaEmbed;
-    protected Boolean saved;
-    protected Boolean stickied;
+    private SecureMediaEmbed secureMediaEmbed;
+    private Boolean saved;
+    private Boolean stickied;
     @SerializedName("is_self")
-    protected Boolean isSelf;
-    protected String permalink;
-    protected Double created;
-    protected String url;
+    private Boolean isSelf;
+    private String permalink;
+    private Double created;
+    private String url;
     @SerializedName("author_flair_text")
-    protected String authorFlairText;
-    protected String title;
+    private String authorFlairText;
+    private String title;
     @SerializedName("created_utc")
-    protected Double createdUtc;
-    protected String distinguished;
-    protected Media media;
+    private Double createdUtc;
+    private String distinguished;
+    private Media media;
     @SerializedName("mod_reports")
-    protected List<Report> modReports;
-    protected Boolean visited;
+    private List<Report> modReports;
+    private Boolean visited;
     @SerializedName("num_reports")
-    protected Integer numReports;
-    protected Integer ups;
+    private Integer numReports;
+    private Integer ups;
 
-    public static class SecureMediaEmbed { }
+    public static class SecureMediaEmbed {
+    }
 
     public static class MediaEmbed {
-      protected String content;
-      protected Integer width;
-      protected Boolean scrolling;
-      protected Integer height;
+      
+      private String content;
+      private Integer width;
+      private Boolean scrolling;
+      private Integer height;
 
       public String getContent() {
         return content;
@@ -104,8 +106,8 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
     public static class Media {
 
-      protected Oembed oembed;
-      protected String type;
+      private Oembed oembed;
+      private String type;
 
       public Oembed getOembed() {
         return oembed;
@@ -116,23 +118,24 @@ public class Link extends Listing implements Votable, Savable, Hideable {
       }
 
       public static class Oembed {
+
         @SerializedName("provider_url")
-        protected String providerUrl;
-        protected String description;
-        protected String title;
-        protected String type;
+        private String providerUrl;
+        private String description;
+        private String title;
+        private String type;
         @SerializedName("thumbnail_width")
-        protected Integer thumbnailWidth;
-        protected Integer height;
-        protected Integer width;
-        protected String html;
-        protected String version;
+        private Integer thumbnailWidth;
+        private Integer height;
+        private Integer width;
+        private String html;
+        private String version;
         @SerializedName("provider_name")
-        protected String providerName;
+        private String providerName;
         @SerializedName("thumbnail_url")
-        protected String thumbnailUrl;
+        private String thumbnailUrl;
         @SerializedName("thumbnail_height")
-        protected Integer thumbnailHeight;
+        private Integer thumbnailHeight;
 
         public String getProviderUrl() {
           return providerUrl;
@@ -334,7 +337,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     data.score += scoreDiff;
   }
 
-  protected int getLikedScore() {
+  private int getLikedScore() {
     if (isLiked() == null)
       return 0;
     else if (isLiked())
