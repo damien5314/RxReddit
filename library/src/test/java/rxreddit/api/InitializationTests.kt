@@ -74,7 +74,7 @@ class InitializationTests : _RedditServiceTests() {
   @Test
   fun testGetOkHttpClient() {
     val userAgent = "sample-user-agent"
-    val client = service.getOkHttpClient(userAgent)
+    val client = service.getOkHttpClient(userAgent, 0, null, false)
     assertNotNull("okhttpclient == null", client)
   }
 
