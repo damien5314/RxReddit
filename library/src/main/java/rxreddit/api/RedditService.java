@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -111,11 +112,49 @@ public class RedditService implements IRedditService {
   }
 
   @Override
+  public Observable<List<Subreddit>> getSubscriberSubreddits() {
+    return getSubreddits("subscriber");
+  }
+
+  @Override
+  public Observable<List<Subreddit>> getContributorSubreddits() {
+    return getSubreddits("contributor");
+  }
+
+  @Override
+  public Observable<List<Subreddit>> getModeratorSubreddits() {
+    return getSubreddits("moderator");
+  }
+
+  private Observable<List<Subreddit>> getSubreddits(String where) {
+    return requireUserAccessToken()
+        .flatMap(
+            new Func1<UserAccessToken, Observable<List<Subreddit>>>() {
+              @Override
+              public Observable<List<Subreddit>> call(UserAccessToken userAccessToken) {
+                return mAPI.getSubreddits(where)
+                    .flatMap(responseToBody())
+                    .map(listingResponse -> {
+                      List<Subreddit> result = new ArrayList<>();
+                      List<Listing> children = listingResponse.getData().getChildren();
+                      for (Listing l : children) {
+                        result.add((Subreddit) l);
+                      }
+                      return result;
+                    });
+              }
+            }
+        );
+  }
+
+  @Override
   public Observable<ListingResponse> loadLinks(
       String subreddit, String sort, String timespan, String before, String after) {
-    return requireAccessToken().flatMap(token ->
-        mAPI.getLinks(sort != null ? sort : "hot", subreddit, timespan, before, after)
-            .flatMap(responseToBody()));
+    return requireAccessToken().flatMap(token -> {
+      String resolvedSort = sort != null ? sort : "hot";
+      return mAPI.getLinks(resolvedSort, subreddit, timespan, before, after)
+          .flatMap(responseToBody());
+    });
   }
 
   @Override

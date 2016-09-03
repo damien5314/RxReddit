@@ -49,6 +49,10 @@ interface RedditAPI {
   @PATCH("/api/v1/me/prefs")
   Observable<Response<Void>> updateUserSettings(@Body RequestBody json);
 
+  @GET("/subreddits/mine/{where}")
+  Observable<Response<ListingResponse>> getSubreddits(
+      @Path("where") String where);
+
   @GET("/{sort}.json")
   Observable<Response<ListingResponse>> getLinks(
       @Path("sort") String sort,
@@ -150,5 +154,4 @@ interface RedditAPI {
   @POST("/api/unread_message")
   Observable<Response<Void>> markMessagesUnread(
       @Query("id") String commaSeparatedFullnames);
-
 }
