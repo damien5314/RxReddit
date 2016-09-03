@@ -8,6 +8,7 @@ import okhttp3.Response;
 
 /* This interceptor adds a custom User-Agent. */
 final class UserAgentInterceptor implements Interceptor {
+
   private final String userAgent;
 
   public UserAgentInterceptor(String userAgent) {

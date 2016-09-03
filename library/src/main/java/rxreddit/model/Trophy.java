@@ -3,6 +3,7 @@ package rxreddit.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Trophy extends Listing {
+
   Data data;
 
   @Override
@@ -35,6 +36,7 @@ public class Trophy extends Listing {
   }
 
   public static class Data extends ListingData {
+
     @SerializedName("icon_70")
     String icon70;
     @SerializedName("icon_40")

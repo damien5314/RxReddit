@@ -20,7 +20,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": {
             "oembed": {
@@ -94,7 +93,6 @@
                   }
                 ],
                 "variants": {
-
                 },
                 "id": "uycK5gLMxDB28ryIpNVWBiT3b1MAu5SDcJHq_ITsdB8"
               }
@@ -132,7 +130,6 @@
           "created_utc": 1441672618,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -145,7 +142,6 @@
           "domain": "self.bugs",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "bugs",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;ol&gt;\n&lt;li&gt;Log in with a reddit gold account&lt;\/li&gt;\n&lt;li&gt;On &lt;a href=\"https:\/\/www.reddit.com\/prefs\"&gt;preferences page&lt;\/a&gt;, select &amp;quot;use reddit theme&amp;quot; and an available theme or subreddit. Save changes.&lt;\/li&gt;\n&lt;li&gt;Make a valid PATCH \/api\/v1\/me\/prefs request&lt;\/li&gt;\n&lt;\/ol&gt;\n\n&lt;p&gt;I encountered this error via the OAuth endpoint, while signed into this account (damien5314) but not via my test accounts that do not have gold or a custom theme specified.&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"http:\/\/pastebin.com\/qczTRpuK\"&gt;http:\/\/pastebin.com\/qczTRpuK&lt;\/a&gt;&lt;\/p&gt;\n\n&lt;p&gt;Edit: Forgot to include my request body in that pastebin, but it&amp;#39;s simply {&amp;quot;domain_details&amp;quot;:&amp;quot;true&amp;quot;}. I&amp;#39;m seeing 500 errors no matter which setting I try to patch.&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -153,7 +149,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": "confirmed",
@@ -178,7 +173,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -197,7 +191,6 @@
           "created_utc": 1436387377,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -210,7 +203,6 @@
           "domain": "self.androiddev",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "androiddev",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;A little background on me: I was into programming back in high school (~2008), learned Java, did some algorithms competitions, no real projects, though. In college I wasn&amp;#39;t really sure if I wanted to code on a daily basis for my career or end up writing &amp;quot;boring&amp;quot; software, so my academic advisor recommended I switch to the IT program instead of taking up CS. I took introductory courses in C++ and Java for my degree, but that was all of the coding they really required.&lt;\/p&gt;\n\n&lt;p&gt;Out of college I found a job as a software test engineer, but I can&amp;#39;t really say testing is a big passion of mine. I&amp;#39;m much more interested in digging into the code, actually fixing the bugs that I find, and writing new functionality instead of testing it. About a year ago I started working on some Android app projects in my spare time, and now I think I can say I want to become a mobile developer as my long-term career goal.&lt;\/p&gt;\n\n&lt;p&gt;I&amp;#39;m starting to regret taking such a long break from programming, though, because when I look at my pace in learning the Android SDK and just my overall understanding of some fundamental CS concepts, I feel like I&amp;#39;m far behind most developers out there, and a long way from being able to make a name for myself on Google Play.&lt;\/p&gt;\n\n&lt;p&gt;I picked up two books a few weeks ago to try to fill in some knowledge gaps, Head First Design Patterns and the Big Nerd Ranch Android Programming guide. I finished both in about 3-4 weeks each and I feel like my all-around comprehension of Android\/Java has increased a bit. That said, when I look on the new questions queue in StackOverflow, or most of the posts in this subreddit, I often get overwhelmed by the large variety of frameworks people are using and feel like I&amp;#39;m falling behind more than I&amp;#39;m catching up.&lt;\/p&gt;\n\n&lt;p&gt;I guess my main questions behind this post are, how bad did I screw myself by taking up IT instead of CS in college? Also, if I keep working on side projects like this, will my comprehension of Android (and programming in general) eventually increase to the point where I can actually release popular apps on a regular basis? I want to believe that I&amp;#39;ll be a super effective developer in a few years if I keep working at it, but sometimes I feel like I&amp;#39;m missing some critical experience that will hinder me in understanding some advanced architectural patterns and frameworks.&lt;\/p&gt;\n\n&lt;p&gt;&lt;strong&gt;TLDR&lt;\/strong&gt;: I took a long break from programming but decided I wanted to be a good app developer about a year ago. I&amp;#39;m having trouble understanding some basic architectural patterns and the amount of frameworks people use in their code is very overwhelming. Looking for some advice on my learning path after making a few apps.&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -218,7 +210,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -243,7 +234,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -262,7 +252,6 @@
           "created_utc": 1423761968,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -275,7 +264,6 @@
           "domain": "self.SFBayJobs",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "SFBayJobs",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Hi all, as the title states I&amp;#39;m a Software Test Engineer in Philadelphia with a huge interest in coding, and looking to move to a more development-oriented role (SDET\/Android dev) in San Francisco. I have wanted to move out to the west coast since college and have no qualms against relocation.&lt;\/p&gt;\n\n&lt;p&gt;&lt;strong&gt;&lt;em&gt;QA Engineer&lt;\/em&gt;&lt;\/strong&gt;&lt;\/p&gt;\n\n&lt;ul&gt;\n&lt;li&gt;6 months mobile application testing experience on iPhone &amp;amp; Android for a streaming media application&lt;\/li&gt;\n&lt;li&gt;2.5 years experience testing web-based .NET applications for a large-scale e-commerce solution&lt;\/li&gt;\n&lt;li&gt;Issue tracking software: HP ALM, Rally, Trac, JIRA&lt;\/li&gt;\n&lt;li&gt;Writing end-to-end test plans, requirements management, test design &amp;amp; execution&lt;\/li&gt;\n&lt;li&gt;Agile, waterfall SDLC &amp;amp; Scrum&lt;\/li&gt;\n&lt;li&gt;Managing offshore testers and mentoring junior engineers&lt;\/li&gt;\n&lt;li&gt;Testing RESTful web services&lt;\/li&gt;\n&lt;li&gt;Automation experience with Selenium (SpecFlow framework), familiar with Robotium for mobile&lt;\/li&gt;\n&lt;li&gt;Content management in Sitecore&lt;\/li&gt;\n&lt;li&gt;Web analytics and digital targeting products in the Adobe Marketing Cloud&lt;\/li&gt;\n&lt;li&gt;Developed automated scripts in Java and PHP to execute calls to SOAP web service endpoints to automate test data auditing processes&lt;\/li&gt;\n&lt;li&gt;Developed a cross-browser extension using Crossrider (JavaScript) to automate manual testing processes (cookie retrieval and form filling)&lt;\/li&gt;\n&lt;\/ul&gt;\n\n&lt;p&gt;&lt;strong&gt;&lt;em&gt;Android Development&lt;\/em&gt;&lt;\/strong&gt;&lt;\/p&gt;\n\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\"https:\/\/play.google.com\/store\/apps\/details?id=com.ddiehl.android.reversi\"&gt;Application&lt;\/a&gt; to simulate the board game Reversi, single player released with multi-player coming in the next few weeks&lt;\/li&gt;\n&lt;li&gt;&lt;a href=\"https:\/\/github.com\/damien5314\/FlashCardAndroid\"&gt;Application&lt;\/a&gt; (in progress) to promote language learning through shared vocabulary lists&lt;\/li&gt;\n&lt;li&gt;Play Services APIs - TurnBasedMultiplayer, Google Drive&lt;\/li&gt;\n&lt;li&gt;Scaling device UI to various screen sizes and densities&lt;\/li&gt;\n&lt;li&gt;XML parser for efficient data storage&lt;\/li&gt;\n&lt;li&gt;Data storage through SharedPreferences objects&lt;\/li&gt;\n&lt;li&gt;Fading animations for Views&lt;\/li&gt;\n&lt;li&gt;ViewPager implementation from support library v4&lt;\/li&gt;\n&lt;\/ul&gt;\n\n&lt;p&gt;My primary interests lie in social networking applications, e-commerce, and gaming, though I would be happy to consider opportunities in other markets for an interesting product. If any of my skill sets capture your interest, please drop me an email and we can speak further. I will link my portfolio site below for more information about my professional experience and independent projects. Thanks for reading!&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"mailto:damien5314@gmail.com\"&gt;damien5314@gmail.com&lt;\/a&gt;&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"http:\/\/www.thelegendofdamien.com\/\"&gt;[Portfolio]&lt;\/a&gt; &lt;a href=\"https:\/\/github.com\/damien5314\"&gt;[GitHub]&lt;\/a&gt; &lt;a href=\"https:\/\/www.linkedin.com\/in\/damiendiehl\"&gt;[LinkedIn]&lt;\/a&gt;&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -283,7 +271,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -308,7 +295,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -327,7 +313,6 @@
           "created_utc": 1416421571,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -340,7 +325,6 @@
           "domain": "self.forhire",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "forhire",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Hi all, as the title states I&amp;#39;m a Software Test Engineer in Philadelphia with a huge interest in coding, and looking to move to a more development-oriented role (SDET\/Android dev) in San Francisco. I have wanted to move out to the west coast since college and have no qualms against relocation. Sticking to bullet points this time to keep it short(er) and sweet.&lt;\/p&gt;\n\n&lt;p&gt;&lt;strong&gt;&lt;em&gt;QA Engineer&lt;\/em&gt;&lt;\/strong&gt;&lt;\/p&gt;\n\n&lt;ul&gt;\n&lt;li&gt;6 months mobile application testing experience on iPhone &amp;amp; Android for a streaming media application&lt;\/li&gt;\n&lt;li&gt;2.5 years experience testing web-based .NET applications for a large-scale e-commerce solution&lt;\/li&gt;\n&lt;li&gt;Issue tracking software: HP ALM, Rally, Trac, JIRA&lt;\/li&gt;\n&lt;li&gt;Writing end-to-end test plans, requirements management, test design &amp;amp; execution&lt;\/li&gt;\n&lt;li&gt;Agile, waterfall SDLC &amp;amp; Scrum&lt;\/li&gt;\n&lt;li&gt;Managing offshore testers and mentoring junior engineers&lt;\/li&gt;\n&lt;li&gt;Testing RESTful web services&lt;\/li&gt;\n&lt;li&gt;Automation experience with Selenium (SpecFlow framework), familiar with Robotium for mobile&lt;\/li&gt;\n&lt;li&gt;Content management in Sitecore&lt;\/li&gt;\n&lt;li&gt;Web analytics and digital targeting products in the Adobe Marketing Cloud&lt;\/li&gt;\n&lt;li&gt;Developed automated scripts in Java and PHP to execute calls to SOAP web service endpoints to automate test data auditing processes&lt;\/li&gt;\n&lt;li&gt;Developed a cross-browser extension using Crossrider (JavaScript) to automate manual testing processes (cookie retrieval and form filling)&lt;\/li&gt;\n&lt;\/ul&gt;\n\n&lt;p&gt;&lt;strong&gt;&lt;em&gt;Android Development&lt;\/em&gt;&lt;\/strong&gt;&lt;\/p&gt;\n\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\"https:\/\/play.google.com\/store\/apps\/details?id=com.ddiehl.android.reversi\"&gt;Application&lt;\/a&gt; to simulate the board game Reversi, single player released with multi-player coming in the next few weeks&lt;\/li&gt;\n&lt;li&gt;&lt;a href=\"https:\/\/github.com\/damien5314\/FlashCardAndroid\"&gt;Application&lt;\/a&gt; (in progress) to promote language learning through shared vocabulary lists&lt;\/li&gt;\n&lt;li&gt;Play Services APIs - TurnBasedMultiplayer, Google Drive&lt;\/li&gt;\n&lt;li&gt;Scaling device UI to various screen sizes and densities&lt;\/li&gt;\n&lt;li&gt;XML parser for efficient data storage&lt;\/li&gt;\n&lt;li&gt;Data storage through SharedPreferences objects&lt;\/li&gt;\n&lt;li&gt;Fading animations for Views&lt;\/li&gt;\n&lt;li&gt;ViewPager implementation from support library v4&lt;\/li&gt;\n&lt;\/ul&gt;\n\n&lt;p&gt;My primary interests lie in social networking applications, e-commerce, and gaming, though I would be happy to consider opportunities in other markets for an interesting product. If any of my skill sets capture your interest, please drop me an email and we can speak further. I will link my portfolio site below for more information about my professional experience and independent projects. Thanks for reading!&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"mailto:damien5314@gmail.com\"&gt;damien5314@gmail.com&lt;\/a&gt;&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"http:\/\/www.thelegendofdamien.com\/\"&gt;[Portfolio]&lt;\/a&gt; &lt;a href=\"https:\/\/github.com\/damien5314\"&gt;[GitHub]&lt;\/a&gt; &lt;a href=\"https:\/\/www.linkedin.com\/in\/damiendiehl\"&gt;[LinkedIn]&lt;\/a&gt;&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -348,7 +332,6 @@
           "likes": true,
           "suggested_sort": "new",
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": "For Hire",
@@ -373,7 +356,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -392,7 +374,6 @@
           "created_utc": 1416420197,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -405,7 +386,6 @@
           "domain": "self.forhire",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "forhire",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Hi all, as the title states I&amp;#39;m a Software Test Engineer in Philadelphia with a huge interest in coding, and looking to move to a more development-oriented role (SDET\/Android dev) in San Francisco. I have wanted to move out to the west coast since college and the technology community out there seems to be as thriving as it has ever been.&lt;\/p&gt;\n\n&lt;p&gt;As a QA Engineer my experience has been primarily in mobile application testing on iPhone &amp;amp; Android (streaming media), as well as on a large-scale web-based e-commerce solution. I have experience with issue tracking software (HP ALM, Rally, Trac, JIRA) and experience implementing end-to-end test plans. The e-commerce solution was very complex, involving managing dependencies from multiple SOAP-based web service endpoints. For these endpoints I developed an internal tool in PHP to take a list of inputs, and output data from the endpoints for test data auditing purposes. I also developed a browser extension with Crossrider to automate certain repetitive processes for our manual testers (site cookie retrieval and form-filling, mainly) which increased productivity for testers significantly. I also have some experience in accessibility testing, web analytics (Omniture), and working with digital targeting products in the Adobe Marketing Cloud.&lt;\/p&gt;\n\n&lt;p&gt;As an Android developer I have been working on several independent applications and am interested in improving my development skills in a professional role and\/or integrating my development skills in a white-box testing role on the Android platform. My most developed project is an application to simulate the game Reversi (Othello) for which I have developed a single player AI, and am currently working on utilizing the Turn-Based Multiplayer API to enable multiplayer functionality. This will hopefully be released within the next month depending on how much time I have to work on it. Aside from this application, I have also worked with the Google Drive API for storing data in XML format and persisting data in SharedPreferences objects.&lt;\/p&gt;\n\n&lt;p&gt;My primary interests lie in social networking applications, e-commerce, and gaming, though I would be happy to consider opportunities in other markets for an interesting product. If any of my skill sets capture your interest, please drop me an email and we can speak further. I will link my portfolio site below for more information about my professional experience and independent projects. Thanks for reading!&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"mailto:damien5314@gmail.com\"&gt;damien5314@gmail.com&lt;\/a&gt;&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"http:\/\/www.thelegendofdamien.com\/\"&gt;http:\/\/www.thelegendofdamien.com\/&lt;\/a&gt; (Portfolio site. I don&amp;#39;t really have an ego, it&amp;#39;s a gaming reference.. Changing the domain when my service expires next month.)&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"https:\/\/www.linkedin.com\/in\/damiendiehl\"&gt;https:\/\/www.linkedin.com\/in\/damiendiehl&lt;\/a&gt;&lt;\/p&gt;\n\n&lt;p&gt;&lt;a href=\"https:\/\/play.google.com\/store\/apps\/details?id=com.ddiehl.android.reversi\"&gt;https:\/\/play.google.com\/store\/apps\/details?id=com.ddiehl.android.reversi&lt;\/a&gt; (Latest app)&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -413,7 +393,6 @@
           "likes": true,
           "suggested_sort": "new",
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": "For Hire",
@@ -438,7 +417,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -457,7 +435,6 @@
           "created_utc": 1415650839,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -470,7 +447,6 @@
           "domain": "self.jobs",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "jobs",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Words cannot explain my frustration at this point.&lt;\/p&gt;\n\n&lt;p&gt;First of all, I know there is no such thing as being &amp;quot;promised&amp;quot; an interview; companies can, and will, do whatever they want. They need a million reasons to hire someone, but not a single reason to pass them up. I don&amp;#39;t mind this reality when I am applying to companies blind. This situation, though, I seriously don&amp;#39;t know how this is possible.&lt;\/p&gt;\n\n&lt;p&gt;I applied to this company mid-July. Recruiter from the company called me the next week saying he is interested in seeing what I can do, and if I might find a position within one of their teams which matches my skill sets. I admitted I have not done a technical\/programming interview before, and he ran through a list of subject areas in which I should prepare myself. He said a lot of their applicants take 1-2+ months to prepare in all of these areas; he wanted to make sure that when I do commit to the interview, that I represent myself in the best possible way, and knock it out of the park.&lt;\/p&gt;\n\n&lt;p&gt;Let me clarify, I applied for a job which is a combination of my skill sets from my professional experience (QA Software Engineer) and my personal development projects on Android. I was not entirely confident in my experience as an Android developer, having never done it professionally, but after taking the time to polish up my projects, study algorithms, and practice programming questions for over 2 months, I am very confident that I could fulfill the role to which I had applied.&lt;\/p&gt;\n\n&lt;p&gt;I did nothing but study on the train, at lunch, in the evenings, on the weekends, whenever I possibly could. I studied the company&amp;#39;s products, their GitHub, their blog, everything. I can write a MergeSort faster than most people can use the restroom. I know the answer to any question anyone would want to ask about my resume. I updated my portfolio website and audited my social networking profiles. I was ready.&lt;\/p&gt;\n\n&lt;p&gt;I email the recruiter back incredibly anxious, but ready to finally see if I have what it takes to get the job. A couple hours later, I get a response saying he passed my profile along to their QA manager, who decided she was not interested. Heart falls out of my chest.&lt;\/p&gt;\n\n&lt;p&gt;I never had what it takes to get that job, that much is clear. I was beginning to get suspicious after applying to 13 companies since receiving the call from the recruiter, none of which have responded with as much as an email. But having this interview to look forward to, that was keeping me going. I was so confident that if someone gives me the chance to prove myself, after all of this preparation, there&amp;#39;s no way I could fail. And they wouldn&amp;#39;t even give me the light of day.&lt;\/p&gt;\n\n&lt;p&gt;There&amp;#39;s nothing I can do at this point, that much I know. Stuff happens, and this is a very competitive company, I just wish they had a little more tact when communicating with their applicants. Just wanted to vent here and forewarn anyone who might go through a similar situation.&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -478,7 +454,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -503,7 +478,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -522,7 +496,6 @@
           "created_utc": 1412966893,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -535,7 +508,6 @@
           "domain": "i.imgur.com",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "pics",
           "selftext_html": null,
@@ -543,7 +515,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -568,7 +539,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -587,7 +557,6 @@
           "created_utc": 1405563621,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -600,7 +569,6 @@
           "domain": "self.AskReddit",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "AskReddit",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Just noticed this today and it kinda baffled me, I don&amp;#39;t know much about how the display of the screen differs between views but at first I thought my screen was going dark due to the sun.&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -608,7 +576,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -633,7 +600,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -652,7 +618,6 @@
           "created_utc": 1397413504,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -665,7 +630,6 @@
           "domain": "i.imgur.com",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "ArcherFX",
           "selftext_html": null,
@@ -673,7 +637,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": "low-relevance",
@@ -698,7 +661,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -717,7 +679,6 @@
           "created_utc": 1365349253,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -730,7 +691,6 @@
           "domain": "i.imgur.com",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "wow",
           "selftext_html": null,
@@ -738,7 +698,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -763,7 +722,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -782,7 +740,6 @@
           "created_utc": 1361142058,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -795,7 +752,6 @@
           "domain": "self.explainlikeimfive",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "explainlikeimfive",
           "selftext_html": null,
@@ -803,7 +759,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -828,7 +783,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -847,7 +801,6 @@
           "created_utc": 1336355737,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -860,7 +813,6 @@
           "domain": "self.DoesAnybodyElse",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "DoesAnybodyElse",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;&lt;a href=\"http:\/\/i.imgur.com\/SDC2G.png\"&gt;I do!&lt;\/a&gt;&lt;\/p&gt;\n\n&lt;p&gt;I always forget about it until someone mentions it once in awhile. It&amp;#39;s not completely obvious unless I&amp;#39;m talking face-to-face with someone, I guess.&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -868,7 +820,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -893,7 +844,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -912,7 +862,6 @@
           "created_utc": 1336276873,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -925,7 +874,6 @@
           "domain": "self.tipofmytongue",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "tipofmytongue",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Applies to diamonds, luxury cars, stuff like that. I learned about it in AP economics in high school but I can never remember the name.&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -933,7 +881,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -958,7 +905,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -977,7 +923,6 @@
           "created_utc": 1336231427,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -990,7 +935,6 @@
           "domain": "i.imgur.com",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "movies",
           "selftext_html": null,
@@ -998,7 +942,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1023,7 +966,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1042,7 +984,6 @@
           "created_utc": 1336181548,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1055,7 +996,6 @@
           "domain": "i.imgur.com",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "pics",
           "selftext_html": null,
@@ -1063,7 +1003,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1088,7 +1027,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1107,7 +1045,6 @@
           "created_utc": 1336177942,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1120,7 +1057,6 @@
           "domain": "self.firstworldproblems",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "firstworldproblems",
           "selftext_html": null,
@@ -1128,7 +1064,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1153,7 +1088,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1172,7 +1106,6 @@
           "created_utc": 1331175040,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1185,7 +1118,6 @@
           "domain": "self.techsupport",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "techsupport",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;The cards in question are GTX 550 Ti. I have one from Gigabyte that I purchased awhile ago, but recently I got a third monitor so I needed a second card. The 550 Ti was still a pretty good deal on Newegg for what I needed it for, so I got another one. The problem is, the Gigabyte model that I had gotten before was sold out, so I went with an EVGA.&lt;\/p&gt;\n\n&lt;p&gt;Can I SLI these cards? I guess no, but I couldn&amp;#39;t find the exact answer from Google, so I came to reddit :)&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -1193,7 +1125,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1218,7 +1149,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1237,7 +1167,6 @@
           "created_utc": 1331079742,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1250,7 +1179,6 @@
           "domain": "self.wii",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "wii",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;My sister just purchased Just Dance 3 and for some reason, it&amp;#39;s not loading. The screen remains black during the load process and the Wii remote turns off.&lt;\/p&gt;\n\n&lt;p&gt;I had soft-modded the Wii a long, long time ago (2+ years?) for something to do, and I suspect that&amp;#39;s the reason it&amp;#39;s not playing the game. Should I attempt to unhack the Wii, or do I need to update some parts of the softmod? It seems like unhacking is just as complicated as the hacking process was, and I don&amp;#39;t think I have an SD card handy to transfer files and such, making this a bit complicated...&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -1258,7 +1186,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1283,7 +1210,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1302,7 +1228,6 @@
           "created_utc": 1324933549,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1315,7 +1240,6 @@
           "domain": "self.iphone",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "iphone",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;My girlfriend&amp;#39;s in the US for a month, but unfortunately we found out that her phone from Japan is locked. This was after I had purchased her a SIM card from AT&amp;amp;T and had tried it out in the store only to find out that the phone was locked. I figured I could unlock it at home, so I took it home anyway.&lt;\/p&gt;\n\n&lt;p&gt;She&amp;#39;s running iOS 4.1 (8B117), but unfortunately there is no direct unlock for baseband 05.14.02 yet. However, I did find out that it&amp;#39;s possible to upgrade to an iPad&amp;#39;s firmware baseband 06.15.00 to unlock the phone.&lt;\/p&gt;\n\n&lt;p&gt;I found &lt;a href=\"http:\/\/www.youtube.com\/watch?v=Rsxl5NYNKjU\"&gt;this video&lt;\/a&gt; to be particularly informative, but I&amp;#39;m still skeptical. What are the side effects\/risks for doing something like this? Is it even worth the effort? Should I just eat the $25 cost and head down to Walmart to get a disposable phone for the month?&lt;\/p&gt;\n\n&lt;p&gt;Any insight here is greatly appreciated :)&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -1323,7 +1247,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1348,7 +1271,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1367,7 +1289,6 @@
           "created_utc": 1320273902,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1380,7 +1301,6 @@
           "domain": "en.wikipedia.org",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "todayilearned",
           "selftext_html": null,
@@ -1388,7 +1308,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1413,7 +1332,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1432,7 +1350,6 @@
           "created_utc": 1319511916,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1445,7 +1362,6 @@
           "domain": "self.Osaka",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "Osaka",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Forgive me for not knowing specifics about Japanese culture, but my girlfriend&amp;#39;s birthday is in a week and I would like to order her flowers. She lives in Osaka, but I&amp;#39;m American and don&amp;#39;t speak nearly fluent Japanese yet.&lt;\/p&gt;\n\n&lt;p&gt;Are there flower delivering services in Japan? And can anyone give me a recommendation on how I could accomplish this, or what websites I should use?&lt;\/p&gt;\n\n&lt;p&gt;Any help is appreciated. I&amp;#39;m also open to other gift ideas that maybe I don&amp;#39;t know about :) Thanks!&lt;\/p&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -1453,7 +1369,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1478,7 +1393,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1497,7 +1411,6 @@
           "created_utc": 1318825960,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1510,7 +1423,6 @@
           "domain": "self.PennStateUniversity",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "PennStateUniversity",
           "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;ol&gt;\n&lt;li&gt;&lt;p&gt;Disconnect Ethernet cable&lt;\/p&gt;&lt;\/li&gt;\n&lt;li&gt;&lt;p&gt;Flip on WLAN switch&lt;\/p&gt;&lt;\/li&gt;\n&lt;li&gt;&lt;p&gt;&lt;a href=\"http:\/\/wireless.psu.edu\/wireless_docs\/win7.html\"&gt;http:\/\/wireless.psu.edu\/wireless_docs\/win7.html&lt;\/a&gt;&lt;\/p&gt;&lt;\/li&gt;\n&lt;li&gt;&lt;p&gt;???&lt;\/p&gt;&lt;\/li&gt;\n&lt;\/ol&gt;\n&lt;\/div&gt;&lt;!-- SC_ON --&gt;",
@@ -1518,7 +1430,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1543,7 +1454,6 @@
           "author_flair_css_class": "",
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1562,7 +1472,6 @@
           "created_utc": 1318552925,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1575,7 +1484,6 @@
           "domain": "i.imgur.com",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "cats",
           "selftext_html": null,
@@ -1583,7 +1491,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1608,7 +1515,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1627,7 +1533,6 @@
           "created_utc": 1312745513,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,
@@ -1640,7 +1545,6 @@
           "domain": "screenie.net",
           "banned_by": null,
           "media_embed": {
-
           },
           "subreddit": "software",
           "selftext_html": null,
@@ -1648,7 +1552,6 @@
           "likes": true,
           "suggested_sort": null,
           "user_reports": [
-
           ],
           "secure_media": null,
           "link_flair_text": null,
@@ -1673,7 +1576,6 @@
           "author_flair_css_class": null,
           "downs": 0,
           "secure_media_embed": {
-
           },
           "saved": false,
           "removal_reason": null,
@@ -1692,7 +1594,6 @@
           "created_utc": 1312254599,
           "distinguished": null,
           "mod_reports": [
-
           ],
           "visited": false,
           "num_reports": null,

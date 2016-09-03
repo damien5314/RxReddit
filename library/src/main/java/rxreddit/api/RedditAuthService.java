@@ -22,6 +22,7 @@ import rxreddit.model.UserAccessToken;
 import static rxreddit.api.RedditService.responseToBody;
 
 final class RedditAuthService implements IRedditAuthService {
+
   static final String BASE_URL = "https://www.reddit.com";
   static final String RESPONSE_TYPE = "code";
   static final String DURATION = "permanent";

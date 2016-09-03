@@ -5,6 +5,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class AddCommentResponse {
+
   private Json json;
 
   public List<String> getErrors() {
@@ -22,11 +23,13 @@ public class AddCommentResponse {
   }
 
   private static class Json {
+
     private List<String> errors;
     private Data data;
   }
 
   private static class Data {
+
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<Comment> things;
   }

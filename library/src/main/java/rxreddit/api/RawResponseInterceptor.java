@@ -8,6 +8,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 final class RawResponseInterceptor implements Interceptor {
+
   @Override
   public Response intercept(Chain chain) throws IOException {
     Request originalRequest = chain.request();

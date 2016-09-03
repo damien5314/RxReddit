@@ -6,6 +6,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class Comment extends AbsComment implements Votable, Savable {
+
   Data data;
   private boolean isCollapsed = false;
 
@@ -183,9 +184,15 @@ public class Comment extends AbsComment implements Votable, Savable {
   public void applyVote(int direction) {
     int scoreDiff = direction - getLikedScore();
     switch (direction) {
-      case 0: isLiked(null); break;
-      case 1: isLiked(true); break;
-      case -1: isLiked(false); break;
+      case 0:
+        isLiked(null);
+        break;
+      case 1:
+        isLiked(true);
+        break;
+      case -1:
+        isLiked(false);
+        break;
     }
     if (data.score == null) return;
     data.score += scoreDiff;
@@ -233,6 +240,7 @@ public class Comment extends AbsComment implements Votable, Savable {
   }
 
   public static class Data extends AbsComment.Data {
+
     // Attributes specific to listing views
     @SerializedName("link_title")
     private String linkTitle;

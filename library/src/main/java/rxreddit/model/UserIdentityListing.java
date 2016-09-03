@@ -1,6 +1,7 @@
 package rxreddit.model;
 
 public class UserIdentityListing extends Listing {
+
   UserIdentity data;
 
   public UserIdentity getUser() {

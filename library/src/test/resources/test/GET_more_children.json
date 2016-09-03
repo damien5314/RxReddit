@@ -1,7 +1,6 @@
 {
   "json": {
     "errors": [
-
     ],
     "data": {
       "things": [
@@ -15,7 +14,6 @@
             "likes": null,
             "replies": "",
             "user_reports": [
-
             ],
             "saved": false,
             "id": "cz5tayl",
@@ -41,7 +39,6 @@
             "created_utc": 1453331404,
             "ups": 1,
             "mod_reports": [
-
             ],
             "num_reports": null,
             "distinguished": null

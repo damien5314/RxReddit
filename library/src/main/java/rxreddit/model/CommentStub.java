@@ -4,6 +4,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class CommentStub extends AbsComment {
+
   Data data;
 
   @Override
@@ -48,6 +49,7 @@ public class CommentStub extends AbsComment {
   }
 
   public static class Data extends AbsComment.Data {
+
     private Integer count;
     private List<String> children;
   }

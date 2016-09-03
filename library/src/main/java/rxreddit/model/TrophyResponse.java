@@ -1,6 +1,7 @@
 package rxreddit.model;
 
 public class TrophyResponse {
+
   private String kind;
   private TrophyResponseData data;
 

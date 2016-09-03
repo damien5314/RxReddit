@@ -3,6 +3,7 @@ package rxreddit.model;
 import java.util.Date;
 
 public class UserAccessToken extends AccessToken {
+
   @Override
   public boolean isUserAccessToken() {
     return true;

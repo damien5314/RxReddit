@@ -1,6 +1,7 @@
 package rxreddit.api;
 
 public class AuthorizationCallback {
+
   public String state;
   public String code;
 

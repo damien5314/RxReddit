@@ -14,16 +14,22 @@ class InboxTests : _RedditServiceTests() {
 
   @Test
   fun testGetInbox_comments() = testGetInbox("comments")
+
   @Test
   fun testGetInbox_inbox() = testGetInbox("inbox")
+
   @Test
   fun testGetInbox_mentions() = testGetInbox("mentions")
+
   @Test
   fun testGetInbox_messages() = testGetInbox("messages")
+
   @Test
   fun testGetInbox_selfreply() = testGetInbox("selfreply")
+
   @Test
   fun testGetInbox_sent() = testGetInbox("sent")
+
   @Test
   fun testGetInbox_unread() = testGetInbox("unread")
 

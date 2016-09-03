@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 public abstract class AccessToken {
+
   private long mCreated = new Date().getTime();
 
   @SerializedName("access_token")

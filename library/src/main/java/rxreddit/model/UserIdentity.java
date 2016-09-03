@@ -3,6 +3,7 @@ package rxreddit.model;
 import com.google.gson.annotations.SerializedName;
 
 public class UserIdentity extends ListingData {
+
   @SerializedName("has_mail")
   private Boolean hasMail;
   private String name;

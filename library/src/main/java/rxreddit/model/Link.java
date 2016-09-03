@@ -78,10 +78,11 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     private Integer ups;
 
     public static class SecureMediaEmbed {
+
     }
 
     public static class MediaEmbed {
-      
+
       private String content;
       private Integer width;
       private Boolean scrolling;
@@ -193,6 +194,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     List<Image> images;
 
     public static class Image {
+
       Res source;
       List<Res> resolutions;
       Variants variants;
@@ -215,10 +217,12 @@ public class Link extends Listing implements Votable, Savable, Hideable {
       }
 
       public static class Variants {
+
         public Image nsfw;
       }
 
       public static class Res {
+
         String url;
         int width;
         int height;
@@ -238,9 +242,15 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     }
   }
 
-  public static class SecureMedia { }
+  public static class SecureMedia {
 
-  public static class Report { }
+  }
+
+  public static class Report {
+
+  }
+
+  //region Public API
 
   @Override
   public String getId() {
@@ -329,9 +339,15 @@ public class Link extends Listing implements Votable, Savable, Hideable {
   public void applyVote(int direction) {
     int scoreDiff = direction - getLikedScore();
     switch (direction) {
-      case 0: isLiked(null); break;
-      case 1: isLiked(true); break;
-      case -1: isLiked(false); break;
+      case 0:
+        isLiked(null);
+        break;
+      case 1:
+        isLiked(true);
+        break;
+      case -1:
+        isLiked(false);
+        break;
     }
     if (data.score == null) return;
     data.score += scoreDiff;
@@ -459,4 +475,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
       return null;
     return data.preview.images;
   }
+
+  //endregion
 }

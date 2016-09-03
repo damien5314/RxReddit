@@ -7,6 +7,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class Subreddit extends Listing {
+
   Data data;
 
   @Override

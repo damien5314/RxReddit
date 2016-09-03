@@ -388,6 +388,7 @@ public class RedditService implements IRedditService {
   }
 
   public static final class Builder {
+
     private String mBaseUrl = "https://oauth.reddit.com/";
     private String mBaseAuthUrl = "https://www.reddit.com/";
     private String mAppId;

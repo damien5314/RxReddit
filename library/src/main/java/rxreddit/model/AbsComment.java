@@ -3,11 +3,14 @@ package rxreddit.model;
 import com.google.gson.annotations.SerializedName;
 
 public abstract class AbsComment extends Listing {
+
   private int depth;
   private boolean isVisible = true;
 
   public abstract boolean isCollapsed();
+
   public abstract void setCollapsed(boolean b);
+
   public abstract String getParentId();
 
   public int getDepth() {
@@ -27,6 +30,8 @@ public abstract class AbsComment extends Listing {
   }
 
   public static abstract class Data extends ListingData {
-    @SerializedName("parent_id") String parentId;
+
+    @SerializedName("parent_id")
+    String parentId;
   }
 }

@@ -3,49 +3,93 @@ package rxreddit.model;
 import com.google.gson.annotations.SerializedName;
 
 public class UserSettings {
-  @SerializedName("beta") Boolean mBeta;
-  @SerializedName("clickgadget") Boolean mClickgadget;
-  @SerializedName("collapse_read_messages") Boolean mCollapseReadMessages;
-  @SerializedName("compress") Boolean mCompress;
-  @SerializedName("creddit_autorenew") Boolean mCredditAutoRenew;
-  @SerializedName("default_comment_sort") String mDefaultCommentSort;
-  @SerializedName("domain_details") Boolean mDomainDetails;
-  @SerializedName("email_messages") Boolean mEmailMessages;
-  @SerializedName("enable_default_themes") Boolean mEnableDefaultThemes;
-  @SerializedName("hide_ads") Boolean mHideAds;
-  @SerializedName("hide_downs") Boolean mHideDowns;
-  @SerializedName("hide_from_robots") Boolean mHideFromRobots;
-  @SerializedName("hide_locationbar") Boolean mHideLocationBar;
-  @SerializedName("hide_ups") Boolean mHideUps;
-  @SerializedName("highlight_controversial") Boolean mHighlightControversial;
-  @SerializedName("highlight_new_comments") Boolean mHighlightNewComments;
-  @SerializedName("ignore_suggested_sort") Boolean mIgnoreSuggestedSort;
-  @SerializedName("label_nsfw") Boolean mLabelNsfw;
-  @SerializedName("lang") String mLang;
-  @SerializedName("mark_messages_read") Boolean mMarkMessagesRead;
-  @SerializedName("media") String mMedia;
-  @SerializedName("min_comment_score") Integer mMinCommentScore;
-  @SerializedName("min_link_score") Integer mMinLinkScore;
-  @SerializedName("monitor_mentions") Boolean mMonitorMentions;
-  @SerializedName("newwindow") Boolean mNewWindow;
-  @SerializedName("no_profanity") Boolean mNoProfanity;
-  @SerializedName("num_comments") Integer mNumComments;
-  @SerializedName("numsites") Integer mNumLinks;
-  @SerializedName("organic") Boolean mOrganic;
-  @SerializedName("over_18") Boolean mOver18;
-  @SerializedName("public_feeds") Boolean mPublicFeeds;
-  @SerializedName("public_votes") Boolean mPublicVotes;
-  @SerializedName("research") Boolean mResearch;
-  @SerializedName("show_flair") Boolean mShowFlair;
-  @SerializedName("show_gold_expiration") Boolean mShowGoldExpiration;
-  @SerializedName("show_link_flair") Boolean mShowLinkFlair;
-  @SerializedName("show_promote") Boolean mShowPromote;
-  @SerializedName("show_stylesheets") Boolean mShowStylesheets;
-  @SerializedName("show_trending") Boolean mShowTrending;
-  @SerializedName("store_visits") Boolean mStoreVisits;
-  @SerializedName("theme_selector") String mThemeSelector;
-  @SerializedName("threaded_messages") Boolean mThreadedMessages;
-  @SerializedName("use_global_defaults") Boolean mUseGlobalDefaults;
+
+  @SerializedName("beta")
+  Boolean mBeta;
+  @SerializedName("clickgadget")
+  Boolean mClickgadget;
+  @SerializedName("collapse_read_messages")
+  Boolean mCollapseReadMessages;
+  @SerializedName("compress")
+  Boolean mCompress;
+  @SerializedName("creddit_autorenew")
+  Boolean mCredditAutoRenew;
+  @SerializedName("default_comment_sort")
+  String mDefaultCommentSort;
+  @SerializedName("domain_details")
+  Boolean mDomainDetails;
+  @SerializedName("email_messages")
+  Boolean mEmailMessages;
+  @SerializedName("enable_default_themes")
+  Boolean mEnableDefaultThemes;
+  @SerializedName("hide_ads")
+  Boolean mHideAds;
+  @SerializedName("hide_downs")
+  Boolean mHideDowns;
+  @SerializedName("hide_from_robots")
+  Boolean mHideFromRobots;
+  @SerializedName("hide_locationbar")
+  Boolean mHideLocationBar;
+  @SerializedName("hide_ups")
+  Boolean mHideUps;
+  @SerializedName("highlight_controversial")
+  Boolean mHighlightControversial;
+  @SerializedName("highlight_new_comments")
+  Boolean mHighlightNewComments;
+  @SerializedName("ignore_suggested_sort")
+  Boolean mIgnoreSuggestedSort;
+  @SerializedName("label_nsfw")
+  Boolean mLabelNsfw;
+  @SerializedName("lang")
+  String mLang;
+  @SerializedName("mark_messages_read")
+  Boolean mMarkMessagesRead;
+  @SerializedName("media")
+  String mMedia;
+  @SerializedName("min_comment_score")
+  Integer mMinCommentScore;
+  @SerializedName("min_link_score")
+  Integer mMinLinkScore;
+  @SerializedName("monitor_mentions")
+  Boolean mMonitorMentions;
+  @SerializedName("newwindow")
+  Boolean mNewWindow;
+  @SerializedName("no_profanity")
+  Boolean mNoProfanity;
+  @SerializedName("num_comments")
+  Integer mNumComments;
+  @SerializedName("numsites")
+  Integer mNumLinks;
+  @SerializedName("organic")
+  Boolean mOrganic;
+  @SerializedName("over_18")
+  Boolean mOver18;
+  @SerializedName("public_feeds")
+  Boolean mPublicFeeds;
+  @SerializedName("public_votes")
+  Boolean mPublicVotes;
+  @SerializedName("research")
+  Boolean mResearch;
+  @SerializedName("show_flair")
+  Boolean mShowFlair;
+  @SerializedName("show_gold_expiration")
+  Boolean mShowGoldExpiration;
+  @SerializedName("show_link_flair")
+  Boolean mShowLinkFlair;
+  @SerializedName("show_promote")
+  Boolean mShowPromote;
+  @SerializedName("show_stylesheets")
+  Boolean mShowStylesheets;
+  @SerializedName("show_trending")
+  Boolean mShowTrending;
+  @SerializedName("store_visits")
+  Boolean mStoreVisits;
+  @SerializedName("theme_selector")
+  String mThemeSelector;
+  @SerializedName("threaded_messages")
+  Boolean mThreadedMessages;
+  @SerializedName("use_global_defaults")
+  Boolean mUseGlobalDefaults;
 
   public boolean getBeta() {
     return mBeta;

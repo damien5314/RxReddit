@@ -97,18 +97,25 @@ class UserProfileTests : _RedditServiceTests() {
 
   @Test
   fun testLoadUserProfile_overview() = testLoadUserProfile("overview")
+
   @Test
   fun testLoadUserProfile_comments() = testLoadUserProfile("comments")
+
   @Test
   fun testLoadUserProfile_submitted() = testLoadUserProfile("submitted")
+
   @Test
   fun testLoadUserProfile_saved() = testLoadUserProfile("saved")
+
   @Test
   fun testLoadUserProfile_upvoted() = testLoadUserProfile("upvoted")
+
   @Test
   fun testLoadUserProfile_downvoted() = testLoadUserProfile("downvoted")
+
   @Test
   fun testLoadUserProfile_hidden() = testLoadUserProfile("hidden")
+
   @Test
   fun testLoadUserProfile_gilded() = testLoadUserProfile("gilded")
 

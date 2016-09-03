@@ -1,7 +1,9 @@
 {
-  "json":  {
-    "errors": ["generic test error"],
-    "data":  {
+  "json": {
+    "errors": [
+      "generic test error"
+    ],
+    "data": {
       "things": []
     }
   }

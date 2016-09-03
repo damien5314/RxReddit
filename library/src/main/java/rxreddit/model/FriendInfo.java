@@ -1,6 +1,7 @@
 package rxreddit.model;
 
 public class FriendInfo {
+
   Long date;
   String note;
   String name;

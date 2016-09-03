@@ -23,10 +23,11 @@ public class RxRedditUtil {
 
   /**
    * Generates a proper user agent string from the provided parameters
-   * @param platform Platform for which application is being developed
-   * @param pkgName Package name for the application
+   *
+   * @param platform    Platform for which application is being developed
+   * @param pkgName     Package name for the application
    * @param versionName Version of the application
-   * @param username reddit username of the application developer
+   * @param username    reddit username of the application developer
    * @return Formatted user agent string
    */
   public static String getUserAgent(
@@ -64,13 +65,14 @@ public class RxRedditUtil {
 
   /**
    * Returns a string containing the tokens joined by delimiters.
+   *
    * @param tokens an array objects to be joined. Strings will be formed from
-   *     the objects by calling object.toString().
+   *               the objects by calling object.toString().
    */
   public static String join(CharSequence delimiter, Object[] tokens) {
     StringBuilder sb = new StringBuilder();
     boolean firstTime = true;
-    for (Object token: tokens) {
+    for (Object token : tokens) {
       if (firstTime) {
         firstTime = false;
       } else {
@@ -83,13 +85,14 @@ public class RxRedditUtil {
 
   /**
    * Returns a string containing the tokens joined by delimiters.
+   *
    * @param tokens an array objects to be joined. Strings will be formed from
-   *     the objects by calling object.toString().
+   *               the objects by calling object.toString().
    */
   public static String join(CharSequence delimiter, Iterable tokens) {
     StringBuilder sb = new StringBuilder();
     boolean firstTime = true;
-    for (Object token: tokens) {
+    for (Object token : tokens) {
       if (firstTime) {
         firstTime = false;
       } else {
@@ -115,7 +118,7 @@ public class RxRedditUtil {
     int mid;
     for (String param : params) {
       mid = param.indexOf('=');
-      if (mid != -1) paramMap.put(param.substring(0, mid), param.substring(mid+1));
+      if (mid != -1) paramMap.put(param.substring(0, mid), param.substring(mid + 1));
     }
     return paramMap;
   }
