@@ -51,7 +51,7 @@ interface RedditAPI {
 
   @GET("/subreddits/mine/{where}")
   Observable<Response<ListingResponse>> getSubreddits(
-      @Path("where") String where);
+      @Path("where") String where, String before, String after);
 
   @GET("/{sort}.json")
   Observable<Response<ListingResponse>> getLinks(
