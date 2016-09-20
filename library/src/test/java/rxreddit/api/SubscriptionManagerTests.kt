@@ -11,10 +11,10 @@ import rxreddit.test.setBodyFromFile
 class SubscriptionManagerTests : _RedditServiceTests() {
 
   @Test
-  fun testGetSubscriberSubreddits() {
+  fun testGetSubreddits() {
     authenticateService()
 
-    val observable = service.getSubscriberSubreddits(null, null)
+    val observable = service.getSubreddits("subscriber", null, null)
     val observer = TestSubscriber.create<ListingResponse>()
 
     mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddits_mine_subscriber.json"))
@@ -24,5 +24,28 @@ class SubscriptionManagerTests : _RedditServiceTests() {
     observer.onNextEvents[0].apply {
       assertNotEquals("no data loaded", 0, data.children.size)
     }
+  }
+
+  @Test
+  fun testGetSubscriberSubreddits() {
+    // Get mockito to verify the helper methods were called?
+    service.getSubscriberSubreddits(null, null)
+        .subscribe()
+
+  }
+
+  @Test
+  fun testGetModeratorSubreddits() {
+
+  }
+
+  @Test
+  fun getContributorSubreddits() {
+
+  }
+
+  @Test
+  fun getSubreddits_noAuth() {
+
   }
 }

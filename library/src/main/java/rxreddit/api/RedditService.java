@@ -125,8 +125,7 @@ public class RedditService implements IRedditService {
     return getSubreddits("moderator", before, after);
   }
 
-  private Observable<ListingResponse> getSubreddits(
-      String where, String before, String after) {
+  Observable<ListingResponse> getSubreddits(String where, String before, String after) {
     return requireUserAccessToken().flatMap(token ->
         mAPI.getSubreddits(where, before, after)
             .flatMap(responseToBody()));

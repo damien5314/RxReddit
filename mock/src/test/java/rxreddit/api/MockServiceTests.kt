@@ -344,7 +344,7 @@ class MockServiceTests {
   fun testGetOkHttpClient() {
     val mockService = getRedditServiceMock()
     val userAgent = "sample-user-agent"
-    val client = mockService.getOkHttpClient(userAgent)
+    val client = mockService.getOkHttpClient(userAgent, 0, null, true)
     assertNotNull(client)
   }
 
