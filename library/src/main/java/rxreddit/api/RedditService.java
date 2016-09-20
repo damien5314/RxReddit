@@ -48,8 +48,8 @@ public class RedditService implements IRedditService {
             String baseUrl, String baseAuthUrl, String redditAppId, String redirectUri,
             String deviceId, String userAgent, AccessTokenManager atm, int cacheSizeBytes, File cacheFile,
             boolean loggingEnabled) {
-        mRedditAuthService =
-                new RedditAuthService(baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm, loggingEnabled);
+        mRedditAuthService = new RedditAuthService(
+                baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm, loggingEnabled);
         mAPI = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile, loggingEnabled);
     }
 
@@ -76,117 +76,149 @@ public class RedditService implements IRedditService {
         } catch (Exception e) {
             return Observable.error(new IllegalArgumentException("invalid callback url: " + callbackUrl));
         }
+
         if (params.containsKey("error")) {
             return Observable.error(
-                    new IllegalStateException("Error during user authentication: " + params.get("error")));
+                    new IllegalStateException("Error during user authentication: " + params.get("error"))
+            );
         }
+
         String authCode = params.get("code");
-        if (authCode == null)
+        if (authCode == null) {
             return Observable.error(new IllegalArgumentException("invalid callback url: " + callbackUrl));
+        }
+
         String state = params.get("state");
         return mRedditAuthService.onAuthCodeReceived(authCode, state);
     }
 
     @Override
     public Observable<UserIdentity> getUserIdentity() {
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.getUserIdentity()
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getUserIdentity()
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<UserSettings> getUserSettings() {
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.getUserSettings()
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getUserSettings()
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> updateUserSettings(Map<String, String> settings) {
         String json = new Gson().toJson(settings);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.updateUserSettings(body)
-                        .flatMap(responseToBody()));
+
+        return requireUserAccessToken().flatMap(
+                token ->
+                        mAPI.updateUserSettings(body)
+                                .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<ListingResponse> getSubreddits(String where, String before, String after) {
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.getSubreddits(where, before, after)
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getSubreddits(where, before, after)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<ListingResponse> loadLinks(
             String subreddit, String sort, String timespan, String before, String after) {
-        return requireAccessToken().flatMap(token -> {
-            String resolvedSort = sort != null ? sort : "hot";
-            return mAPI.getLinks(resolvedSort, subreddit, timespan, before, after)
-                    .flatMap(responseToBody());
-        });
+        return requireAccessToken().flatMap(
+                token -> {
+                    String resolvedSort = sort != null ? sort : "hot";
+                    return mAPI.getLinks(resolvedSort, subreddit, timespan, before, after)
+                            .flatMap(responseToBody());
+                }
+        );
     }
 
     @Override
     public Observable<List<ListingResponse>> loadLinkComments(
             String subreddit, String article, String sort, String commentId) {
-        if (subreddit == null)
+        if (subreddit == null) {
             return Observable.error(new IllegalArgumentException("subreddit == null"));
-        if (article == null)
+        }
+        if (article == null) {
             return Observable.error(new IllegalArgumentException("article == null"));
-        return requireAccessToken().flatMap(token ->
-                mAPI.getComments(subreddit, article, sort, commentId)
-                        .flatMap(responseToBody()));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getComments(subreddit, article, sort, commentId)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<MoreChildrenResponse> loadMoreChildren(
             String linkId, List<String> childrenIds, String sort) {
-        if (linkId == null)
+        if (linkId == null) {
             return Observable.error(new IllegalArgumentException("linkId == null"));
-        if (childrenIds == null || childrenIds.size() == 0)
+        }
+
+        if (childrenIds == null || childrenIds.size() == 0) {
             return Observable.error(new IllegalArgumentException("no comment IDs provided"));
-        return requireAccessToken().flatMap(token ->
-                mAPI.getMoreChildren("t3_" + linkId, RxRedditUtil.join(",", childrenIds), sort)
-                        .flatMap(responseToBody()));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getMoreChildren("t3_" + linkId, RxRedditUtil.join(",", childrenIds), sort)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<UserIdentity> getUserInfo(String username) {
-        return requireAccessToken().flatMap(token ->
-                mAPI.getUserInfo(username)
+        return requireAccessToken().flatMap(
+                token -> mAPI.getUserInfo(username)
                         .flatMap(responseToBody())
-                        .map(UserIdentityListing::getUser));
+                        .map(UserIdentityListing::getUser)
+        );
     }
 
     @Override
     public Observable<FriendInfo> getFriendInfo(String username) {
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.getFriendInfo(username)
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getFriendInfo(username)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<List<Listing>> getUserTrophies(String username) {
         // TODO: This should return a List of Trophies instead of Listings
-        if (username == null)
+        if (username == null) {
             return Observable.error(new IllegalArgumentException("username == null"));
-        return requireAccessToken().flatMap(token ->
-                mAPI.getUserTrophies(username)
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getUserTrophies(username)
                         .flatMap(responseToBody())
-                        .map(trophyResponse -> trophyResponse.getData().getTrophies()));
+                        .map(trophyResponse -> trophyResponse.getData().getTrophies())
+        );
     }
 
     @Override
     public Observable<ListingResponse> loadUserProfile(
             String show, String username, String sort, String timespan, String before, String after) {
-        if (show == null)
+        if (show == null) {
             return Observable.error(new IllegalArgumentException("show == null"));
-        if (username == null)
+        }
+
+        if (username == null) {
             return Observable.error(new IllegalArgumentException("username == null"));
-        return requireAccessToken().flatMap(token ->
-                mAPI.getUserProfile(show, username, sort, timespan, before, after)
-                        .flatMap(responseToBody()));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getUserProfile(show, username, sort, timespan, before, after)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
@@ -194,74 +226,93 @@ public class RedditService implements IRedditService {
         if (username == null)
             return Observable.error(new IllegalArgumentException("username == null"));
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{}");
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.addFriend(username, body)
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.addFriend(username, body)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> deleteFriend(String username) {
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.deleteFriend(username)
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.deleteFriend(username)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> saveFriendNote(String username, String note) {
-        if (RxRedditUtil.isEmpty(note))
-            return Observable.error(
-                    new IllegalArgumentException("user note should be non-empty"));
+        if (RxRedditUtil.isEmpty(note)) {
+            return Observable.error(new IllegalArgumentException("user note should be non-empty"));
+        }
+
         String json = new Gson().toJson(new Friend(note));
+
         return requireUserAccessToken().flatMap(token ->
                 mAPI.addFriend(username, RequestBody.create(MediaType.parse("application/json"), json))
-                        .flatMap(responseToBody()));
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Subreddit> getSubredditInfo(String subreddit) {
-        if (subreddit == null)
+        if (subreddit == null) {
             return Observable.error(new IllegalArgumentException("subreddit == null"));
-        return requireAccessToken().flatMap(token ->
-                mAPI.getSubredditInfo(subreddit)
-                        .flatMap(responseToBody()));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getSubredditInfo(subreddit)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> vote(String fullname, int direction) {
-        if (fullname == null)
+        if (fullname == null) {
             return Observable.error(new IllegalArgumentException("fullname == null"));
+        }
+
         return requireUserAccessToken().flatMap(token ->
                 mAPI.vote(fullname, direction)
-                        .flatMap(responseToBody()));
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> save(String fullname, String category, boolean toSave) {
-        if (fullname == null)
+        if (fullname == null) {
             return Observable.error(new IllegalArgumentException("fullname == null"));
+        }
+
         if (toSave) { // Save
-            return requireUserAccessToken().flatMap(token ->
-                    mAPI.save(fullname, category)
-                            .flatMap(responseToBody()));
+            return requireUserAccessToken().flatMap(
+                    token -> mAPI.save(fullname, category)
+                            .flatMap(responseToBody())
+            );
         } else { // Unsave
-            return requireUserAccessToken().flatMap(token ->
-                    mAPI.unsave(fullname)
-                            .flatMap(responseToBody()));
+            return requireUserAccessToken().flatMap(
+                    token -> mAPI.unsave(fullname)
+                            .flatMap(responseToBody())
+            );
         }
     }
 
     @Override
     public Observable<Void> hide(String fullname, boolean toHide) {
-        if (fullname == null)
+        if (fullname == null) {
             return Observable.error(new IllegalArgumentException("fullname == null"));
+        }
+
         if (toHide) { // Hide
-            return requireUserAccessToken().flatMap(token ->
-                    mAPI.hide(fullname)
-                            .flatMap(responseToBody()));
+            return requireUserAccessToken().flatMap(
+                    token -> mAPI.hide(fullname)
+                            .flatMap(responseToBody())
+            );
         } else { // Unhide
-            return requireUserAccessToken().flatMap(token ->
-                    mAPI.unhide(fullname)
-                            .flatMap(responseToBody()));
+            return requireUserAccessToken().flatMap(
+                    token -> mAPI.unhide(fullname)
+                            .flatMap(responseToBody())
+            );
         }
     }
 
@@ -272,52 +323,65 @@ public class RedditService implements IRedditService {
 
     @Override
     public Observable<Comment> addComment(String parentId, String text) {
-        if (parentId == null)
+        if (parentId == null) {
             return Observable.error(new IllegalArgumentException("parentId == null"));
-        if (text == null)
+        }
+
+        if (text == null) {
             return Observable.error(new IllegalArgumentException("text == null"));
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.addComment(parentId, text)
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.addComment(parentId, text)
                         .flatMap(responseToBody())
                         .map(response -> {
                             List<String> errors = response.getErrors();
+
                             if (errors.size() > 0) {
                                 throw new IllegalStateException("an error occurred: " + response.getErrors().get(0));
                             }
+
                             return response.getComment();
-                        }));
+                        })
+        );
     }
 
     @Override
     public Observable<ListingResponse> getInbox(String show, String before, String after) {
-        if (show == null)
+        if (show == null) {
             return Observable.error(new IllegalArgumentException("show == null"));
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.getInbox(show, before, after)
-                        .flatMap(responseToBody()));
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getInbox(show, before, after)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> markAllMessagesRead() {
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.markAllMessagesRead()
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.markAllMessagesRead()
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> markMessagesRead(String commaSeparatedFullnames) {
         // TODO: This should take a List of message fullnames and construct the parameter
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.markMessagesRead(commaSeparatedFullnames)
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.markMessagesRead(commaSeparatedFullnames)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
     public Observable<Void> markMessagesUnread(String commaSeparatedFullnames) {
         // TODO: This should take a List of message fullnames and construct the parameter
-        return requireUserAccessToken().flatMap(token ->
-                mAPI.markMessagesUnread(commaSeparatedFullnames)
-                        .flatMap(responseToBody()));
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.markMessagesUnread(commaSeparatedFullnames)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
