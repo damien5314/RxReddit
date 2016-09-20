@@ -8,92 +8,93 @@ import rxreddit.model.ApplicationAccessToken;
 import rxreddit.model.UserAccessToken;
 
 public class AndroidAccessTokenManager implements AccessTokenManager {
-  private static final String PREFS_USER_ACCESS_TOKEN = "prefs_user_access_token";
-  private static final String PREFS_APPLICATION_ACCESS_TOKEN = "prefs_application_access_token";
-  private static final String PREF_ACCESS_TOKEN = "pref_access_token";
-  private static final String PREF_TOKEN_TYPE = "pref_token_type";
-  private static final String PREF_EXPIRATION = "pref_expiration";
-  private static final String PREF_SCOPE = "pref_scope";
-  private static final String PREF_REFRESH_TOKEN = "pref_refresh_token";
 
-  private Context mContext;
+    private static final String PREFS_USER_ACCESS_TOKEN = "prefs_user_access_token";
+    private static final String PREFS_APPLICATION_ACCESS_TOKEN = "prefs_application_access_token";
+    private static final String PREF_ACCESS_TOKEN = "pref_access_token";
+    private static final String PREF_TOKEN_TYPE = "pref_token_type";
+    private static final String PREF_EXPIRATION = "pref_expiration";
+    private static final String PREF_SCOPE = "pref_scope";
+    private static final String PREF_REFRESH_TOKEN = "pref_refresh_token";
 
-  public AndroidAccessTokenManager(Context context) {
-    mContext = context.getApplicationContext();
-  }
+    private Context mContext;
 
-  @Override
-  public UserAccessToken getUserAccessToken() {
-    return getSavedUserAccessToken();
-  }
+    public AndroidAccessTokenManager(Context context) {
+        mContext = context.getApplicationContext();
+    }
 
-  private UserAccessToken getSavedUserAccessToken() {
-    SharedPreferences sp =  mContext.getSharedPreferences(
-        PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE);
-    if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
-    UserAccessToken token = new UserAccessToken();
-    token.setToken(sp.getString(PREF_ACCESS_TOKEN, null));
-    token.setTokenType(sp.getString(PREF_TOKEN_TYPE, null));
-    token.setExpiration(sp.getLong(PREF_EXPIRATION, 0));
-    token.setScope(sp.getString(PREF_SCOPE, null));
-    token.setRefreshToken(sp.getString(PREF_REFRESH_TOKEN, null));
-    return token;
-  }
+    @Override
+    public UserAccessToken getUserAccessToken() {
+        return getSavedUserAccessToken();
+    }
 
-  @Override
-  public ApplicationAccessToken getApplicationAccessToken() {
-    return getSavedApplicationAccessToken();
-  }
+    private UserAccessToken getSavedUserAccessToken() {
+        SharedPreferences sp = mContext.getSharedPreferences(
+                PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE);
+        if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
+        UserAccessToken token = new UserAccessToken();
+        token.setToken(sp.getString(PREF_ACCESS_TOKEN, null));
+        token.setTokenType(sp.getString(PREF_TOKEN_TYPE, null));
+        token.setExpiration(sp.getLong(PREF_EXPIRATION, 0));
+        token.setScope(sp.getString(PREF_SCOPE, null));
+        token.setRefreshToken(sp.getString(PREF_REFRESH_TOKEN, null));
+        return token;
+    }
 
-  private ApplicationAccessToken getSavedApplicationAccessToken() {
-    SharedPreferences sp =  mContext.getSharedPreferences(
-        PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE);
-    if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
-    ApplicationAccessToken token = new ApplicationAccessToken();
-    token.setToken(sp.getString(PREF_ACCESS_TOKEN, null));
-    token.setTokenType(sp.getString(PREF_TOKEN_TYPE, null));
-    token.setExpiration(sp.getLong(PREF_EXPIRATION, 0));
-    token.setScope(sp.getString(PREF_SCOPE, null));
-    token.setRefreshToken(sp.getString(PREF_REFRESH_TOKEN, null));
-    return token;
-  }
+    @Override
+    public ApplicationAccessToken getApplicationAccessToken() {
+        return getSavedApplicationAccessToken();
+    }
 
-  @Override
-  public void saveUserAccessToken(UserAccessToken token) {
-    mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
-        .putString(PREF_ACCESS_TOKEN, token.getToken())
-        .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
-        .putString(PREF_TOKEN_TYPE, token.getTokenType())
-        .putLong(PREF_EXPIRATION, token.getExpiration())
-        .putString(PREF_SCOPE, token.getScope())
-        .apply();
-  }
+    private ApplicationAccessToken getSavedApplicationAccessToken() {
+        SharedPreferences sp = mContext.getSharedPreferences(
+                PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE);
+        if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
+        ApplicationAccessToken token = new ApplicationAccessToken();
+        token.setToken(sp.getString(PREF_ACCESS_TOKEN, null));
+        token.setTokenType(sp.getString(PREF_TOKEN_TYPE, null));
+        token.setExpiration(sp.getLong(PREF_EXPIRATION, 0));
+        token.setScope(sp.getString(PREF_SCOPE, null));
+        token.setRefreshToken(sp.getString(PREF_REFRESH_TOKEN, null));
+        return token;
+    }
 
-  @Override
-  public void saveApplicationAccessToken(ApplicationAccessToken token) {
-    mContext.getSharedPreferences(
-        PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
-        .putString(PREF_ACCESS_TOKEN, token.getToken())
-        .putString(PREF_TOKEN_TYPE, token.getTokenType())
-        .putLong(PREF_EXPIRATION, token.getExpiration())
-        .putString(PREF_SCOPE, token.getScope())
-        .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
-        .apply();
-  }
+    @Override
+    public void saveUserAccessToken(UserAccessToken token) {
+        mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
+                .putString(PREF_ACCESS_TOKEN, token.getToken())
+                .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
+                .putString(PREF_TOKEN_TYPE, token.getTokenType())
+                .putLong(PREF_EXPIRATION, token.getExpiration())
+                .putString(PREF_SCOPE, token.getScope())
+                .apply();
+    }
 
-  @Override
-  public void clearSavedUserAccessToken() {
-    mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE)
-        .edit()
-        .clear()
-        .apply();
-  }
+    @Override
+    public void saveApplicationAccessToken(ApplicationAccessToken token) {
+        mContext.getSharedPreferences(
+                PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
+                .putString(PREF_ACCESS_TOKEN, token.getToken())
+                .putString(PREF_TOKEN_TYPE, token.getTokenType())
+                .putLong(PREF_EXPIRATION, token.getExpiration())
+                .putString(PREF_SCOPE, token.getScope())
+                .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
+                .apply();
+    }
 
-  @Override
-  public void clearSavedApplicationAccessToken() {
-    mContext.getSharedPreferences(PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE)
-        .edit()
-        .clear()
-        .apply();
-  }
+    @Override
+    public void clearSavedUserAccessToken() {
+        mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE)
+                .edit()
+                .clear()
+                .apply();
+    }
+
+    @Override
+    public void clearSavedApplicationAccessToken() {
+        mContext.getSharedPreferences(PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE)
+                .edit()
+                .clear()
+                .apply();
+    }
 }

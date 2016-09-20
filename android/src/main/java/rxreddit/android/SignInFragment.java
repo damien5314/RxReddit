@@ -28,154 +28,154 @@ import static rxreddit.android.SignInActivity.EXTRA_CALLBACK_URL;
 
 public class SignInFragment extends Fragment {
 
-  private static final String ARG_AUTH_URL = "ARG_AUTH_URL";
+    private static final String ARG_AUTH_URL = "ARG_AUTH_URL";
 
-  private String mAuthorizationUrl;
-  private String mRedirectUri;
-  private WebView mWebView;
+    private String mAuthorizationUrl;
+    private String mRedirectUri;
+    private WebView mWebView;
 
-  public static SignInFragment newInstance(String url) {
-    Bundle args = new Bundle();
-    args.putString(ARG_AUTH_URL, url);
-    SignInFragment fragment = new SignInFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setRetainInstance(true);
-    setHasOptionsMenu(true);
-
-    Bundle args = getArguments();
-    mAuthorizationUrl = args.getString(ARG_AUTH_URL);
-    Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(mAuthorizationUrl);
-    mRedirectUri = params.get("redirect_uri");
-  }
-
-  @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
-
-    mWebView = (WebView) view.findViewById(R.id.rxr_web_view);
-    configureWebView(mWebView);
-
-    mWebView.setWebViewClient(
-        new RxRedditWebViewClient(this, mRedirectUri, mAuthorizationUrl));
-
-    final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.rxr_progress_bar);
-    progressBar.setMax(100);
-    mWebView.setWebChromeClient(getProgressBarChromeClient(progressBar));
-
-    mWebView.setOnKeyListener(getBackKeyListener());
-
-    mWebView.loadUrl(mAuthorizationUrl);
-
-    return view;
-  }
-
-  private void configureWebView(@NonNull WebView webView) {
-    CookieManager cookieManager = CookieManager.getInstance();
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      cookieManager.removeAllCookies(null);
-    }
-
-    WebSettings settings = webView.getSettings();
-    settings.setSaveFormData(false);
-    settings.setSavePassword(false); // Not needed for API level 18 or greater (deprecated)
-  }
-
-  @Override
-  public void onDestroyView() {
-    if (mWebView != null) {
-      ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-      mWebView.removeAllViews();
-      mWebView.destroy();
-    }
-    super.onDestroyView();
-  }
-
-  private void onCallbackUrlReceived(String url) {
-    finish(url);
-  }
-
-  private void finish(String url) {
-    Intent data = new Intent();
-    data.putExtra(EXTRA_CALLBACK_URL, url);
-
-    if (getTargetFragment() != null) {
-      getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, data);
-    } else if (getActivity() instanceof SignInActivity) {
-      getActivity().setResult(RESULT_OK, data);
-      getActivity().finish();
-    }
-  }
-
-  protected static class RxRedditWebViewClient extends WebViewClient {
-
-    private final SignInFragment mSignInFragment;
-    private final String mRedirectUri;
-    private final String mAuthorizationUrl;
-
-    public RxRedditWebViewClient(
-        @NonNull SignInFragment fragment, @NonNull String redirectUri, @NonNull String authorizationUrl) {
-      mSignInFragment = fragment;
-      mRedirectUri = redirectUri;
-      mAuthorizationUrl = authorizationUrl;
+    public static SignInFragment newInstance(String url) {
+        Bundle args = new Bundle();
+        args.putString(ARG_AUTH_URL, url);
+        SignInFragment fragment = new SignInFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-      if (url.contains(mRedirectUri) && !url.equals(mAuthorizationUrl)) {
-        mSignInFragment.onCallbackUrlReceived(url);
-        return true;
-      }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
 
-      return false;
+        Bundle args = getArguments();
+        mAuthorizationUrl = args.getString(ARG_AUTH_URL);
+        Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(mAuthorizationUrl);
+        mRedirectUri = params.get("redirect_uri");
     }
-  }
 
-  protected WebChromeClient getProgressBarChromeClient(final ProgressBar progressBar) {
-    return new WebChromeClient() {
-      @Override
-      public void onProgressChanged(WebView view, int progress) {
-        if (progress == 100) {
-          progressBar.setVisibility(View.INVISIBLE);
-        } else {
-          progressBar.setVisibility(View.VISIBLE);
-          progressBar.setProgress(progress);
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
+
+        mWebView = (WebView) view.findViewById(R.id.rxr_web_view);
+        configureWebView(mWebView);
+
+        mWebView.setWebViewClient(
+                new RxRedditWebViewClient(this, mRedirectUri, mAuthorizationUrl));
+
+        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.rxr_progress_bar);
+        progressBar.setMax(100);
+        mWebView.setWebChromeClient(getProgressBarChromeClient(progressBar));
+
+        mWebView.setOnKeyListener(getBackKeyListener());
+
+        mWebView.loadUrl(mAuthorizationUrl);
+
+        return view;
+    }
+
+    private void configureWebView(@NonNull WebView webView) {
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeAllCookies(null);
         }
-      }
-    };
-  }
 
-  protected View.OnKeyListener getBackKeyListener() {
-    return (v1, keyCode, event) -> {
-      // Check if the key event was the Back button and if there's history
-      if (event.getAction() == KeyEvent.ACTION_UP
-          && (keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-        mWebView.goBack();
-        return true;
-      }
-      return false;
-    };
-  }
-
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    super.onCreateOptionsMenu(menu, inflater);
-    inflater.inflate(R.menu.rxr_web_view, menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    if (id == R.id.action_refresh) {
-      mWebView.reload();
-      return true;
+        WebSettings settings = webView.getSettings();
+        settings.setSaveFormData(false);
+        settings.setSavePassword(false); // Not needed for API level 18 or greater (deprecated)
     }
-    return super.onOptionsItemSelected(item);
-  }
+
+    @Override
+    public void onDestroyView() {
+        if (mWebView != null) {
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+            mWebView.removeAllViews();
+            mWebView.destroy();
+        }
+        super.onDestroyView();
+    }
+
+    private void onCallbackUrlReceived(String url) {
+        finish(url);
+    }
+
+    private void finish(String url) {
+        Intent data = new Intent();
+        data.putExtra(EXTRA_CALLBACK_URL, url);
+
+        if (getTargetFragment() != null) {
+            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, data);
+        } else if (getActivity() instanceof SignInActivity) {
+            getActivity().setResult(RESULT_OK, data);
+            getActivity().finish();
+        }
+    }
+
+    protected static class RxRedditWebViewClient extends WebViewClient {
+
+        private final SignInFragment mSignInFragment;
+        private final String mRedirectUri;
+        private final String mAuthorizationUrl;
+
+        public RxRedditWebViewClient(
+                @NonNull SignInFragment fragment, @NonNull String redirectUri, @NonNull String authorizationUrl) {
+            mSignInFragment = fragment;
+            mRedirectUri = redirectUri;
+            mAuthorizationUrl = authorizationUrl;
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.contains(mRedirectUri) && !url.equals(mAuthorizationUrl)) {
+                mSignInFragment.onCallbackUrlReceived(url);
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    protected WebChromeClient getProgressBarChromeClient(final ProgressBar progressBar) {
+        return new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int progress) {
+                if (progress == 100) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(progress);
+                }
+            }
+        };
+    }
+
+    protected View.OnKeyListener getBackKeyListener() {
+        return (v1, keyCode, event) -> {
+            // Check if the key event was the Back button and if there's history
+            if (event.getAction() == KeyEvent.ACTION_UP
+                    && (keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+                mWebView.goBack();
+                return true;
+            }
+            return false;
+        };
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.rxr_web_view, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            mWebView.reload();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
