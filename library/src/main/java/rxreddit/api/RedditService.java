@@ -114,9 +114,8 @@ public class RedditService implements IRedditService {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
 
         return requireUserAccessToken().flatMap(
-                token ->
-                        mAPI.updateUserSettings(body)
-                                .flatMap(responseToBody())
+                token -> mAPI.updateUserSettings(body)
+                        .flatMap(responseToBody())
         );
     }
 
@@ -144,10 +143,10 @@ public class RedditService implements IRedditService {
     public Observable<List<ListingResponse>> loadLinkComments(
             String subreddit, String article, String sort, String commentId) {
         if (subreddit == null) {
-            return Observable.error(new IllegalArgumentException("subreddit == null"));
+            return Observable.error(new NullPointerException("subreddit == null"));
         }
         if (article == null) {
-            return Observable.error(new IllegalArgumentException("article == null"));
+            return Observable.error(new NullPointerException("article == null"));
         }
 
         return requireAccessToken().flatMap(
@@ -160,11 +159,11 @@ public class RedditService implements IRedditService {
     public Observable<MoreChildrenResponse> loadMoreChildren(
             String linkId, List<String> childrenIds, String sort) {
         if (linkId == null) {
-            return Observable.error(new IllegalArgumentException("linkId == null"));
+            return Observable.error(new NullPointerException("linkId == null"));
         }
 
         if (childrenIds == null || childrenIds.size() == 0) {
-            return Observable.error(new IllegalArgumentException("no comment IDs provided"));
+            return Observable.error(new NullPointerException("no comment IDs provided"));
         }
 
         return requireAccessToken().flatMap(
@@ -194,7 +193,7 @@ public class RedditService implements IRedditService {
     public Observable<List<Listing>> getUserTrophies(String username) {
         // TODO: This should return a List of Trophies instead of Listings
         if (username == null) {
-            return Observable.error(new IllegalArgumentException("username == null"));
+            return Observable.error(new NullPointerException("username == null"));
         }
 
         return requireAccessToken().flatMap(
@@ -208,11 +207,11 @@ public class RedditService implements IRedditService {
     public Observable<ListingResponse> loadUserProfile(
             String show, String username, String sort, String timespan, String before, String after) {
         if (show == null) {
-            return Observable.error(new IllegalArgumentException("show == null"));
+            return Observable.error(new NullPointerException("show == null"));
         }
 
         if (username == null) {
-            return Observable.error(new IllegalArgumentException("username == null"));
+            return Observable.error(new NullPointerException("username == null"));
         }
 
         return requireAccessToken().flatMap(
@@ -224,7 +223,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<Void> addFriend(String username) {
         if (username == null)
-            return Observable.error(new IllegalArgumentException("username == null"));
+            return Observable.error(new NullPointerException("username == null"));
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{}");
         return requireUserAccessToken().flatMap(
                 token -> mAPI.addFriend(username, body)
@@ -257,7 +256,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<Subreddit> getSubredditInfo(String subreddit) {
         if (subreddit == null) {
-            return Observable.error(new IllegalArgumentException("subreddit == null"));
+            return Observable.error(new NullPointerException("subreddit == null"));
         }
 
         return requireAccessToken().flatMap(
@@ -269,7 +268,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<Void> vote(String fullname, int direction) {
         if (fullname == null) {
-            return Observable.error(new IllegalArgumentException("fullname == null"));
+            return Observable.error(new NullPointerException("fullname == null"));
         }
 
         return requireUserAccessToken().flatMap(token ->
@@ -281,7 +280,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<Void> save(String fullname, String category, boolean toSave) {
         if (fullname == null) {
-            return Observable.error(new IllegalArgumentException("fullname == null"));
+            return Observable.error(new NullPointerException("fullname == null"));
         }
 
         if (toSave) { // Save
@@ -300,7 +299,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<Void> hide(String fullname, boolean toHide) {
         if (fullname == null) {
-            return Observable.error(new IllegalArgumentException("fullname == null"));
+            return Observable.error(new NullPointerException("fullname == null"));
         }
 
         if (toHide) { // Hide
@@ -324,11 +323,11 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<Comment> addComment(String parentId, String text) {
         if (parentId == null) {
-            return Observable.error(new IllegalArgumentException("parentId == null"));
+            return Observable.error(new NullPointerException("parentId == null"));
         }
 
         if (text == null) {
-            return Observable.error(new IllegalArgumentException("text == null"));
+            return Observable.error(new NullPointerException("text == null"));
         }
 
         return requireUserAccessToken().flatMap(
@@ -349,7 +348,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<ListingResponse> getInbox(String show, String before, String after) {
         if (show == null) {
-            return Observable.error(new IllegalArgumentException("show == null"));
+            return Observable.error(new NullPointerException("show == null"));
         }
 
         return requireUserAccessToken().flatMap(
