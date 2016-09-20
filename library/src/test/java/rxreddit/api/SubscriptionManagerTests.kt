@@ -29,7 +29,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
   @Test
   fun testGetSubscriberSubreddits() {
     // Get mockito to verify the helper methods were called?
-    service.getSubscriberSubreddits(null, null)
+    service.getSubreddits("subscriber", null, null)
         .subscribe()
 
   }

@@ -30,11 +30,7 @@ interface IRedditService {
 
   Observable<Void> updateUserSettings(Map<String, String> settings);
 
-  Observable<ListingResponse> getSubscriberSubreddits(String before, String after);
-
-  Observable<ListingResponse> getContributorSubreddits(String before, String after);
-
-  Observable<ListingResponse> getModeratorSubreddits(String before, String after);
+  Observable<ListingResponse> getSubreddits(String where, String before, String after);
 
   Observable<ListingResponse> loadLinks(
       String subreddit, String sort,
