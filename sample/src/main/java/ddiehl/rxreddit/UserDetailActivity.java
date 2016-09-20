@@ -18,61 +18,61 @@ import rxreddit.model.UserIdentity;
 
 public class UserDetailActivity extends AppCompatActivity {
 
-  private RedditService mRedditService;
+    private RedditService mRedditService;
 
-  private TextView mUsername;
-  private TextView mJoinDate;
-  private TextView mLinkKarma;
-  private TextView mCommentKarma;
+    private TextView mUsername;
+    private TextView mJoinDate;
+    private TextView mLinkKarma;
+    private TextView mCommentKarma;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_user_detail);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_detail);
 
-    mRedditService = RedditServiceProvider.get(this);
+        mRedditService = RedditServiceProvider.get(this);
 
-    mUsername = (TextView) findViewById(R.id.username);
-    mJoinDate = (TextView) findViewById(R.id.join_date);
-    mLinkKarma = (TextView) findViewById(R.id.link_karma);
-    mCommentKarma = (TextView) findViewById(R.id.comment_karma);
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-
-    if (mRedditService.isUserAuthorized()) {
-      mRedditService.getUserIdentity()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(onUserIdentityRetrieved(), onError());
+        mUsername = (TextView) findViewById(R.id.username);
+        mJoinDate = (TextView) findViewById(R.id.join_date);
+        mLinkKarma = (TextView) findViewById(R.id.link_karma);
+        mCommentKarma = (TextView) findViewById(R.id.comment_karma);
     }
-  }
 
-  private Action1<UserIdentity> onUserIdentityRetrieved() {
-    return identity -> {
-      mUsername.setText(identity.getName());
-      mJoinDate.setText(
-          String.format(
-              getString(R.string.username_formatter),
-              SimpleDateFormat.getDateInstance()
-                  .format(new Date(identity.getCreatedUTC() * 1000))));
-      mLinkKarma.setText(
-          String.format(
-              getString(R.string.link_karma_formatter),
-              identity.getLinkKarma()));
-      mCommentKarma.setText(
-          String.format(
-              getString(R.string.comment_karma_formatter),
-              identity.getCommentKarma()));
-    };
-  }
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-  private Action1<Throwable> onError() {
-    return error -> {
-      Snackbar.make(mUsername, R.string.get_identity_error, Snackbar.LENGTH_SHORT).show();
-      Log.e("RxReddit", "error retrieving user identity", error);
-    };
-  }
+        if (mRedditService.isUserAuthorized()) {
+            mRedditService.getUserIdentity()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(onUserIdentityRetrieved(), onError());
+        }
+    }
+
+    private Action1<UserIdentity> onUserIdentityRetrieved() {
+        return identity -> {
+            mUsername.setText(identity.getName());
+            mJoinDate.setText(
+                    String.format(
+                            getString(R.string.username_formatter),
+                            SimpleDateFormat.getDateInstance()
+                                    .format(new Date(identity.getCreatedUTC() * 1000))));
+            mLinkKarma.setText(
+                    String.format(
+                            getString(R.string.link_karma_formatter),
+                            identity.getLinkKarma()));
+            mCommentKarma.setText(
+                    String.format(
+                            getString(R.string.comment_karma_formatter),
+                            identity.getCommentKarma()));
+        };
+    }
+
+    private Action1<Throwable> onError() {
+        return error -> {
+            Snackbar.make(mUsername, R.string.get_identity_error, Snackbar.LENGTH_SHORT).show();
+            Log.e("RxReddit", "error retrieving user identity", error);
+        };
+    }
 }

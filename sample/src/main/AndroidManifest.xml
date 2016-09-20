@@ -2,22 +2,22 @@
 <manifest package="ddiehl.rxreddit.sample"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
-  <application
-      android:allowBackup="true"
-      android:label="@string/app_name"
-      android:supportsRtl="true"
-      android:theme="@style/AppTheme">
-    <activity android:name="ddiehl.rxreddit.SubredditActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+    <application
+            android:allowBackup="true"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name="ddiehl.rxreddit.SubredditActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity android:name="rxreddit.android.SignInActivity" />
-    <activity android:name="ddiehl.rxreddit.UserDetailActivity" />
-  </application>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="rxreddit.android.SignInActivity"/>
+        <activity android:name="ddiehl.rxreddit.UserDetailActivity"/>
+    </application>
 
 </manifest>

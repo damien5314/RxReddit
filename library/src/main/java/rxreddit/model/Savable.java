@@ -2,9 +2,9 @@ package rxreddit.model;
 
 public interface Savable {
 
-  boolean isSaved();
+    boolean isSaved();
 
-  void isSaved(boolean b);
+    void isSaved(boolean b);
 
-  String getFullName();
+    String getFullName();
 }

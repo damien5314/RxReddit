@@ -4,34 +4,34 @@ import com.google.gson.annotations.SerializedName;
 
 public abstract class AbsComment extends Listing {
 
-  private int depth;
-  private boolean isVisible = true;
+    private int depth;
+    private boolean isVisible = true;
 
-  public abstract boolean isCollapsed();
+    public abstract boolean isCollapsed();
 
-  public abstract void setCollapsed(boolean b);
+    public abstract void setCollapsed(boolean b);
 
-  public abstract String getParentId();
+    public abstract String getParentId();
 
-  public int getDepth() {
-    return this.depth;
-  }
+    public int getDepth() {
+        return this.depth;
+    }
 
-  public void setDepth(int depth) {
-    this.depth = depth;
-  }
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
 
-  public boolean isVisible() {
-    return this.isVisible;
-  }
+    public boolean isVisible() {
+        return this.isVisible;
+    }
 
-  public void setVisible(boolean b) {
-    this.isVisible = b;
-  }
+    public void setVisible(boolean b) {
+        this.isVisible = b;
+    }
 
-  public static abstract class Data extends ListingData {
+    public static abstract class Data extends ListingData {
 
-    @SerializedName("parent_id")
-    String parentId;
-  }
+        @SerializedName("parent_id")
+        String parentId;
+    }
 }

@@ -6,20 +6,20 @@ import rxreddit.model.UserAccessToken;
 
 interface IRedditAuthService {
 
-  String getRedirectUri();
+    String getRedirectUri();
 
-  String getAuthorizationUrl();
+    String getAuthorizationUrl();
 
-  Observable<UserAccessToken> onAuthCodeReceived(String authCode, String state);
+    Observable<UserAccessToken> onAuthCodeReceived(String authCode, String state);
 
-  boolean isUserAuthorized();
+    boolean isUserAuthorized();
 
-  AccessToken getAccessToken();
+    AccessToken getAccessToken();
 
-  Observable<AccessToken> refreshAccessToken();
+    Observable<AccessToken> refreshAccessToken();
 
-  Observable<UserAccessToken> refreshUserAccessToken();
+    Observable<UserAccessToken> refreshUserAccessToken();
 
-  Observable<Void> revokeUserAuthentication();
+    Observable<Void> revokeUserAuthentication();
 
 }

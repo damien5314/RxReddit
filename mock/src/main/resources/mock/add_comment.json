@@ -1,23 +1,23 @@
 {
-  "json":  {
-    "errors":  [],
-    "data":  {
-      "things":  [
-         {
+  "json": {
+    "errors": [],
+    "data": {
+      "things": [
+        {
           "kind": "t1",
-          "data":  {
+          "data": {
             "subreddit_id": "t5_36w64",
             "banned_by": null,
             "removal_reason": null,
             "link_id": "t3_40hx2m",
             "likes": true,
             "replies": "",
-            "user_reports":  [],
+            "user_reports": [],
             "saved": false,
             "id": "cz5xbvs",
             "gilded": 0,
             "archived": false,
-            "report_reasons":  [],
+            "report_reasons": [],
             "author": "damien5314",
             "parent_id": "t3_40hx2m",
             "score": 1,
@@ -36,7 +36,7 @@
             "author_flair_text": null,
             "created_utc": 1453337580,
             "ups": 1,
-            "mod_reports":  [],
+            "mod_reports": [],
             "num_reports": 0,
             "distinguished": null
           }

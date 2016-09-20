@@ -2,9 +2,9 @@ package rxreddit.model;
 
 public interface Hideable {
 
-  boolean isHidden();
+    boolean isHidden();
 
-  void isHidden(Boolean b);
+    void isHidden(Boolean b);
 
-  String getFullName();
+    String getFullName();
 }

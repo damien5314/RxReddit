@@ -6,31 +6,31 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class AddCommentResponse {
 
-  private Json json;
+    private Json json;
 
-  public List<String> getErrors() {
-    if (json == null || json.errors == null) return new ArrayList<>();
-    return json.errors;
-  }
+    public List<String> getErrors() {
+        if (json == null || json.errors == null) return new ArrayList<>();
+        return json.errors;
+    }
 
-  public Comment getComment() {
-    if (json == null
-        || json.data == null
-        || json.data.things == null
-        || json.data.things.size() == 0)
-      return null;
-    return json.data.things.get(0);
-  }
+    public Comment getComment() {
+        if (json == null
+                || json.data == null
+                || json.data.things == null
+                || json.data.things.size() == 0)
+            return null;
+        return json.data.things.get(0);
+    }
 
-  private static class Json {
+    private static class Json {
 
-    private List<String> errors;
-    private Data data;
-  }
+        private List<String> errors;
+        private Data data;
+    }
 
-  private static class Data {
+    private static class Data {
 
-    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    private List<Comment> things;
-  }
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        private List<Comment> things;
+    }
 }

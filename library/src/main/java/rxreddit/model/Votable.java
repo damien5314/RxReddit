@@ -2,13 +2,13 @@ package rxreddit.model;
 
 public interface Votable extends Archivable {
 
-  void applyVote(int direction);
+    void applyVote(int direction);
 
-  Boolean isLiked();
+    Boolean isLiked();
 
-  void isLiked(Boolean b);
+    void isLiked(Boolean b);
 
-  String getId();
+    String getId();
 
-  String getKind();
+    String getKind();
 }
