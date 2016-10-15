@@ -5,6 +5,7 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import rx.observers.TestSubscriber
 import rxreddit.model.ListingResponse
+import rxreddit.test.assertErrorEvents
 import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
 
@@ -27,25 +28,11 @@ class SubscriptionManagerTests : _RedditServiceTests() {
     }
 
     @Test
-    fun testGetSubscriberSubreddits() {
-        // Get mockito to verify the helper methods were called?
-        service.getSubreddits("subscriber", null, null)
-                .subscribe()
-
-    }
-
-    @Test
-    fun testGetModeratorSubreddits() {
-
-    }
-
-    @Test
-    fun getContributorSubreddits() {
-
-    }
-
-    @Test
     fun getSubreddits_noAuth() {
-
+//    authenticateService()
+        val observable = service.getSubreddits("subscriber", null, null)
+        val test = TestSubscriber<ListingResponse>()
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
     }
 }

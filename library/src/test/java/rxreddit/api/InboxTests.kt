@@ -63,8 +63,8 @@ class InboxTests : _RedditServiceTests() {
         val test = TestSubscriber<ListingResponse>()
         observable.subscribe(test)
         test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
     }
 
     @Test

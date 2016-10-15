@@ -91,8 +91,8 @@ class UserProfileTests : _RedditServiceTests() {
         val test = TestSubscriber<List<Listing>>()
         observable.subscribe(test)
         test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
     }
 
     @Test
@@ -138,8 +138,8 @@ class UserProfileTests : _RedditServiceTests() {
         val test = TestSubscriber<ListingResponse>()
         observable.subscribe(test)
         test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
     }
 
     @Test
@@ -148,8 +148,8 @@ class UserProfileTests : _RedditServiceTests() {
         val test = TestSubscriber<ListingResponse>()
         observable.subscribe(test)
         test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
     }
 
     @Test
@@ -181,8 +181,8 @@ class UserProfileTests : _RedditServiceTests() {
         val test = TestSubscriber<Void>()
         observable.subscribe(test)
         test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
     }
 
     @Test
