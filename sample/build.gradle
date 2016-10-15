@@ -1,48 +1,48 @@
 buildscript {
-  repositories {
-    mavenCentral()
-  }
+    repositories {
+        mavenCentral()
+    }
 
-  dependencies {
-    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-  }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
-  compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
-  defaultConfig {
-    applicationId "ddiehl.rxreddit.sample"
-    minSdkVersion 15
-    targetSdkVersion 23
-    versionCode 1
-    versionName "1.0"
-    buildConfigField "String", "REDDIT_APP_ID", "\"" + REDDIT_APP_ID + "\""
-    buildConfigField "String", "REDDIT_REDIRECT_URI", "\"" + REDDIT_REDIRECT_URI + "\""
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+    defaultConfig {
+        applicationId "ddiehl.rxreddit.sample"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "REDDIT_APP_ID", "\"" + REDDIT_APP_ID + "\""
+        buildConfigField "String", "REDDIT_REDIRECT_URI", "\"" + REDDIT_REDIRECT_URI + "\""
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(':library')
-  compile project(':android')
-  debugCompile project(':mock')
-  def appcompat_version = "23.2.1"
-  compile "com.android.support:appcompat-v7:$appcompat_version"
-  compile "com.android.support:recyclerview-v7:$appcompat_version"
-  compile "com.android.support:design:$appcompat_version"
-  compile "com.android.support:support-v4:$appcompat_version"
-  compile "io.reactivex:rxandroid:1.1.0"
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':library')
+    compile project(':android')
+    debugCompile project(':mock')
+    def appcompat_version = "23.2.1"
+    compile "com.android.support:appcompat-v7:$appcompat_version"
+    compile "com.android.support:recyclerview-v7:$appcompat_version"
+    compile "com.android.support:design:$appcompat_version"
+    compile "com.android.support:support-v4:$appcompat_version"
+    compile "io.reactivex:rxandroid:1.1.0"
 }
 
 retrolambda {
-  javaVersion JavaVersion.VERSION_1_7
+    javaVersion JavaVersion.VERSION_1_7
 }
