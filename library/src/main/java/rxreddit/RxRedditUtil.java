@@ -122,4 +122,13 @@ public class RxRedditUtil {
         }
         return paramMap;
     }
+
+    public static String getCommaDelimitedString(Iterable<String> string) {
+        StringBuilder commaDelimited = new StringBuilder();
+        for (String subreddit : string) {
+            commaDelimited.append(subreddit).append(",");
+        }
+        commaDelimited.deleteCharAt(commaDelimited.length()-1);
+        return commaDelimited.toString();
+    }
 }

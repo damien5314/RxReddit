@@ -128,6 +128,34 @@ public class RedditService implements IRedditService {
     }
 
     @Override
+    public Observable<Response<Void>> subscribe(String subreddit) {
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.subscribe(subreddit, true)
+        );
+    }
+
+    @Override
+    public Observable<Response<Void>> subscribe(Iterable<String> subreddits) {
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.subscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits), true)
+        );
+    }
+
+    @Override
+    public Observable<Response<Void>> unsubscribe(String subreddit) {
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.unsubscribe(subreddit)
+        );
+    }
+
+    @Override
+    public Observable<Response<Void>> unsubscribe(Iterable<String> subreddits) {
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.unsubscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits))
+        );
+    }
+
+    @Override
     public Observable<ListingResponse> loadLinks(
             String subreddit, String sort, String timespan, String before, String after) {
         return requireAccessToken().flatMap(

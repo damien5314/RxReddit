@@ -3,6 +3,7 @@ package rxreddit.api;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Response;
 import rx.Observable;
 import rxreddit.model.Comment;
 import rxreddit.model.FriendInfo;
@@ -31,6 +32,14 @@ interface IRedditService {
     Observable<Void> updateUserSettings(Map<String, String> settings);
 
     Observable<ListingResponse> getSubreddits(String where, String before, String after);
+
+    Observable<Response<Void>> subscribe(String subreddit);
+
+    Observable<Response<Void>> subscribe(Iterable<String> subreddits);
+
+    Observable<Response<Void>> unsubscribe(String subreddit);
+
+    Observable<Response<Void>> unsubscribe(Iterable<String> subreddits);
 
     Observable<ListingResponse> loadLinks(
             String subreddit, String sort,
