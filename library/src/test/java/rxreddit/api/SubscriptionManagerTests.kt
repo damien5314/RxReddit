@@ -3,7 +3,6 @@ package rxreddit.api
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import retrofit2.Response
 import rx.observers.TestSubscriber
 import rxreddit.model.ListingResponse
 import rxreddit.test.assertErrorEvents
@@ -42,7 +41,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.subscribe("AskReddit")
-        val observer = TestSubscriber.create<Response<Void>>()
+        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
         observable.subscribe(observer)
@@ -55,7 +54,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.subscribe("AskReddit")
-        val observer = TestSubscriber<Response<Void>>()
+        val observer = TestSubscriber<Void>()
 
         observable.subscribe(observer)
 
@@ -67,7 +66,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.subscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber.create<Response<Void>>()
+        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
         observable.subscribe(observer)
@@ -80,7 +79,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.subscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber<Response<Void>>()
+        val observer = TestSubscriber<Void>()
 
         observable.subscribe(observer)
 
@@ -92,7 +91,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.unsubscribe("AskReddit")
-        val observer = TestSubscriber.create<Response<Void>>()
+        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
         observable.subscribe(observer)
@@ -105,7 +104,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.unsubscribe("AskReddit")
-        val observer = TestSubscriber<Response<Void>>()
+        val observer = TestSubscriber<Void>()
 
         observable.subscribe(observer)
 
@@ -117,7 +116,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.unsubscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber.create<Response<Void>>()
+        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
         observable.subscribe(observer)
@@ -130,7 +129,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.unsubscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber<Response<Void>>()
+        val observer = TestSubscriber<Void>()
 
         observable.subscribe(observer)
 
