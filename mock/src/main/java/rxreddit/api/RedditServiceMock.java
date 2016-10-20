@@ -77,7 +77,7 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Observable<Void> updateUserSettings(Map<String, String> settings) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
@@ -139,17 +139,17 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Observable<Void> addFriend(String username) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> deleteFriend(String username) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> saveFriendNote(String username, String note) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
@@ -161,17 +161,17 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Observable<Void> vote(String fullname, int direction) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> save(String fullname, String category, boolean toSave) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> hide(String fullname, boolean toHide) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
@@ -196,22 +196,22 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Observable<Void> markAllMessagesRead() {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> markMessagesRead(String commaSeparatedFullnames) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> markMessagesUnread(String commaSeparatedFullnames) {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     @Override
     public Observable<Void> revokeAuthentication() {
-        return Observable.just((Void) null);
+        return Observable.just(null);
     }
 
     private Reader getReaderForFile(String filename) {
@@ -231,8 +231,8 @@ public class RedditServiceMock extends RedditService {
             return new InputStreamReader(ins);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
 //    return new InputStreamReader(is);
     }
 }
