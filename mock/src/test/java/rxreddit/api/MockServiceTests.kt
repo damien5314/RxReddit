@@ -333,6 +333,46 @@ class MockServiceTests {
     }
 
     @Test
+    fun testGetSubreddits() {
+        val mockService = getRedditServiceMock()
+        val test = TestSubscriber<ListingResponse>()
+        mockService.getSubreddits("subscriber", null, null).subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testSubscribe() {
+        val mockService = getRedditServiceMock()
+        val test = TestSubscriber<Void>()
+        mockService.subscribe("AskReddit").subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testSubscribeAll() {
+        val mockService = getRedditServiceMock()
+        val test = TestSubscriber<Void>()
+        mockService.subscribe(listOf("AskReddit", "sports")).subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testUnsubscribe() {
+        val mockService = getRedditServiceMock()
+        val test = TestSubscriber<Void>()
+        mockService.unsubscribe("AskReddit").subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testUnsubscribeAll() {
+        val mockService = getRedditServiceMock()
+        val test = TestSubscriber<Void>()
+        mockService.unsubscribe(listOf("AskReddit", "sports")).subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
     fun testRevokeAuthentication() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()

@@ -210,6 +210,33 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
+    public Observable<ListingResponse> getSubreddits(String where, String before, String after) {
+        ListingResponse response = mGson.fromJson(
+                getReaderForFile("GET_subreddits_mine_subscriber.json"), ListingResponse.class);
+        return Observable.just(response);
+    }
+
+    @Override
+    public Observable<Void> subscribe(String subreddit) {
+        return Observable.just(null);
+    }
+
+    @Override
+    public Observable<Void> subscribe(Iterable<String> subreddits) {
+        return Observable.just(null);
+    }
+
+    @Override
+    public Observable<Void> unsubscribe(String subreddit) {
+        return Observable.just(null);
+    }
+
+    @Override
+    public Observable<Void> unsubscribe(Iterable<String> subreddits) {
+        return Observable.just(null);
+    }
+
+    @Override
     public Observable<Void> revokeAuthentication() {
         return Observable.just(null);
     }
