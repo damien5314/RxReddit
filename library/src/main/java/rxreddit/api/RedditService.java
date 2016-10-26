@@ -294,6 +294,30 @@ public class RedditService implements IRedditService {
     }
 
     @Override
+    public Observable<Object> getSubredditRules(String subreddit) {
+        if (subreddit == null) {
+            return Observable.error(new NullPointerException("subreddit == null"));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getSubredditRules(subreddit)
+                        .flatMap(responseToBody())
+        );
+    }
+
+    @Override
+    public Observable<Object> getSubredditSidebar(String subreddit) {
+        if (subreddit == null) {
+            return Observable.error(new NullPointerException("subreddit == null"));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getSubredditSidebar(subreddit)
+                        .flatMap(responseToBody())
+        );
+    }
+
+    @Override
     public Observable<Void> vote(String fullname, int direction) {
         if (fullname == null) {
             return Observable.error(new NullPointerException("fullname == null"));

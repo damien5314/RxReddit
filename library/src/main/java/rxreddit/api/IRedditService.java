@@ -69,6 +69,10 @@ interface IRedditService {
 
     Observable<Subreddit> getSubredditInfo(String subreddit);
 
+    Observable<Object> getSubredditRules(String subreddit);
+
+    Observable<Object> getSubredditSidebar(String subreddit);
+
     Observable<Void> vote(String fullname, int direction);
 
     Observable<Void> save(String fullname, String category, boolean toSave);
