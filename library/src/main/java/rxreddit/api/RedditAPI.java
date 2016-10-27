@@ -43,12 +43,12 @@ interface RedditAPI {
             @Path("subreddit") String subreddit
     );
 
-    @GET("/r/{subreddit}/rules")
+    @GET("/r/{subreddit}/about/rules")
     Observable<Response<Object>> getSubredditRules(
             @Path("subreddit") String subreddit
     );
 
-    @GET("/r/{subreddit}/sidebar")
+    @GET("/r/{subreddit}/about/sidebar")
     Observable<Response<Object>> getSubredditSidebar(
             @Path("subreddit") String subreddit
     );
