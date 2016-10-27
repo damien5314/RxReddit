@@ -20,6 +20,8 @@ import rxreddit.model.FriendInfo;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
 import rxreddit.model.Subreddit;
+import rxreddit.model.SubredditRules;
+import rxreddit.model.SubredditSidebar;
 import rxreddit.model.TrophyResponse;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserIdentityListing;
@@ -44,12 +46,12 @@ interface RedditAPI {
     );
 
     @GET("/r/{subreddit}/about/rules")
-    Observable<Response<Object>> getSubredditRules(
+    Observable<Response<SubredditRules>> getSubredditRules(
             @Path("subreddit") String subreddit
     );
 
     @GET("/r/{subreddit}/about/sidebar")
-    Observable<Response<Object>> getSubredditSidebar(
+    Observable<Response<SubredditSidebar>> getSubredditSidebar(
             @Path("subreddit") String subreddit
     );
 

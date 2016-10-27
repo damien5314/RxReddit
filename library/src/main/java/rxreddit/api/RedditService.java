@@ -32,6 +32,8 @@ import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
 import rxreddit.model.Subreddit;
+import rxreddit.model.SubredditRules;
+import rxreddit.model.SubredditSidebar;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserIdentityListing;
@@ -294,7 +296,7 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Object> getSubredditRules(String subreddit) {
+    public Observable<SubredditRules> getSubredditRules(String subreddit) {
         if (subreddit == null) {
             return Observable.error(new NullPointerException("subreddit == null"));
         }
@@ -306,7 +308,7 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Object> getSubredditSidebar(String subreddit) {
+    public Observable<SubredditSidebar> getSubredditSidebar(String subreddit) {
         if (subreddit == null) {
             return Observable.error(new NullPointerException("subreddit == null"));
         }

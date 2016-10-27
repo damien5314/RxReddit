@@ -10,6 +10,8 @@ import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
 import rxreddit.model.Subreddit;
+import rxreddit.model.SubredditRules;
+import rxreddit.model.SubredditSidebar;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserSettings;
@@ -69,9 +71,9 @@ interface IRedditService {
 
     Observable<Subreddit> getSubredditInfo(String subreddit);
 
-    Observable<Object> getSubredditRules(String subreddit);
+    Observable<SubredditRules> getSubredditRules(String subreddit);
 
-    Observable<Object> getSubredditSidebar(String subreddit);
+    Observable<SubredditSidebar> getSubredditSidebar(String subreddit);
 
     Observable<Void> vote(String fullname, int direction);
 
