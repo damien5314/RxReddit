@@ -20,7 +20,7 @@ public class SubredditRules {
         return siteRules;
     }
 
-    static class Rule {
+    public static class Rule {
 
         @SerializedName("kind")
         String kind;
