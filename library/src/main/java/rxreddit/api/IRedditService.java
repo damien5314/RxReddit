@@ -43,15 +43,16 @@ interface IRedditService {
     Observable<Void> unsubscribe(Iterable<String> subreddits);
 
     Observable<ListingResponse> loadLinks(
-            String subreddit, String sort,
-            String timespan, String before, String after);
+            String subreddit, String sort, String timespan, String before, String after
+    );
 
     Observable<List<ListingResponse>> loadLinkComments(
-            String subreddit, String article,
-            String sort, String commentId);
+            String subreddit, String article, String sort, String commentId
+    );
 
     Observable<MoreChildrenResponse> loadMoreChildren(
-            String linkId, List<String> childrenIds, String sort);
+            String linkId, List<String> childrenIds, String sort
+    );
 
     Observable<UserIdentity> getUserInfo(String username);
 
@@ -60,8 +61,8 @@ interface IRedditService {
     Observable<List<Listing>> getUserTrophies(String username);
 
     Observable<ListingResponse> loadUserProfile(
-            String show, String username, String sort,
-            String timespan, String before, String after);
+            String show, String username, String sort, String timespan, String before, String after
+    );
 
     Observable<Void> addFriend(String username);
 
@@ -75,6 +76,8 @@ interface IRedditService {
 
     Observable<SubredditSidebar> getSubredditSidebar(String subreddit);
 
+    Observable<List<ListingResponse>> getSubredditSticky(String subreddit);
+
     Observable<Void> vote(String fullname, int direction);
 
     Observable<Void> save(String fullname, String category, boolean toSave);
@@ -85,8 +88,7 @@ interface IRedditService {
 
     Observable<Comment> addComment(String parentId, String text);
 
-    Observable<ListingResponse> getInbox(
-            String show, String before, String after);
+    Observable<ListingResponse> getInbox(String show, String before, String after);
 
     Observable<Void> markAllMessagesRead();
 
@@ -95,5 +97,4 @@ interface IRedditService {
     Observable<Void> markMessagesUnread(String commaSeparatedFullnames);
 
     Observable<Void> revokeAuthentication();
-
 }

@@ -2,13 +2,11 @@ package rxreddit.api
 
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.*
+import org.junit.Ignore
 import org.junit.Test
 import retrofit2.adapter.rxjava.HttpException
 import rx.observers.TestSubscriber
-import rxreddit.model.Comment
-import rxreddit.model.ListingResponse
-import rxreddit.model.MoreChildrenResponse
-import rxreddit.model.Subreddit
+import rxreddit.model.*
 import rxreddit.test.assertErrorEvents
 import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
@@ -133,9 +131,11 @@ class SubredditTests : _RedditServiceTests() {
     fun testGetSubredditInfo() {
         val observable = service.getSubredditInfo("")
         assertNotNull("observable == null", observable)
+
         val test = TestSubscriber<Subreddit>()
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_info.json"))
         observable.subscribe(test)
+
         test.assertSuccessfulEvents(1)
         assertNotNull("response == null", test.onNextEvents[0])
     }
@@ -145,6 +145,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.getSubredditInfo(null)
         val test = TestSubscriber<Subreddit>()
         observable.subscribe(test)
+
         test.assertErrorEvents(1)
         assertEquals("NullPointerException expected",
                 NullPointerException::class.java, test.onErrorEvents[0].javaClass)
@@ -154,9 +155,102 @@ class SubredditTests : _RedditServiceTests() {
     fun testGetSubredditInfo_httpError() {
         val observable = service.getSubredditInfo("")
         assertNotNull("observable == null", observable)
+
         val test = TestSubscriber<Subreddit>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         observable.subscribe(test)
+
+        test.assertErrorEvents(1)
+        assertEquals("HttpException expected",
+                HttpException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
+    fun testGetSubredditRules() {
+        val observable = service.getSubredditRules("gaming")
+        assertNotNull("observable == null", observable)
+
+        val observer = TestSubscriber<SubredditRules>()
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_about_rules.json"))
+        observable.subscribe(observer)
+
+        observer.assertSuccessfulEvents(1)
+        assertNotNull("response == null", observer.onNextEvents[0])
+    }
+
+    @Test
+    fun testGetSubredditRules_null() {
+        val observable = service.getSubredditRules(null)
+        val test = TestSubscriber<SubredditRules>()
+        observable.subscribe(test)
+
+        test.assertErrorEvents(1)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
+    fun testGetSubredditRules_httpError() {
+        val observable = service.getSubredditRules("gaming")
+        assertNotNull("observable == null", observable)
+
+        val test = TestSubscriber<SubredditRules>()
+        mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
+        observable.subscribe(test)
+
+        test.assertErrorEvents(1)
+        assertEquals("HttpException expected",
+                HttpException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test @Ignore("/r/subreddit/about/sidebar is broken")
+    fun testGetSubredditSidebar() {
+
+    }
+
+    @Test @Ignore("/r/subreddit/about/sidebar is broken")
+    fun testGetSubredditSidebar_null() {
+
+    }
+
+    @Test @Ignore("/r/subreddit/about/sidebar is broken")
+    fun testGetSubredditSidebar_httpError() {
+
+    }
+
+    @Test
+    fun testGetSubredditSticky() {
+        val observable = service.getSubredditSticky("gaming")
+        assertNotNull("observable == null", observable)
+
+        val observer = TestSubscriber<List<ListingResponse>>()
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_about_sticky.json"))
+        observable.subscribe(observer)
+
+        observer.assertSuccessfulEvents(1)
+        assertNotNull("response == null", observer.onNextEvents[0])
+    }
+
+    @Test
+    fun testGetSubredditSticky_null() {
+        val observable = service.getSubredditSticky(null)
+        val test = TestSubscriber<List<ListingResponse>>()
+        observable.subscribe(test)
+
+        test.assertErrorEvents(1)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
+    fun testGetSubredditSticky_httpError() {
+        val observable = service.getSubredditSticky("gaming")
+        assertNotNull("observable == null", observable)
+
+        val test = TestSubscriber<List<ListingResponse>>()
+        mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
+        observable.subscribe(test)
+
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
                 HttpException::class.java, test.onErrorEvents[0].javaClass)

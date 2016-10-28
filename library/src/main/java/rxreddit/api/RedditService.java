@@ -313,8 +313,23 @@ public class RedditService implements IRedditService {
             return Observable.error(new NullPointerException("subreddit == null"));
         }
 
+        // TODO Implement this once endpoint is fixed
+        // https://github.com/reddit/reddit/pull/1424
+
         return requireAccessToken().flatMap(
                 token -> mAPI.getSubredditSidebar(subreddit)
+                        .flatMap(responseToBody())
+        );
+    }
+
+    @Override
+    public Observable<List<ListingResponse>> getSubredditSticky(String subreddit) {
+        if (subreddit == null) {
+            return Observable.error(new NullPointerException("subreddit == null"));
+        }
+
+        return requireAccessToken().flatMap(
+                token -> mAPI.getSubredditSticky(subreddit)
                         .flatMap(responseToBody())
         );
     }

@@ -1,0 +1,65 @@
+{
+  "rules": [
+    {
+      "kind": "link",
+      "description": "No screenshots, No pictures with added/superimposed text. This includes image macros, comics, infographics, maps and most diagrams. Text (e.g. a URL) serving to credit the original author is exempt. Screenshots includes both actual screencaptures, any image that contains GUI elements, as well as photos of screens.",
+      "short_name": "R1: no screenshots/added text/comics",
+      "created_utc": 1449727207,
+      "priority": 0,
+      "description_html": ""
+    },
+    {
+      "kind": "link",
+      "description": "No porn or gore",
+      "short_name": "R2: no porn or gore",
+      "created_utc": 1449727249,
+      "priority": 1,
+      "description_html": ""
+    },
+    {
+      "kind": "all",
+      "description": "No personal information / No missing-persons requests. Do not witch hunt.",
+      "short_name": "R3: no personal information / missing persons",
+      "created_utc": 1449727339,
+      "priority": 2,
+      "description_html": ""
+    },
+    {
+      "kind": "link",
+      "description": "Sensationalized or misleading titles will be removed (at mod discretion). No soliciting votes (e.g. \"upvote this\")!\n",
+      "short_name": "R4: Soliciting Votes or Misleading",
+      "created_utc": 1449727488,
+      "priority": 3,
+      "description_html": ""
+    },
+    {
+      "kind": "link",
+      "description": "No DAE, [Fixed], cakeday, or photoshop request posts. No posts addressed to a specific redditor. This includes posts addressed to a subreddit or to reddit itself.",
+      "short_name": "R5: No DAE, FIXED, cakeday, PS requests",
+      "created_utc": 1449727619,
+      "priority": 4,
+      "description_html": ""
+    },
+    {
+      "kind": "all",
+      "description": "Submissions must link directly to a specific image file or to a website with minimal ads. We do not allow blog hosting of images (\"blogspam\"), but links to albums on image hosting websites are okay. Ads in album titles or descriptions are not allowed.",
+      "short_name": "R6: spam / bad image host",
+      "created_utc": 1449727666,
+      "priority": 5,
+      "description_html": ""
+    },
+    {
+      "kind": "link",
+      "description": "No animated images, no youtube links. This applies to all file types. Animated images in comments are fine.",
+      "short_name": "R7: no animated image posts",
+      "created_utc": 1449727684,
+      "priority": 6,
+      "description_html": ""
+    }
+  ],
+  "site_rules": [
+    "Spam",
+    "Personal and confidential information",
+    "Threatening, harassing, or inciting violence"
+  ]
+}

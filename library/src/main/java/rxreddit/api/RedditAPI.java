@@ -55,6 +55,11 @@ interface RedditAPI {
             @Path("subreddit") String subreddit
     );
 
+    @GET("/r/{subreddit}/about/sticky")
+    Observable<Response<List<ListingResponse>>> getSubredditSticky(
+            @Path("subreddit") String subreddit
+    );
+
     @GET("/api/v1/me")
     Observable<Response<UserIdentity>> getUserIdentity();
 

@@ -237,6 +237,42 @@ class MockServiceTests {
     }
 
     @Test
+    fun testGetSubredditRules() {
+        val mockService = getRedditServiceMock()
+        val observer = TestSubscriber<SubredditRules>()
+
+        mockService.getSubredditRules("")
+                .subscribe(observer)
+
+        observer.assertSuccessfulEvents(1)
+        assertNotNull("response == null", observer.onNextEvents[0])
+    }
+
+    @Test @Ignore("/r/subreddit/about/sidebar endpoint is broken")
+    fun testGetSubredditSidebar() {
+        val mockService = getRedditServiceMock()
+        val observer = TestSubscriber<SubredditSidebar>()
+
+        mockService.getSubredditSidebar("")
+                .subscribe(observer)
+
+        observer.assertSuccessfulEvents(1)
+        assertNotNull("response == null", observer.onNextEvents[0])
+    }
+
+    @Test
+    fun testGetSubredditSticky() {
+        val mockService = getRedditServiceMock()
+        val observer = TestSubscriber<List<ListingResponse>>()
+
+        mockService.getSubredditSticky("")
+                .subscribe(observer)
+
+        observer.assertSuccessfulEvents(1)
+        assertNotNull("response == null", observer.onNextEvents[0])
+    }
+
+    @Test
     fun testVote() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()

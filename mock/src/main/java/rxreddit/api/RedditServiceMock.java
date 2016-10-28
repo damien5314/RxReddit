@@ -19,6 +19,8 @@ import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
 import rxreddit.model.Subreddit;
+import rxreddit.model.SubredditRules;
+import rxreddit.model.SubredditSidebar;
 import rxreddit.model.TrophyResponse;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
@@ -92,8 +94,7 @@ public class RedditServiceMock extends RedditService {
     public Observable<List<ListingResponse>> loadLinkComments(
             String subreddit, String article,
             String sort, String commentId) {
-        Type listType = new TypeToken<List<ListingResponse>>() {
-        }.getType();
+        Type listType = new TypeToken<List<ListingResponse>>() {}.getType();
         List<ListingResponse> response = mGson.fromJson(
                 getReaderForFile("link_comments.json"), listType);
         return Observable.just(response);
@@ -155,7 +156,35 @@ public class RedditServiceMock extends RedditService {
     @Override
     public Observable<Subreddit> getSubredditInfo(String subreddit) {
         Subreddit response = mGson.fromJson(
-                getReaderForFile("subreddit_info.json"), Subreddit.class);
+                getReaderForFile("subreddit_info.json"), Subreddit.class
+        );
+        return Observable.just(response);
+    }
+
+    @Override
+    public Observable<SubredditRules> getSubredditRules(String subreddit) {
+        SubredditRules response = mGson.fromJson(
+                getReaderForFile("GET_subreddit_about_rules.json"), SubredditRules.class
+        );
+        return Observable.just(response);
+    }
+
+    @Override
+    public Observable<SubredditSidebar> getSubredditSidebar(String subreddit) {
+        // TODO Implement this once endpoint is fixed
+        // https://github.com/reddit/reddit/pull/1424
+
+        throw new UnsupportedOperationException(
+                "this endpoint is broken: https://github.com/reddit/reddit/pull/1424"
+        );
+    }
+
+    @Override
+    public Observable<List<ListingResponse>> getSubredditSticky(String subreddit) {
+        Type listType = new TypeToken<List<ListingResponse>>() {}.getType();
+        List<ListingResponse> response = mGson.fromJson(
+                getReaderForFile("GET_subreddit_about_sticky.json"), listType
+        );
         return Observable.just(response);
     }
 
