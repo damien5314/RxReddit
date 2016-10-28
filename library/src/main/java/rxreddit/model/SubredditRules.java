@@ -12,6 +12,14 @@ public class SubredditRules {
     @SerializedName("site_rules")
     List<String> siteRules;
 
+    public List<Rule> getRules() {
+        return rules;
+    }
+
+    public List<String> getSiteRules() {
+        return siteRules;
+    }
+
     static class Rule {
 
         @SerializedName("kind")
