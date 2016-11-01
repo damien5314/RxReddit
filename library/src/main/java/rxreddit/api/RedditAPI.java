@@ -84,7 +84,7 @@ interface RedditAPI {
 
     @POST("/api/subscribe?action=sub")
     Observable<Response<Void>> subscribeAll(
-            @Query("sr") String subreddit,
+            @Query("sr_name") String subreddit,
             @Query("skip_initial_defaults") Boolean skipInitialDefaults
     );
 
@@ -95,7 +95,7 @@ interface RedditAPI {
 
     @POST("/api/subscribe?action=unsub")
     Observable<Response<Void>> unsubscribeAll(
-            @Query("sr") String subreddit
+            @Query("sr_name") String subreddit
     );
 
     @GET("/{sort}.json")
