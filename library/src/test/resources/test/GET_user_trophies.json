@@ -1,10 +1,10 @@
 {
   "kind": "TrophyList",
-  "data":  {
-    "trophies":  [
-       {
+  "data": {
+    "trophies": [
+      {
         "kind": "t6",
-        "data":  {
+        "data": {
           "icon_70": "https://s3.amazonaws.com/redditstatic/award/5_year_club-70.png",
           "description": null,
           "url": null,
@@ -14,9 +14,9 @@
           "name": "Five-Year Club"
         }
       },
-       {
+      {
         "kind": "t6",
-        "data":  {
+        "data": {
           "icon_70": "https://s3.amazonaws.com/redditstatic/award/verified_email-70.png",
           "description": null,
           "url": null,

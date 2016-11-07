@@ -1,6 +1,6 @@
 {
   "kind": "t5",
-  "data":  {
+  "data": {
     "banner_img": "",
     "submit_text_html": "",
     "user_is_banned": false,
@@ -15,7 +15,7 @@
     "public_description": "/r/AskReddit is the place to ask and answer thought-provoking questions.",
     "over18": false,
     "public_description_html": "",
-    "community_rules":  [],
+    "community_rules": [],
     "icon_size": null,
     "suggested_comment_sort": null,
     "icon_img": "",
@@ -25,7 +25,7 @@
     "submit_link_label": null,
     "accounts_active": 34856,
     "public_traffic": true,
-    "header_size":  [
+    "header_size": [
       125,
       73
     ],

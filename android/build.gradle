@@ -1,12 +1,12 @@
 buildscript {
-  repositories {
-    jcenter()
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-  }
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+    }
 }
 
 apply plugin: 'com.android.library'
@@ -16,44 +16,44 @@ apply plugin: 'me.tatarka.retrolambda'
 group = 'com.github.damien5314'
 
 android {
-  compileSdkVersion 24
-  buildToolsVersion "23.0.3"
-  defaultConfig {
-    minSdkVersion 11
-    targetSdkVersion 24
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+    compileSdkVersion 24
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 24
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-  compile project(':library')
-  compile 'com.android.support:appcompat-v7:24.0.0'
+    compile project(':library')
+    compile 'com.android.support:appcompat-v7:24.0.0'
 }
 
 retrolambda {
-  javaVersion JavaVersion.VERSION_1_7
+    javaVersion JavaVersion.VERSION_1_7
 }
 
 task sourcesJar(type: Jar) {
-  from android.sourceSets.main.java.srcDirs
-  classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
 }
 
 task javadoc(type: Javadoc) {
-  failOnError false
-  source = android.sourceSets.main.java.sourceFiles
-  classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from javadoc.destinationDir
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 artifacts {
-  archives sourcesJar
+    archives sourcesJar
 //  archives javadocJar
 }

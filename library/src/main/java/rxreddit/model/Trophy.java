@@ -3,46 +3,48 @@ package rxreddit.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Trophy extends Listing {
-  Data data;
 
-  @Override
-  public String getId() {
-    return data.id;
-  }
+    Data data;
 
-  public String getName() {
-    return data.name;
-  }
+    @Override
+    public String getId() {
+        return data.id;
+    }
 
-  public String getIcon70() {
-    return data.icon70;
-  }
+    public String getName() {
+        return data.name;
+    }
 
-  public String getIcon40() {
-    return data.icon40;
-  }
+    public String getIcon70() {
+        return data.icon70;
+    }
 
-  public String getDescription() {
-    return data.description;
-  }
+    public String getIcon40() {
+        return data.icon40;
+    }
 
-  public String getUrl() {
-    return data.url;
-  }
+    public String getDescription() {
+        return data.description;
+    }
 
-  public String getAwardId() {
-    return data.awardId;
-  }
+    public String getUrl() {
+        return data.url;
+    }
 
-  public static class Data extends ListingData {
-    @SerializedName("icon_70")
-    String icon70;
-    @SerializedName("icon_40")
-    String icon40;
-    String description;
-    String url;
-    String name;
-    @SerializedName("award_id")
-    String awardId;
-  }
+    public String getAwardId() {
+        return data.awardId;
+    }
+
+    public static class Data extends ListingData {
+
+        @SerializedName("icon_70")
+        String icon70;
+        @SerializedName("icon_40")
+        String icon40;
+        String description;
+        String url;
+        String name;
+        @SerializedName("award_id")
+        String awardId;
+    }
 }

@@ -1,24 +1,25 @@
 package rxreddit.model;
 
 public class FriendInfo {
-  Long date;
-  String note;
-  String name;
-  String id;
 
-  public Long getDate() {
-    return date;
-  }
+    Long date;
+    String note;
+    String name;
+    String id;
 
-  public String getNote() {
-    return note;
-  }
+    public Long getDate() {
+        return date;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getNote() {
+        return note;
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
 }

@@ -8,19 +8,20 @@ import okhttp3.Response;
 
 /* This interceptor adds a custom User-Agent. */
 final class UserAgentInterceptor implements Interceptor {
-  private final String userAgent;
 
-  public UserAgentInterceptor(String userAgent) {
-    this.userAgent = userAgent;
-  }
+    private final String userAgent;
 
-  @Override
-  public Response intercept(Chain chain) throws IOException {
-    Request originalRequest = chain.request();
-    Request newRequest = originalRequest.newBuilder()
-        .removeHeader("User-Agent")
-        .addHeader("User-Agent", userAgent)
-        .build();
-    return chain.proceed(newRequest);
-  }
+    public UserAgentInterceptor(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        Request originalRequest = chain.request();
+        Request newRequest = originalRequest.newBuilder()
+                .removeHeader("User-Agent")
+                .addHeader("User-Agent", userAgent)
+                .build();
+        return chain.proceed(newRequest);
+    }
 }

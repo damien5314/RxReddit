@@ -1,22 +1,23 @@
 package rxreddit.model;
 
 public class TrophyResponse {
-  private String kind;
-  private TrophyResponseData data;
 
-  public String getKind() {
-    return kind;
-  }
+    private String kind;
+    private TrophyResponseData data;
 
-  public void setKind(String kind) {
-    this.kind = kind;
-  }
+    public String getKind() {
+        return kind;
+    }
 
-  public TrophyResponseData getData() {
-    return data;
-  }
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
 
-  public void setData(TrophyResponseData data) {
-    this.data = data;
-  }
+    public TrophyResponseData getData() {
+        return data;
+    }
+
+    public void setData(TrophyResponseData data) {
+        this.data = data;
+    }
 }
