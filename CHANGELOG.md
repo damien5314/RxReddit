@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.8 *(2016-11-06)*
+----------------------------------
+* Added API methods for retrieving subreddit subscriptions.
+* Remove cookies when loading SignInFragment.
+
 Version 0.8 *(2016-06-25)*
 ----------------------------------
 * Updated Android module targetSdkVersion to 24 (N).
