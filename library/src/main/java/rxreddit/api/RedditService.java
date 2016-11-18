@@ -31,6 +31,7 @@ import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
@@ -382,6 +383,18 @@ public class RedditService implements IRedditService {
                             .flatMap(responseToBody())
             );
         }
+    }
+
+    @Override
+    public Observable<ReportForm> getReportForm(String fullname) {
+        if (fullname == null) {
+            return Observable.error(new NullPointerException("id == null"));
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getReportForm(fullname)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override

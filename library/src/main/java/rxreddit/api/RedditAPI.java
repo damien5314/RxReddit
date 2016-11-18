@@ -19,6 +19,7 @@ import rxreddit.model.AddCommentResponse;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
@@ -172,6 +173,11 @@ interface RedditAPI {
     @POST("/api/unhide")
     Observable<Response<Void>> unhide(
             @Query("id") String id
+    );
+
+    @GET("/api/report_form?api_type=json")
+    Observable<Response<ReportForm>> getReportForm(
+            @Query("thing") String thing
     );
 
     @POST("/api/report?api_type=json")

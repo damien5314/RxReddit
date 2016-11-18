@@ -396,6 +396,43 @@ class SubredditTests : _RedditServiceTests() {
     }
 
     @Test
+    fun testGetReportForm() {
+        authenticateService()
+        val observable = service.getReportForm("t3_foo")
+        assertNotNull("observable == null", observable)
+
+        val test = TestSubscriber<ReportForm>()
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_report_form.json"))
+
+        observable.subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testGetReportForm_noauth() {
+//        authenticateService()
+        val observable = service.getReportForm("t3_foo")
+        assertNotNull("observable == null", observable)
+
+        val test = TestSubscriber<ReportForm>()
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
+    }
+
+    @Test
+    fun testGetReportForm_noId() {
+        authenticateService()
+        val observable = service.getReportForm(null)
+
+        val test = TestSubscriber<ReportForm>()
+        observable.subscribe(test)
+
+        test.assertErrorEvents(1)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
     fun testReport() {
         authenticateService()
         val observable = service.report("t3_foo", "", "", "tomfoolery")
