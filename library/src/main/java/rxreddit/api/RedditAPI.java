@@ -176,9 +176,10 @@ interface RedditAPI {
 
     @POST("/api/report?api_type=json")
     Observable<Response<Void>> report(
-            @Query("thing_id") String id,
+            @Query("thing_id") String fullname,
             @Query("reason") String reason,
-            @Query("otherReason") String otherReason
+            @Query("site_reason") String siteReason,
+            @Query("other_reason") String otherReason
     );
 
     @FormUrlEncoded

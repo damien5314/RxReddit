@@ -84,7 +84,7 @@ interface IRedditService {
 
     Observable<Void> hide(String fullname, boolean toHide);
 
-    Observable<Void> report(String id, String reason);
+    Observable<Void> report(String fullname, String reason, String siteReason, String otherReason);
 
     Observable<Comment> addComment(String parentId, String text);
 

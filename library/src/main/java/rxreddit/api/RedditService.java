@@ -385,8 +385,19 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> report(String id, String reason) {
-        return Observable.error(new UnsupportedOperationException());
+    public Observable<Void> report(String id, String reason, String siteReason, String otherReason) {
+        if (id == null) {
+            return Observable.error(new NullPointerException("id == null"));
+        }
+
+        if (reason == null && siteReason == null && otherReason == null) {
+            return Observable.error(new NullPointerException("no reason provided"));
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.report(id, reason, siteReason, otherReason)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
