@@ -24,7 +24,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         private String edited;
         private Boolean likes;
         @SerializedName("user_reports")
-        private List<Report> userReports;
+        private List<UserReport> userReports;
         @SerializedName("secure_media")
         private SecureMedia secureMedia;
         @SerializedName("link_flair_text")
@@ -69,7 +69,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         private String distinguished;
         private Media media;
         @SerializedName("mod_reports")
-        private List<Report> modReports;
+        private List<ModReport> modReports;
         private Boolean visited;
         @SerializedName("num_reports")
         private Integer numReports;
@@ -244,10 +244,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
     }
 
-    public static class Report {
-
-    }
-
     //region Public API
 
     @Override
@@ -289,7 +285,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         data.likes = b;
     }
 
-    public List<Report> getUserReports() {
+    public List<UserReport> getUserReports() {
         return data.userReports;
     }
 
@@ -448,7 +444,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         return data.media;
     }
 
-    public List<Report> getModReports() {
+    public List<ModReport> getModReports() {
         return data.modReports;
     }
 

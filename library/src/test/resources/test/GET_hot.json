@@ -20,6 +20,14 @@
           "likes": null,
           "suggested_sort": null,
           "user_reports": [
+            [
+              null,
+              1
+            ],
+            [
+              "Test Rule One",
+              1
+            ]
           ],
           "secure_media": {
             "type": "i.imgur.com",
@@ -130,6 +138,10 @@
           "created_utc": 1453206935,
           "distinguished": null,
           "mod_reports": [
+            [
+              "Test Rule One",
+              "damien5314"
+            ]
           ],
           "visited": false,
           "num_reports": null,

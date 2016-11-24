@@ -30,6 +30,7 @@ import rxreddit.model.Friend;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
+import rxreddit.model.ModReport;
 import rxreddit.model.MoreChildrenResponse;
 import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
@@ -38,6 +39,7 @@ import rxreddit.model.SubredditSidebar;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserIdentityListing;
+import rxreddit.model.UserReport;
 import rxreddit.model.UserSettings;
 
 public class RedditService implements IRedditService {
@@ -524,6 +526,8 @@ public class RedditService implements IRedditService {
                 .registerTypeAdapter(ListingResponse.class, new ListingResponseDeserializer())
                 .registerTypeAdapter(Listing.class, new ListingDeserializer())
                 .registerTypeAdapter(AbsComment.class, new CommentDeserializer())
+                .registerTypeAdapter(UserReport.class, new UserReportDeserializer())
+                .registerTypeAdapter(ModReport.class, new ModReportDeserializer())
                 .create();
     }
 
