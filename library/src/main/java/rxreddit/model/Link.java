@@ -33,8 +33,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         @SerializedName("archived")
         private Boolean isArchived;
         private Boolean clicked;
-        @SerializedName("report_reasons")
-        private List<String> reportReasons;
         private String author;
         @SerializedName("num_comments")
         private Integer numComments;
@@ -313,10 +311,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
     public boolean getClicked() {
         return data.clicked == null ? false : data.clicked;
-    }
-
-    public List<String> getReportReasons() {
-        return data.reportReasons;
     }
 
     public String getAuthor() {
