@@ -18,6 +18,7 @@ import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
@@ -204,7 +205,12 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> report(String id, String reason) {
+    public Observable<ReportForm> getReportForm(String fullname) {
+        return Observable.error(new UnsupportedOperationException());
+    }
+
+    @Override
+    public Observable<Void> report(String id, String reason, String siteReason, String otherReason) {
         return Observable.error(new UnsupportedOperationException());
     }
 

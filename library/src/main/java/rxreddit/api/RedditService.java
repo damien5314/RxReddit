@@ -30,13 +30,16 @@ import rxreddit.model.Friend;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
+import rxreddit.model.ModReport;
 import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
 import rxreddit.model.UserAccessToken;
 import rxreddit.model.UserIdentity;
 import rxreddit.model.UserIdentityListing;
+import rxreddit.model.UserReport;
 import rxreddit.model.UserSettings;
 
 public class RedditService implements IRedditService {
@@ -385,8 +388,31 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> report(String id, String reason) {
-        return Observable.error(new UnsupportedOperationException());
+    public Observable<ReportForm> getReportForm(String fullname) {
+        if (fullname == null) {
+            return Observable.error(new NullPointerException("id == null"));
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.getReportForm(fullname)
+                        .flatMap(responseToBody())
+        );
+    }
+
+    @Override
+    public Observable<Void> report(String id, String reason, String siteReason, String otherReason) {
+        if (id == null) {
+            return Observable.error(new NullPointerException("id == null"));
+        }
+
+        if (reason == null && siteReason == null && otherReason == null) {
+            return Observable.error(new NullPointerException("no reason provided"));
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.report(id, reason, siteReason, otherReason)
+                        .flatMap(responseToBody())
+        );
     }
 
     @Override
@@ -500,6 +526,8 @@ public class RedditService implements IRedditService {
                 .registerTypeAdapter(ListingResponse.class, new ListingResponseDeserializer())
                 .registerTypeAdapter(Listing.class, new ListingDeserializer())
                 .registerTypeAdapter(AbsComment.class, new CommentDeserializer())
+                .registerTypeAdapter(UserReport.class, new UserReportDeserializer())
+                .registerTypeAdapter(ModReport.class, new ModReportDeserializer())
                 .create();
     }
 

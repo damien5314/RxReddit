@@ -9,6 +9,7 @@ import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
@@ -84,7 +85,9 @@ interface IRedditService {
 
     Observable<Void> hide(String fullname, boolean toHide);
 
-    Observable<Void> report(String id, String reason);
+    Observable<ReportForm> getReportForm(String fullname);
+
+    Observable<Void> report(String fullname, String reason, String siteReason, String otherReason);
 
     Observable<Comment> addComment(String parentId, String text);
 

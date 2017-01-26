@@ -19,12 +19,18 @@ final class ListingResponseDeserializer implements JsonDeserializer<ListingRespo
 
     @Override
     public ListingResponse deserialize(
-            JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if (json.isJsonPrimitive()) return null;
+            JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
+        // If no object is returned, return null
+        if (json.isJsonPrimitive()) {
+            return null;
+        }
+
         JsonObject obj = json.getAsJsonObject();
         String kind = obj.get("kind").getAsString();
         ListingResponseData data = context.deserialize(
-                obj.get("data"), ListingResponseData.class);
+                obj.get("data"), ListingResponseData.class
+        );
         ListingResponse response = new ListingResponse();
         response.setKind(kind);
         response.setData(data);

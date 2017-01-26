@@ -19,6 +19,7 @@ import rxreddit.model.AddCommentResponse;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.ListingResponse;
 import rxreddit.model.MoreChildrenResponse;
+import rxreddit.model.ReportForm;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
@@ -174,11 +175,18 @@ interface RedditAPI {
             @Query("id") String id
     );
 
+    @GET("/api/report_form?api_type=json")
+    Observable<Response<ReportForm>> getReportForm(
+            @Query("thing") String thing
+    );
+
+    @FormUrlEncoded
     @POST("/api/report?api_type=json")
     Observable<Response<Void>> report(
-            @Query("thing_id") String id,
-            @Query("reason") String reason,
-            @Query("otherReason") String otherReason
+            @Field("thing_id") String fullname,
+            @Field("reason") String reason,
+            @Field("site_reason") String siteReason,
+            @Field("other_reason") String otherReason
     );
 
     @FormUrlEncoded

@@ -396,9 +396,94 @@ class SubredditTests : _RedditServiceTests() {
     }
 
     @Test
-    fun testReport() {
-        val observable = service.report("", "")
+    fun testGetReportForm() {
+        authenticateService()
+        val observable = service.getReportForm("t3_foo")
         assertNotNull("observable == null", observable)
+
+        val test = TestSubscriber<ReportForm>()
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_report_form.json"))
+
+        observable.subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testGetReportForm_noauth() {
+//        authenticateService()
+        val observable = service.getReportForm("t3_foo")
+        assertNotNull("observable == null", observable)
+
+        val test = TestSubscriber<ReportForm>()
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
+    }
+
+    @Test
+    fun testGetReportForm_noId() {
+        authenticateService()
+        val observable = service.getReportForm(null)
+
+        val test = TestSubscriber<ReportForm>()
+        observable.subscribe(test)
+
+        test.assertErrorEvents(1)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
+    fun testReport() {
+        authenticateService()
+        val observable = service.report("t3_foo", "", "", "tomfoolery")
+        assertNotNull("observable == null", observable)
+        val test = TestSubscriber<Void>()
+        mockServer.enqueue(MockResponse())
+        observable.subscribe(test)
+        test.assertSuccessfulEvents(1)
+    }
+
+    @Test
+    fun testReport_noId() {
+        authenticateService()
+        val observable = service.report(null, null, null, "tomfoolery")
+        val test = TestSubscriber<Void>()
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
+    fun testReport_noReason() {
+        authenticateService()
+        val observable = service.report("", null, null, null)
+        val test = TestSubscriber<Void>()
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
+        assertEquals("NullPointerException expected",
+                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+    }
+
+    @Test
+    fun testReport_noauth() {
+//        authenticateService()
+        val observable = service.report("t3_foo", "", "", "")
+        val test = TestSubscriber<Void>()
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
+    }
+
+    @Test
+    fun testReport_httpError() {
+        authenticateService()
+        val observable = service.report("t3_linkId", null, null, "tomfoolery")
+        val test = TestSubscriber<Void>()
+        mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
+        observable.subscribe(test)
+        test.assertErrorEvents(1)
+        assertEquals("HttpException expected",
+                HttpException::class.java, test.onErrorEvents[0].javaClass)
     }
 
     @Test
