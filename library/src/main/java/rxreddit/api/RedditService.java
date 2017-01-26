@@ -416,6 +416,30 @@ public class RedditService implements IRedditService {
     }
 
     @Override
+    public Observable<Void> submit(
+            String subreddit, String kind, String title, String url, String text,
+            boolean sendReplies, boolean resubmit) {
+        if (subreddit == null) {
+            return Observable.error(new NullPointerException("subreddit == null"));
+        }
+
+        if (kind == null) {
+            return Observable.error(new NullPointerException("kind == null"));
+        }
+
+        if (title == null) {
+            return Observable.error(new NullPointerException("title == null"));
+        }
+
+        return requireUserAccessToken().flatMap(
+                token -> mAPI.submit(
+                        subreddit, kind, title, url, text, sendReplies, resubmit, "json"
+                )
+                .flatMap(responseToBody())
+        );
+    }
+
+    @Override
     public Observable<Comment> addComment(String parentId, String text) {
         if (parentId == null) {
             return Observable.error(new NullPointerException("parentId == null"));

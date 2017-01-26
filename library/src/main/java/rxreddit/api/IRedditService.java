@@ -89,6 +89,11 @@ interface IRedditService {
 
     Observable<Void> report(String fullname, String reason, String siteReason, String otherReason);
 
+    Observable<Void> submit(
+            String subreddit, String kind, String title, String url, String text,
+            boolean sendReplies, boolean resubmit
+    );
+
     Observable<Comment> addComment(String parentId, String text);
 
     Observable<ListingResponse> getInbox(String show, String before, String after);

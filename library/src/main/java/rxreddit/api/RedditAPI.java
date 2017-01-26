@@ -190,6 +190,19 @@ interface RedditAPI {
     );
 
     @FormUrlEncoded
+    @POST("/api/submit?api_type=json")
+    Observable<Response<Void>> submit(
+            @Field("sr") String subreddit,
+            @Field("kind") String kind,
+            @Field("title") String title,
+            @Field("url") String url,
+            @Field("text") String text,
+            @Field("sendreplies") boolean sendReplies,
+            @Field("resubmit") boolean resubmit,
+            @Field("extension") String extension
+    );
+
+    @FormUrlEncoded
     @POST("/api/comment?api_type=json")
     Observable<Response<AddCommentResponse>> addComment(
             @Field("parent") String parentId,
