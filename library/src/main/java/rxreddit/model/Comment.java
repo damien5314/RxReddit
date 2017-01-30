@@ -18,7 +18,7 @@ public class Comment extends AbsComment implements Votable, Savable {
     public String getUrl() {
         return String.format("http://www.reddit.com/r/%s/comments/%s?comment=%s",
                 getSubreddit(),
-                getLinkId().substring(3), // Remove the type prefix (t3_, etc)
+                getLinkId(), // Remove the type prefix (t3_, etc)
                 getId());
     }
 
@@ -51,8 +51,11 @@ public class Comment extends AbsComment implements Votable, Savable {
             data.linkId = linkUrl.substring(i, j);
         }
         int i = data.linkId.indexOf('_');
-        if (i != -1) return data.linkId.substring(i + 1);
-        return data.linkId;
+        if (i == -1) {
+            return data.linkId;
+        } else {
+            return data.linkId.substring(i + 1);
+        }
     }
 
     @Override
