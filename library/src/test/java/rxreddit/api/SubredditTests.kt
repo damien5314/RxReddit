@@ -487,6 +487,21 @@ class SubredditTests : _RedditServiceTests() {
     }
 
     @Test
+    fun submit_successful() {
+        authenticateService()
+        val observable = service.submit(
+                "damien5314apitest", "link", "foo", "foo://127.0.0.1", "bar", false, false
+        )
+        val observer = TestSubscriber<Void>()
+        mockServer.enqueue(MockResponse()) // TODO: Input correct body response
+
+        observable.subscribe(observer)
+
+        observer.assertValueCount(1)
+        observer.assertCompleted()
+    }
+
+    @Test
     fun testAddComment() {
         authenticateService()
         val observable = service.addComment("linkId", "I like cats")
