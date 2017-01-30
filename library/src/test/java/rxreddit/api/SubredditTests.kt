@@ -492,8 +492,8 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.submit(
                 "damien5314apitest", "link", "foo", "foo://127.0.0.1", "bar", false, false
         )
-        val observer = TestSubscriber<Void>()
-        mockServer.enqueue(MockResponse()) // TODO: Input correct body response
+        val observer = TestSubscriber<SubmitPostResponse>()
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/POST_submit.json"))
 
         observable.subscribe(observer)
 

@@ -33,6 +33,7 @@ import rxreddit.model.ListingResponse;
 import rxreddit.model.ModReport;
 import rxreddit.model.MoreChildrenResponse;
 import rxreddit.model.ReportForm;
+import rxreddit.model.SubmitPostResponse;
 import rxreddit.model.Subreddit;
 import rxreddit.model.SubredditRules;
 import rxreddit.model.SubredditSidebar;
@@ -416,7 +417,7 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> submit(
+    public Observable<SubmitPostResponse> submit(
             String subreddit, String kind, String title, String url, String text,
             boolean sendReplies, boolean resubmit) {
         if (subreddit == null) {
