@@ -486,12 +486,15 @@ class SubredditTests : _RedditServiceTests() {
                 HttpException::class.java, test.onErrorEvents[0].javaClass)
     }
 
+    private fun getSubmitObservable() =
+        service.submit(
+                "damien5314apitest", "link", "foo", "foo://127.0.0.1", "bar", false, false
+        )
+
     @Test
     fun submit_successful() {
         authenticateService()
-        val observable = service.submit(
-                "damien5314apitest", "link", "foo", "foo://127.0.0.1", "bar", false, false
-        )
+        val observable = getSubmitObservable()
         val observer = TestSubscriber<SubmitPostResponse>()
         mockServer.enqueue(MockResponse().setBodyFromFile("test/POST_submit.json"))
 
@@ -499,6 +502,57 @@ class SubredditTests : _RedditServiceTests() {
 
         observer.assertValueCount(1)
         observer.assertCompleted()
+    }
+
+    @Test
+    fun submit_nullSubreddit_throwsError() {
+        val observable = service.submit(null, "link", "foo", "foo://127.0.0.1", "bar", false, false)
+        val observer = TestSubscriber<SubmitPostResponse>()
+        observable.subscribe(observer)
+        observer.assertErrorEvents(1)
+    }
+
+    @Test
+    fun submit_nullKind_throwsError() {
+        val observable = service.submit("AskReddit", null, "foo", "foo://127.0.0.1", "bar", false, false)
+        val observer = TestSubscriber<SubmitPostResponse>()
+        observable.subscribe(observer)
+        observer.assertErrorEvents(1)
+    }
+
+    @Test
+    fun submit_nullTitle_throwsError() {
+        val observable = service.submit("AskReddit", "link", null, "foo://127.0.0.1", "bar", false, false)
+        val observer = TestSubscriber<SubmitPostResponse>()
+        observable.subscribe(observer)
+        observer.assertErrorEvents(1)
+    }
+
+    @Test
+    fun submit_noAuth_throwsError() {
+//        authenticateService()
+        val observable = getSubmitObservable()
+        val observer = TestSubscriber<SubmitPostResponse>()
+
+        observable.subscribe(observer)
+
+        observer.assertErrorEvents(1)
+    }
+
+    @Test
+    fun submit_httpError_throwsError() {
+        authenticateService()
+        val observable = getSubmitObservable()
+        val observer = TestSubscriber<SubmitPostResponse>()
+        mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
+
+        observable.subscribe(observer)
+
+        observer.assertErrorEvents(1)
+        assertEquals(
+                "HttpException expected",
+                HttpException::class.java, observer.onErrorEvents[0].javaClass
+        )
     }
 
     @Test

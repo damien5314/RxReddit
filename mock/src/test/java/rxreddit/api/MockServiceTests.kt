@@ -299,7 +299,14 @@ class MockServiceTests {
     @Test
     fun testReport() {
         val mockService = getRedditServiceMock()
-        val observable = mockService.report("", "")
+        val observable = mockService.report("", "", "", "")
+        assertNotNull("observable == null", observable)
+    }
+
+    @Test
+    fun testSubmit() {
+        val mockService = getRedditServiceMock()
+        val observable = mockService.submit("", "", "", "", "", false, false)
         assertNotNull("observable == null", observable)
     }
 
