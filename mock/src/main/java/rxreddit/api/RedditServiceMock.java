@@ -82,7 +82,7 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Completable updateUserSettings(Map<String, String> settings) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
@@ -143,17 +143,17 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Completable addFriend(String username) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable deleteFriend(String username) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable saveFriendNote(String username, String note) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
@@ -193,17 +193,17 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Completable vote(String fullname, int direction) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable save(String fullname, String category, boolean toSave) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable hide(String fullname, boolean toHide) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
@@ -213,7 +213,7 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Completable report(String id, String reason, String siteReason, String otherReason) {
-        return Observable.error(new UnsupportedOperationException());
+        return Completable.error(new UnsupportedOperationException());
     }
 
     @Override
@@ -243,17 +243,17 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Completable markAllMessagesRead() {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable markMessagesRead(String commaSeparatedFullnames) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable markMessagesUnread(String commaSeparatedFullnames) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
@@ -265,27 +265,27 @@ public class RedditServiceMock extends RedditService {
 
     @Override
     public Completable subscribe(String subreddit) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable subscribe(Iterable<String> subreddits) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable unsubscribe(String subreddit) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable unsubscribe(Iterable<String> subreddits) {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     @Override
     public Completable revokeAuthentication() {
-        return Observable.just(null);
+        return Completable.complete();
     }
 
     private Reader getReaderForFile(String filename) {

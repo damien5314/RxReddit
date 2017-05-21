@@ -10,9 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ddiehl.rxreddit.sample.R;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import rxreddit.api.RedditService;
 import rxreddit.model.UserIdentity;
 
@@ -50,7 +50,7 @@ public class UserDetailActivity extends AppCompatActivity {
         }
     }
 
-    private Action1<UserIdentity> onUserIdentityRetrieved() {
+    private Consumer<UserIdentity> onUserIdentityRetrieved() {
         return identity -> {
             mUsername.setText(identity.getName());
             mJoinDate.setText(
@@ -69,7 +69,7 @@ public class UserDetailActivity extends AppCompatActivity {
         };
     }
 
-    private Action1<Throwable> onError() {
+    private Consumer<Throwable> onError() {
         return error -> {
             Snackbar.make(mUsername, R.string.get_identity_error, Snackbar.LENGTH_SHORT).show();
             Log.e("RxReddit", "error retrieving user identity", error);
