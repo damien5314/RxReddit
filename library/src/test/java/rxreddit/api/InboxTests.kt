@@ -1,11 +1,10 @@
 package rxreddit.api
 
 import okhttp3.mockwebserver.MockResponse
-import org.junit.Assert.*
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.HttpException
-import rxreddit.test.assertErrorEvents
-import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
 
 class InboxTests : _RedditServiceTests() {
@@ -37,10 +36,10 @@ class InboxTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_inbox_$show.json"))
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.values()[0])
+        test.assertValueCount(1)
+        assertNotNull(test.values()[0])
         test.values()[0].apply {
-            assertNotEquals("no listings loaded", 0, data.children.size)
+            assertNotEquals(0, data.children.size)
         }
     }
 
@@ -49,7 +48,7 @@ class InboxTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.getInbox("comments", null, null)
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -57,9 +56,7 @@ class InboxTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.getInbox(null, null, null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -68,9 +65,7 @@ class InboxTests : _RedditServiceTests() {
         val observable = service.getInbox("comments", null, null)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -80,7 +75,7 @@ class InboxTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -88,7 +83,7 @@ class InboxTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.markAllMessagesRead()
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -97,9 +92,7 @@ class InboxTests : _RedditServiceTests() {
         val observable = service.markAllMessagesRead()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -109,7 +102,7 @@ class InboxTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -117,7 +110,7 @@ class InboxTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.markMessagesRead("")
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -126,9 +119,7 @@ class InboxTests : _RedditServiceTests() {
         val observable = service.markMessagesRead("")
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -138,7 +129,7 @@ class InboxTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -146,7 +137,7 @@ class InboxTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.markMessagesUnread("")
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -155,8 +146,6 @@ class InboxTests : _RedditServiceTests() {
         val observable = service.markMessagesUnread("")
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 }

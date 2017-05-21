@@ -5,8 +5,6 @@ import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
 import retrofit2.HttpException
-import rxreddit.test.assertErrorEvents
-import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
 
 class SubredditTests : _RedditServiceTests() {
@@ -16,7 +14,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.loadLinks(null, null, null, null, null)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_hot.json"))
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
         test.values()[0].apply {
             assertNotEquals("no links loaded", 0, data.children.size)
         }
@@ -27,9 +25,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.loadLinks(null, null, null, null, null)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -38,7 +34,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_submission_comments.json"))
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
         test.values()[0][0].apply {
             assertEquals("unexpected number of links loaded", 1, data.children.size)
         }
@@ -51,18 +47,14 @@ class SubredditTests : _RedditServiceTests() {
     fun testLoadLinkComments_noSubreddit() {
         val observable = service.loadLinkComments(null, "", null, null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
     fun testLoadLinkComments_noLink() {
         val observable = service.loadLinkComments("", null, null, null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -70,9 +62,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.loadLinkComments("pics", "commentId", null, null)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -81,7 +71,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_more_children.json"))
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
         test.values()[0].apply {
             assertNotEquals("no children loaded", 0, childComments.size)
         }
@@ -91,18 +81,14 @@ class SubredditTests : _RedditServiceTests() {
     fun testLoadMoreChildren_noLink() {
         val observable = service.loadMoreChildren(null, listOf("comment1", "comment2"), null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
     fun testLoadMoreChildren_noComments() {
         val observable = service.loadMoreChildren("linkId", emptyList(), null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -110,9 +96,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.loadMoreChildren("linkId", listOf("comment1", "comment2"), "top")
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -123,7 +107,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_info.json"))
         val test = observable.test()
 
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
         assertNotNull("response == null", test.values()[0])
     }
 
@@ -132,9 +116,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.getSubredditInfo(null)
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -145,9 +127,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -158,7 +138,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_about_rules.json"))
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertValueCount(1)
         assertNotNull("response == null", observer.values()[0])
     }
 
@@ -167,9 +147,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.getSubredditRules(null)
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -180,9 +158,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test @Ignore("/r/subreddit/about/sidebar is broken")
@@ -208,7 +184,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_about_sticky.json"))
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertValueCount(1)
         assertNotNull("response == null", observer.values()[0])
     }
 
@@ -217,9 +193,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.getSubredditSticky(null)
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -230,9 +204,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -242,7 +214,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -250,9 +222,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.vote(null, 0)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -260,7 +230,7 @@ class SubredditTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.vote("t3_linkId", 0)
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -269,9 +239,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.vote("t3_linkId", 0)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -281,7 +249,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -291,7 +259,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -299,9 +267,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.save(null, null, true)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -309,7 +275,7 @@ class SubredditTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.save("t3_linkId", null, true)
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -319,7 +285,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -329,7 +295,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -337,9 +303,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.hide(null, true)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -347,7 +311,7 @@ class SubredditTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.hide("t3_linkId", true)
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -356,9 +320,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.hide("t3_linkId", true)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -370,7 +332,7 @@ class SubredditTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_report_form.json"))
 
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
     }
 
     @Test
@@ -380,7 +342,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
 
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -390,9 +352,7 @@ class SubredditTests : _RedditServiceTests() {
 
         val test = observable.test()
 
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -402,7 +362,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertComplete()
     }
 
     @Test
@@ -410,9 +370,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.report(null, null, null, "tomfoolery")
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -420,9 +378,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.report("", null, null, null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -430,7 +386,7 @@ class SubredditTests : _RedditServiceTests() {
 //        authenticateService()
         val observable = service.report("t3_foo", "", "", "")
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -439,9 +395,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.report("t3_linkId", null, null, "tomfoolery")
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     private fun getSubmitObservable() =
@@ -465,21 +419,21 @@ class SubredditTests : _RedditServiceTests() {
     fun submit_nullSubreddit_throwsError() {
         val observable = service.submit(null, "link", "foo", "foo://127.0.0.1", "bar", false, false)
         val observer = observable.test()
-        observer.assertErrorEvents(1)
+        observer.assertError(NullPointerException::class.java)
     }
 
     @Test
     fun submit_nullKind_throwsError() {
         val observable = service.submit("AskReddit", null, "foo", "foo://127.0.0.1", "bar", false, false)
         val observer = observable.test()
-        observer.assertErrorEvents(1)
+        observer.assertError(NullPointerException::class.java)
     }
 
     @Test
     fun submit_nullTitle_throwsError() {
         val observable = service.submit("AskReddit", "link", null, "foo://127.0.0.1", "bar", false, false)
         val observer = observable.test()
-        observer.assertErrorEvents(1)
+        observer.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -489,7 +443,7 @@ class SubredditTests : _RedditServiceTests() {
 
         val observer = observable.test()
 
-        observer.assertErrorEvents(1)
+        observer.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -500,11 +454,7 @@ class SubredditTests : _RedditServiceTests() {
 
         val observer = observable.test()
 
-        observer.assertErrorEvents(1)
-        assertEquals(
-                "HttpException expected",
-                HttpException::class.java, observer.errors()[0].javaClass
-        )
+        observer.assertError(HttpException::class.java)
     }
 
     @Test
@@ -514,7 +464,7 @@ class SubredditTests : _RedditServiceTests() {
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/POST_add_comment.json"))
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
         assertNotNull("response == null", test.values()[0])
     }
 
@@ -523,9 +473,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.addComment(null, "I like cats")
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -533,9 +481,7 @@ class SubredditTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.addComment("linkId", null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.errors()[0].javaClass)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test
@@ -543,7 +489,7 @@ class SubredditTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.addComment("", "")
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -552,9 +498,7 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.addComment("", "")
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
@@ -563,9 +507,6 @@ class SubredditTests : _RedditServiceTests() {
         val observable = service.addComment("", "")
         mockServer.enqueue(MockResponse().setBodyFromFile("model/add_comment_error.json"))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("IllegalStateException expected",
-                IllegalStateException::class.java, test.errors()[0].javaClass)
+        test.assertError(IllegalStateException::class.java)
     }
-
 }

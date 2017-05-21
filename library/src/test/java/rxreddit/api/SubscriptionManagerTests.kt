@@ -3,8 +3,6 @@ package rxreddit.api
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import rxreddit.test.assertErrorEvents
-import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
 
 class SubscriptionManagerTests : _RedditServiceTests() {
@@ -18,7 +16,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddits_mine_subscriber.json"))
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertValueCount(1)
         observer.values()[0].apply {
             assertNotEquals("no data loaded", 0, data.children.size)
         }
@@ -29,7 +27,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.getSubreddits("subscriber", null, null)
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -41,7 +39,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse())
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertComplete()
     }
 
     @Test
@@ -52,7 +50,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 
         val observer = observable.test()
 
-        observer.assertErrorEvents(1)
+        observer.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -64,7 +62,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse())
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertComplete()
     }
 
     @Test
@@ -75,7 +73,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 
         val observer = observable.test()
 
-        observer.assertErrorEvents(1)
+        observer.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -87,7 +85,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse())
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertComplete()
     }
 
     @Test
@@ -98,7 +96,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 
         val observer = observable.test()
 
-        observer.assertErrorEvents(1)
+        observer.assertError(IllegalStateException::class.java)
     }
 
     @Test
@@ -110,7 +108,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         mockServer.enqueue(MockResponse())
         val observer = observable.test()
 
-        observer.assertSuccessfulEvents(1)
+        observer.assertComplete()
     }
 
     @Test
@@ -121,6 +119,6 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 
         val observer = observable.test()
 
-        observer.assertErrorEvents(1)
+        observer.assertError(IllegalStateException::class.java)
     }
 }

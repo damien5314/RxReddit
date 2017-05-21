@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import rxreddit.RxRedditUtil;
 import rxreddit.model.AddCommentResponse;
@@ -80,7 +81,7 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> updateUserSettings(Map<String, String> settings) {
+    public Completable updateUserSettings(Map<String, String> settings) {
         return Observable.just(null);
     }
 
@@ -141,17 +142,17 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> addFriend(String username) {
+    public Completable addFriend(String username) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> deleteFriend(String username) {
+    public Completable deleteFriend(String username) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> saveFriendNote(String username, String note) {
+    public Completable saveFriendNote(String username, String note) {
         return Observable.just(null);
     }
 
@@ -191,17 +192,17 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> vote(String fullname, int direction) {
+    public Completable vote(String fullname, int direction) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> save(String fullname, String category, boolean toSave) {
+    public Completable save(String fullname, String category, boolean toSave) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> hide(String fullname, boolean toHide) {
+    public Completable hide(String fullname, boolean toHide) {
         return Observable.just(null);
     }
 
@@ -211,7 +212,7 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> report(String id, String reason, String siteReason, String otherReason) {
+    public Completable report(String id, String reason, String siteReason, String otherReason) {
         return Observable.error(new UnsupportedOperationException());
     }
 
@@ -241,17 +242,17 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> markAllMessagesRead() {
+    public Completable markAllMessagesRead() {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> markMessagesRead(String commaSeparatedFullnames) {
+    public Completable markMessagesRead(String commaSeparatedFullnames) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> markMessagesUnread(String commaSeparatedFullnames) {
+    public Completable markMessagesUnread(String commaSeparatedFullnames) {
         return Observable.just(null);
     }
 
@@ -263,27 +264,27 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> subscribe(String subreddit) {
+    public Completable subscribe(String subreddit) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> subscribe(Iterable<String> subreddits) {
+    public Completable subscribe(Iterable<String> subreddits) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> unsubscribe(String subreddit) {
+    public Completable unsubscribe(String subreddit) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> unsubscribe(Iterable<String> subreddits) {
+    public Completable unsubscribe(Iterable<String> subreddits) {
         return Observable.just(null);
     }
 
     @Override
-    public Observable<Void> revokeAuthentication() {
+    public Completable revokeAuthentication() {
         return Observable.just(null);
     }
 

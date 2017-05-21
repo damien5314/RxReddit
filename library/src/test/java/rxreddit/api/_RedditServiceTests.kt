@@ -45,6 +45,6 @@ abstract class _RedditServiceTests {
 
     protected fun deauthenticateService() {
         service.revokeAuthentication()
-                .blockingSubscribe()
+                .blockingAwait()
     }
 }

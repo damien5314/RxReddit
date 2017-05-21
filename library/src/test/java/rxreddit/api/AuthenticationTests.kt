@@ -6,8 +6,6 @@ import org.junit.Assert.*
 import org.junit.Test
 import retrofit2.HttpException
 import rxreddit.model.ListingResponse
-import rxreddit.test.assertErrorEvents
-import rxreddit.test.assertSuccessfulEvents
 
 class AuthenticationTests : _RedditServiceTests() {
 
@@ -24,7 +22,7 @@ class AuthenticationTests : _RedditServiceTests() {
     fun testProcessAuthenticationCallback_allowed() {
         val observable = service.processAuthenticationCallback(TEST_AUTH_CALLBACK)
         val test = observable.test()
-        test.assertSuccessfulEvents(1)
+        test.assertValueCount(1)
         assertTrue("service is not authorized", service.isUserAuthorized)
     }
 
@@ -32,9 +30,7 @@ class AuthenticationTests : _RedditServiceTests() {
     fun testProcessAuthenticationCallback_denied() {
         val observable = service.processAuthenticationCallback(TEST_AUTH_CALLBACK_DENIED)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("IllegalStateException expected",
-                IllegalStateException::class.java, test.errors()[0].javaClass)
+        test.assertError(IllegalStateException::class.java)
         assertFalse("service is authorized", service.isUserAuthorized)
     }
 
@@ -42,9 +38,7 @@ class AuthenticationTests : _RedditServiceTests() {
     fun testProcessAuthenticationCallback_badState() {
         val observable = service.processAuthenticationCallback(TEST_AUTH_CALLBACK_BAD_STATE)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("IllegalStateException expected",
-                IllegalStateException::class.java, test.errors()[0].javaClass)
+        test.assertError(IllegalStateException::class.java)
         assertFalse("service is authorized", service.isUserAuthorized)
     }
 
@@ -52,9 +46,7 @@ class AuthenticationTests : _RedditServiceTests() {
     fun testProcessAuthenticationCallback_nullURL() {
         val observable = service.processAuthenticationCallback(null)
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.errors()[0].javaClass)
+        test.assertError(IllegalArgumentException::class.java)
     }
 
     @Test
@@ -62,37 +54,31 @@ class AuthenticationTests : _RedditServiceTests() {
         val observable = service.processAuthenticationCallback(TEST_AUTH_CALLBACK)
         mockAuthServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("HttpException expected",
-                HttpException::class.java, test.errors()[0].javaClass)
+        test.assertError(HttpException::class.java)
     }
 
     @Test
     fun testProcessAuthenticationCallback_noAuthCode() {
         val observable = service.processAuthenticationCallback("")
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.errors()[0].javaClass)
+        test.assertError(IllegalArgumentException::class.java)
     }
 
     @Test
     fun testProcessAuthenticationCallback_invalidURL() {
         val observable = service.processAuthenticationCallback("@#$%^&*")
         val test = observable.test()
-        test.assertErrorEvents(1)
-        assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.errors()[0].javaClass)
+        test.assertError(IllegalArgumentException::class.java)
     }
 
     @Test
     fun testRevokeAuthentication() {
         authenticateService()
         val observable = service.revokeAuthentication()
-        assertNotNull("observable == null", observable)
+        assertNotNull(observable)
         mockServer.enqueue(MockResponse())
         val test = observable.test()
-        test.assertSuccessfulEvents(2)
+        test.assertComplete()
     }
 
     @Test
@@ -100,7 +86,7 @@ class AuthenticationTests : _RedditServiceTests() {
 //    authenticateService()
         val observable = service.revokeAuthentication()
         val test = observable.test()
-        test.assertErrorEvents(1)
+        test.assertError(NullPointerException::class.java)
     }
 
     @Test

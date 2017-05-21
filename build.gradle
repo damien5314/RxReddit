@@ -11,7 +11,7 @@ buildscript {
 
         SUPPORT_LIBRARY_VERSION = '25.3.1'
         RETROFIT_VERSION = "2.3.0"
-        OKHTTP_VERSION = "3.3.1"
+        OKHTTP_VERSION = "3.6.0"
 
         JUNIT_VERSION = "4.12"
     }

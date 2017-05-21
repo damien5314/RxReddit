@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import okhttp3.Cache;
@@ -115,14 +116,14 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> updateUserSettings(Map<String, String> settings) {
+    public Completable updateUserSettings(Map<String, String> settings) {
         String json = new Gson().toJson(settings);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
 
-        return requireUserAccessToken().flatMap(
-                token -> mAPI.updateUserSettings(body)
-                        .flatMap(responseToBody())
-        );
+        return requireUserAccessToken().flatMap(token ->
+                mAPI.updateUserSettings(body)
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
@@ -134,31 +135,31 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> subscribe(String subreddit) {
+    public Completable subscribe(String subreddit) {
         return requireUserAccessToken().flatMap(
                 token -> mAPI.subscribe(subreddit, true)
-        ).flatMap(responseToBody());
+        ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
-    public Observable<Void> subscribe(Iterable<String> subreddits) {
+    public Completable subscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
                 token -> mAPI.subscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits), true)
-        ).flatMap(responseToBody());
+        ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
-    public Observable<Void> unsubscribe(String subreddit) {
+    public Completable unsubscribe(String subreddit) {
         return requireUserAccessToken().flatMap(
                 token -> mAPI.unsubscribe(subreddit)
-        ).flatMap(responseToBody());
+        ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
-    public Observable<Void> unsubscribe(Iterable<String> subreddits) {
+    public Completable unsubscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
                 token -> mAPI.unsubscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits))
-        ).flatMap(responseToBody());
+        ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
@@ -255,36 +256,36 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> addFriend(String username) {
+    public Completable addFriend(String username) {
         if (username == null)
-            return Observable.error(new NullPointerException("username == null"));
+            return Completable.error(new NullPointerException("username == null"));
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{}");
         return requireUserAccessToken().flatMap(
                 token -> mAPI.addFriend(username, body)
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
-    public Observable<Void> deleteFriend(String username) {
+    public Completable deleteFriend(String username) {
         return requireUserAccessToken().flatMap(
                 token -> mAPI.deleteFriend(username)
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
-    public Observable<Void> saveFriendNote(String username, String note) {
+    public Completable saveFriendNote(String username, String note) {
         if (RxRedditUtil.isEmpty(note)) {
-            return Observable.error(new IllegalArgumentException("user note should be non-empty"));
+            return Completable.error(new IllegalArgumentException("user note should be non-empty"));
         }
 
         String json = new Gson().toJson(new Friend(note));
 
         return requireUserAccessToken().flatMap(token ->
                 mAPI.addFriend(username, RequestBody.create(MediaType.parse("application/json"), json))
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
@@ -339,52 +340,52 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> vote(String fullname, int direction) {
+    public Completable vote(String fullname, int direction) {
         if (fullname == null) {
-            return Observable.error(new NullPointerException("fullname == null"));
+            return Completable.error(new NullPointerException("fullname == null"));
         }
 
         return requireUserAccessToken().flatMap(token ->
                 mAPI.vote(fullname, direction)
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
-    public Observable<Void> save(String fullname, String category, boolean toSave) {
+    public Completable save(String fullname, String category, boolean toSave) {
         if (fullname == null) {
-            return Observable.error(new NullPointerException("fullname == null"));
+            return Completable.error(new NullPointerException("fullname == null"));
         }
 
         if (toSave) { // Save
             return requireUserAccessToken().flatMap(
                     token -> mAPI.save(fullname, category)
-                            .flatMap(responseToBody())
-            );
+                            .flatMap(checkResponse())
+            ).ignoreElements();
         } else { // Unsave
             return requireUserAccessToken().flatMap(
                     token -> mAPI.unsave(fullname)
-                            .flatMap(responseToBody())
-            );
+                            .flatMap(checkResponse())
+            ).ignoreElements();
         }
     }
 
     @Override
-    public Observable<Void> hide(String fullname, boolean toHide) {
+    public Completable hide(String fullname, boolean toHide) {
         if (fullname == null) {
-            return Observable.error(new NullPointerException("fullname == null"));
+            return Completable.error(new NullPointerException("fullname == null"));
         }
 
         if (toHide) { // Hide
             return requireUserAccessToken().flatMap(
                     token -> mAPI.hide(fullname)
-                            .flatMap(responseToBody())
-            );
+                            .flatMap(checkResponse())
+            ).ignoreElements();
         } else { // Unhide
             return requireUserAccessToken().flatMap(
                     token -> mAPI.unhide(fullname)
-                            .flatMap(responseToBody())
-            );
+                            .flatMap(checkResponse())
+            ).ignoreElements();
         }
     }
 
@@ -401,19 +402,19 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> report(String id, String reason, String siteReason, String otherReason) {
+    public Completable report(String id, String reason, String siteReason, String otherReason) {
         if (id == null) {
-            return Observable.error(new NullPointerException("id == null"));
+            return Completable.error(new NullPointerException("id == null"));
         }
 
         if (reason == null && siteReason == null && otherReason == null) {
-            return Observable.error(new NullPointerException("no reason provided"));
+            return Completable.error(new NullPointerException("no reason provided"));
         }
 
         return requireUserAccessToken().flatMap(
                 token -> mAPI.report(id, reason, siteReason, otherReason)
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
@@ -478,33 +479,33 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<Void> markAllMessagesRead() {
+    public Completable markAllMessagesRead() {
         return requireUserAccessToken().flatMap(
                 token -> mAPI.markAllMessagesRead()
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
-    public Observable<Void> markMessagesRead(String commaSeparatedFullnames) {
+    public Completable markMessagesRead(String commaSeparatedFullnames) {
         // TODO: This should take a List of message fullnames and construct the parameter
         return requireUserAccessToken().flatMap(
                 token -> mAPI.markMessagesRead(commaSeparatedFullnames)
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
-    public Observable<Void> markMessagesUnread(String commaSeparatedFullnames) {
+    public Completable markMessagesUnread(String commaSeparatedFullnames) {
         // TODO: This should take a List of message fullnames and construct the parameter
         return requireUserAccessToken().flatMap(
                 token -> mAPI.markMessagesUnread(commaSeparatedFullnames)
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     @Override
-    public Observable<Void> revokeAuthentication() {
+    public Completable revokeAuthentication() {
         return mRedditAuthService.revokeUserAuthentication();
     }
 
@@ -578,6 +579,15 @@ public class RedditService implements IRedditService {
                 return Observable.error(new HttpException(response));
             }
             return Observable.just(response.body());
+        };
+    }
+
+    public static <T> Function<Response<T>, Observable<Response<T>>> checkResponse() {
+        return response -> {
+            if (!response.isSuccessful()) {
+                return Observable.error(new HttpException(response));
+            }
+            return Observable.just(response);
         };
     }
 

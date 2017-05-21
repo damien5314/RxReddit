@@ -3,6 +3,7 @@ package rxreddit.api;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import rxreddit.model.Comment;
 import rxreddit.model.FriendInfo;
@@ -32,17 +33,17 @@ interface IRedditService {
 
     Observable<UserSettings> getUserSettings();
 
-    Observable<Void> updateUserSettings(Map<String, String> settings);
+    Completable updateUserSettings(Map<String, String> settings);
 
     Observable<ListingResponse> getSubreddits(String where, String before, String after);
 
-    Observable<Void> subscribe(String subreddit);
+    Completable subscribe(String subreddit);
 
-    Observable<Void> subscribe(Iterable<String> subreddits);
+    Completable subscribe(Iterable<String> subreddits);
 
-    Observable<Void> unsubscribe(String subreddit);
+    Completable unsubscribe(String subreddit);
 
-    Observable<Void> unsubscribe(Iterable<String> subreddits);
+    Completable unsubscribe(Iterable<String> subreddits);
 
     Observable<ListingResponse> loadLinks(
             String subreddit, String sort, String timespan, String before, String after
@@ -66,11 +67,11 @@ interface IRedditService {
             String show, String username, String sort, String timespan, String before, String after
     );
 
-    Observable<Void> addFriend(String username);
+    Completable addFriend(String username);
 
-    Observable<Void> deleteFriend(String username);
+    Completable deleteFriend(String username);
 
-    Observable<Void> saveFriendNote(String username, String note);
+    Completable saveFriendNote(String username, String note);
 
     Observable<Subreddit> getSubredditInfo(String subreddit);
 
@@ -80,15 +81,15 @@ interface IRedditService {
 
     Observable<List<ListingResponse>> getSubredditSticky(String subreddit);
 
-    Observable<Void> vote(String fullname, int direction);
+    Completable vote(String fullname, int direction);
 
-    Observable<Void> save(String fullname, String category, boolean toSave);
+    Completable save(String fullname, String category, boolean toSave);
 
-    Observable<Void> hide(String fullname, boolean toHide);
+    Completable hide(String fullname, boolean toHide);
 
     Observable<ReportForm> getReportForm(String fullname);
 
-    Observable<Void> report(String fullname, String reason, String siteReason, String otherReason);
+    Completable report(String fullname, String reason, String siteReason, String otherReason);
 
     Observable<SubmitPostResponse> submit(
             String subreddit, String kind, String title, String url, String text,
@@ -99,11 +100,11 @@ interface IRedditService {
 
     Observable<ListingResponse> getInbox(String show, String before, String after);
 
-    Observable<Void> markAllMessagesRead();
+    Completable markAllMessagesRead();
 
-    Observable<Void> markMessagesRead(String commaSeparatedFullnames);
+    Completable markMessagesRead(String commaSeparatedFullnames);
 
-    Observable<Void> markMessagesUnread(String commaSeparatedFullnames);
+    Completable markMessagesUnread(String commaSeparatedFullnames);
 
-    Observable<Void> revokeAuthentication();
+    Completable revokeAuthentication();
 }
