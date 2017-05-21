@@ -1,10 +1,12 @@
 package rxreddit.api
 
+import io.reactivex.subscribers.TestSubscriber
 import org.junit.*
 import org.junit.Assert.*
-import rx.observers.TestSubscriber
-import rxreddit.model.*
-import rxreddit.test.assertSuccessfulEvents
+import rxreddit.model.Comment
+import rxreddit.model.ListingResponse
+import rxreddit.model.Subreddit
+import rxreddit.model.UserIdentity
 import java.net.URI
 import java.util.*
 
@@ -62,53 +64,47 @@ class MockServiceTests {
     fun testProcessAuthenticationCallback() {
         val mockService = getRedditServiceMock()
         val observable = mockService.processAuthenticationCallback("")
-        assertNotNull("observable == null", observable)
-        val test = TestSubscriber<UserAccessToken>()
-        observable.subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        assertNotNull(observable)
+        val test = observable.test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetUserIdentity() {
         val mockService = getRedditServiceMock()
-        mockService.processAuthenticationCallback("")
-                .toBlocking().subscribe()
+        mockService.processAuthenticationCallback("").blockingSubscribe()
         val test = TestSubscriber<UserIdentity>()
-        mockService.getUserIdentity().subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        mockService.getUserIdentity().test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetUserSettings() {
         val mockService = getRedditServiceMock()
-        mockService.processAuthenticationCallback("")
-                .toBlocking().subscribe()
-        val test = TestSubscriber<UserSettings>()
-        mockService.getUserSettings().subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        mockService.processAuthenticationCallback("").blockingSubscribe()
+        val test = mockService.getUserSettings().test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testUpdateUserSettings() {
         val mockService = getRedditServiceMock()
-        mockService.processAuthenticationCallback("")
-                .toBlocking().subscribe()
-        val test = TestSubscriber<Void>()
+        mockService.processAuthenticationCallback("").blockingSubscribe()
         val map = HashMap<String, String>()
-        mockService.updateUserSettings(map).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        val test = mockService.updateUserSettings(map).test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testLoadLinks() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<ListingResponse>()
-        mockService.loadLinks("", "", "", "", "").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        test.onNextEvents[0].apply {
+        mockService.loadLinks("", "", "", "", "").test()
+        test.assertValueCount(1)
+        test.values()[0].apply {
             assertNotEquals("no links loaded", 0, data.children.size)
         }
     }
@@ -117,12 +113,12 @@ class MockServiceTests {
     fun testLoadLinkComments() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<List<ListingResponse>>()
-        mockService.loadLinkComments("", "", "", "").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        test.onNextEvents[0][0].apply {
+        mockService.loadLinkComments("", "", "", "").test()
+        test.assertValueCount(1)
+        test.values()[0][0].apply {
             assertEquals("unexpected number of links loaded", 1, data.children.size)
         }
-        test.onNextEvents[0][1].apply {
+        test.values()[0][1].apply {
             assertNotEquals("no comments loaded", 0, data.children.size)
         }
     }
@@ -130,10 +126,9 @@ class MockServiceTests {
     @Test
     fun testLoadMoreChildren() {
         val mockService = getRedditServiceMock()
-        val test = TestSubscriber<MoreChildrenResponse>()
-        mockService.loadMoreChildren(null, null, null).subscribe(test)
-        test.assertSuccessfulEvents(1)
-        test.onNextEvents[0].apply {
+        val test = mockService.loadMoreChildren(null, null, null).test()
+        test.assertValueCount(1)
+        test.values()[0].apply {
             assertNotEquals("no children loaded", 0, childComments.size)
         }
     }
@@ -142,39 +137,36 @@ class MockServiceTests {
     fun testGetUserInfo() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<UserIdentity>()
-        mockService.getUserInfo("").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        mockService.getUserInfo("").test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetFriendInfo() {
         val mockService = getRedditServiceMock()
-        val test = TestSubscriber<FriendInfo>()
-        mockService.getFriendInfo("").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        val test = mockService.getFriendInfo("").test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetUserTrophies() {
         val mockService = getRedditServiceMock()
-        val test = TestSubscriber<List<Listing>>()
-        mockService.getUserTrophies("").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
-        test.onNextEvents[0].apply {
+        val test = mockService.getUserTrophies("").test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
+        test.values()[0].apply {
             assertNotEquals("no trophies loaded", 0, size)
         }
     }
 
     private fun testLoadUserProfile(show: String) {
         val mockService = getRedditServiceMock()
-        val test = TestSubscriber<ListingResponse>()
-        mockService.loadUserProfile("overview", "", "", "", "", "").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
-        test.onNextEvents[0].apply {
+        val test = mockService.loadUserProfile("overview", "", "", "", "", "").test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
+        test.values()[0].apply {
             assertNotEquals("no listings loaded", 0, data.children.size)
         }
     }
@@ -207,93 +199,87 @@ class MockServiceTests {
     fun testAddFriend() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.addFriend("").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.addFriend("").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testDeleteFriend() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.deleteFriend("").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.deleteFriend("").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testSaveFriendNote() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.saveFriendNote("", "").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.saveFriendNote("", "").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testGetSubredditInfo() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Subreddit>()
-        mockService.getSubredditInfo("").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        mockService.getSubredditInfo("").test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetSubredditRules() {
         val mockService = getRedditServiceMock()
-        val observer = TestSubscriber<SubredditRules>()
 
-        mockService.getSubredditRules("")
-                .subscribe(observer)
+        val observer = mockService.getSubredditRules("").test()
 
-        observer.assertSuccessfulEvents(1)
-        assertNotNull("response == null", observer.onNextEvents[0])
+        observer.assertValueCount(1)
+        assertNotNull("response == null", observer.values()[0])
     }
 
     @Test @Ignore("/r/subreddit/about/sidebar endpoint is broken")
     fun testGetSubredditSidebar() {
         val mockService = getRedditServiceMock()
-        val observer = TestSubscriber<SubredditSidebar>()
 
-        mockService.getSubredditSidebar("")
-                .subscribe(observer)
+        val observer = mockService.getSubredditSidebar("").test()
 
-        observer.assertSuccessfulEvents(1)
-        assertNotNull("response == null", observer.onNextEvents[0])
+        observer.assertValueCount(1)
+        assertNotNull("response == null", observer.values()[0])
     }
 
     @Test
     fun testGetSubredditSticky() {
         val mockService = getRedditServiceMock()
-        val observer = TestSubscriber<List<ListingResponse>>()
 
-        mockService.getSubredditSticky("")
-                .subscribe(observer)
+        val observer = mockService.getSubredditSticky("").test()
 
-        observer.assertSuccessfulEvents(1)
-        assertNotNull("response == null", observer.onNextEvents[0])
+        observer.assertValueCount(1)
+        assertNotNull("response == null", observer.values()[0])
     }
 
     @Test
     fun testVote() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.vote(null, 0).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.vote(null, 0).test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testSave() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.save(null, null, true).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.save(null, null, true).test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testHide() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.hide(null, true).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.hide(null, true).test()
+        test.assertValueCount(1)
     }
 
     @Test
@@ -314,18 +300,18 @@ class MockServiceTests {
     fun testAddComment() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Comment>()
-        mockService.addComment("", "").subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        mockService.addComment("", "").test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
     }
 
     private fun testGetInbox(show: String) {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<ListingResponse>()
-        mockService.getInbox(show, null, null).subscribe(test)
-        test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
-        test.onNextEvents[0].apply {
+        mockService.getInbox(show, null, null).test()
+        test.assertValueCount(1)
+        assertNotNull("response == null", test.values()[0])
+        test.values()[0].apply {
             assertNotEquals("no listings loaded", 0, data.children.size)
         }
     }
@@ -355,72 +341,72 @@ class MockServiceTests {
     fun testMarkAllMessagesRead() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.markAllMessagesRead().subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.markAllMessagesRead().test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testMarkMessagesRead() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.markMessagesRead("").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.markMessagesRead("").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testMarkMessagesUnread() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.markMessagesUnread("").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.markMessagesUnread("").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testGetSubreddits() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<ListingResponse>()
-        mockService.getSubreddits("subscriber", null, null).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.getSubreddits("subscriber", null, null).test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testSubscribe() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.subscribe("AskReddit").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.subscribe("AskReddit").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testSubscribeAll() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.subscribe(listOf("AskReddit", "sports")).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.subscribe(listOf("AskReddit", "sports")).test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testUnsubscribe() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.unsubscribe("AskReddit").subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.unsubscribe("AskReddit").test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testUnsubscribeAll() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.unsubscribe(listOf("AskReddit", "sports")).subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.unsubscribe(listOf("AskReddit", "sports")).test()
+        test.assertValueCount(1)
     }
 
     @Test
     fun testRevokeAuthentication() {
         val mockService = getRedditServiceMock()
         val test = TestSubscriber<Void>()
-        mockService.revokeAuthentication().subscribe(test)
-        test.assertSuccessfulEvents(1)
+        mockService.revokeAuthentication().test()
+        test.assertValueCount(1)
     }
 
     @Test
