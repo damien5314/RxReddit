@@ -1,6 +1,7 @@
 package rxreddit.api;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 import rxreddit.model.AccessToken;
 import rxreddit.model.UserAccessToken;
 
@@ -20,6 +21,6 @@ interface IRedditAuthService {
 
     Observable<UserAccessToken> refreshUserAccessToken();
 
-    Observable<Void> revokeUserAuthentication();
+    Completable revokeUserAuthentication();
 
 }

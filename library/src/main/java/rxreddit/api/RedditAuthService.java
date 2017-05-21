@@ -4,22 +4,25 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.functions.Action1;
 import rxreddit.RxRedditUtil;
 import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
 import rxreddit.model.UserAccessToken;
 
-import static rxreddit.api.RedditService.responseToBody;
+import static rxreddit.RxRedditUtil.checkResponse;
+import static rxreddit.RxRedditUtil.responseToBody;
+
 
 final class RedditAuthService implements IRedditAuthService {
 
@@ -134,7 +137,7 @@ final class RedditAuthService implements IRedditAuthService {
         });
     }
 
-    private Action1<UserAccessToken> saveUserAccessToken() {
+    private Consumer<UserAccessToken> saveUserAccessToken() {
         return token -> {
             if (token.getRefreshToken() == null) {
                 UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
@@ -147,7 +150,7 @@ final class RedditAuthService implements IRedditAuthService {
         };
     }
 
-    private Action1<ApplicationAccessToken> saveApplicationAccessToken() {
+    private Consumer<ApplicationAccessToken> saveApplicationAccessToken() {
         return token -> {
             mApplicationAccessToken = token;
             mAccessTokenManager.saveApplicationAccessToken(token);
@@ -182,21 +185,21 @@ final class RedditAuthService implements IRedditAuthService {
     }
 
     @Override
-    public Observable<Void> revokeUserAuthentication() {
+    public Completable revokeUserAuthentication() {
         AccessToken token = getUserAccessToken();
         mUserAccessToken = null;
         mAccessTokenManager.clearSavedUserAccessToken();
         return revokeAuthToken(token);
     }
 
-    private Observable<Void> revokeAuthToken(AccessToken token) {
-        if (token == null) return Observable.error(new IllegalStateException("token == null"));
+    private Completable revokeAuthToken(AccessToken token) {
+        if (token == null) return Completable.error(new NullPointerException("token == null"));
         return Observable.merge(
                 mAuthService.revokeUserAuthToken(token.getToken(), "access_token")
-                        .flatMap(responseToBody()),
+                        .flatMap(checkResponse()),
                 mAuthService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token")
-                        .flatMap(responseToBody())
-        );
+                        .flatMap(checkResponse())
+        ).ignoreElements();
     }
 
     private RedditAuthAPI buildApi(String baseUrl, boolean loggingEnabled) {
@@ -218,7 +221,7 @@ final class RedditAuthService implements IRedditAuthService {
                 .client(okhttp.build())
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         return restAdapter.create(RedditAuthAPI.class);

@@ -2,6 +2,7 @@ package rxreddit.api;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -14,7 +15,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
 import rxreddit.model.AddCommentResponse;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.ListingResponse;

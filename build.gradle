@@ -10,8 +10,9 @@ buildscript {
         TARGET_SDK_VERSION = 25
 
         SUPPORT_LIBRARY_VERSION = '25.3.1'
-        RETROFIT_VERSION = "2.1.0"
-        OKHTTP_VERSION = "3.3.1"
+        RETROFIT_VERSION = "2.3.0"
+        OKHTTP_VERSION = "3.6.0"
+        RXANDROID_VERSION = "2.0.1"
 
         JUNIT_VERSION = "4.12"
     }

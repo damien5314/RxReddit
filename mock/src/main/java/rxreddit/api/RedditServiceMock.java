@@ -10,7 +10,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 import rxreddit.RxRedditUtil;
 import rxreddit.model.AddCommentResponse;
 import rxreddit.model.Comment;
@@ -80,8 +81,8 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> updateUserSettings(Map<String, String> settings) {
-        return Observable.just(null);
+    public Completable updateUserSettings(Map<String, String> settings) {
+        return Completable.complete();
     }
 
     @Override
@@ -141,18 +142,18 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> addFriend(String username) {
-        return Observable.just(null);
+    public Completable addFriend(String username) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> deleteFriend(String username) {
-        return Observable.just(null);
+    public Completable deleteFriend(String username) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> saveFriendNote(String username, String note) {
-        return Observable.just(null);
+    public Completable saveFriendNote(String username, String note) {
+        return Completable.complete();
     }
 
     @Override
@@ -191,18 +192,18 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> vote(String fullname, int direction) {
-        return Observable.just(null);
+    public Completable vote(String fullname, int direction) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> save(String fullname, String category, boolean toSave) {
-        return Observable.just(null);
+    public Completable save(String fullname, String category, boolean toSave) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> hide(String fullname, boolean toHide) {
-        return Observable.just(null);
+    public Completable hide(String fullname, boolean toHide) {
+        return Completable.complete();
     }
 
     @Override
@@ -211,8 +212,8 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> report(String id, String reason, String siteReason, String otherReason) {
-        return Observable.error(new UnsupportedOperationException());
+    public Completable report(String id, String reason, String siteReason, String otherReason) {
+        return Completable.error(new UnsupportedOperationException());
     }
 
     @Override
@@ -241,18 +242,18 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> markAllMessagesRead() {
-        return Observable.just(null);
+    public Completable markAllMessagesRead() {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> markMessagesRead(String commaSeparatedFullnames) {
-        return Observable.just(null);
+    public Completable markMessagesRead(String commaSeparatedFullnames) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> markMessagesUnread(String commaSeparatedFullnames) {
-        return Observable.just(null);
+    public Completable markMessagesUnread(String commaSeparatedFullnames) {
+        return Completable.complete();
     }
 
     @Override
@@ -263,28 +264,28 @@ public class RedditServiceMock extends RedditService {
     }
 
     @Override
-    public Observable<Void> subscribe(String subreddit) {
-        return Observable.just(null);
+    public Completable subscribe(String subreddit) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> subscribe(Iterable<String> subreddits) {
-        return Observable.just(null);
+    public Completable subscribe(Iterable<String> subreddits) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> unsubscribe(String subreddit) {
-        return Observable.just(null);
+    public Completable unsubscribe(String subreddit) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> unsubscribe(Iterable<String> subreddits) {
-        return Observable.just(null);
+    public Completable unsubscribe(Iterable<String> subreddits) {
+        return Completable.complete();
     }
 
     @Override
-    public Observable<Void> revokeAuthentication() {
-        return Observable.just(null);
+    public Completable revokeAuthentication() {
+        return Completable.complete();
     }
 
     private Reader getReaderForFile(String filename) {

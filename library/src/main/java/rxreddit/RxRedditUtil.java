@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import retrofit2.HttpException;
+import retrofit2.Response;
 import rxreddit.model.Comment;
 import rxreddit.model.CommentStub;
 import rxreddit.model.Listing;
@@ -130,5 +134,23 @@ public class RxRedditUtil {
         }
         commaDelimited.deleteCharAt(commaDelimited.length()-1);
         return commaDelimited.toString();
+    }
+
+    public static <T> Function<Response<T>, Observable<T>> responseToBody() {
+        return response -> {
+            if (!response.isSuccessful()) {
+                return Observable.error(new HttpException(response));
+            }
+            return Observable.just(response.body());
+        };
+    }
+
+    public static <T> Function<Response<T>, Observable<Response<T>>> checkResponse() {
+        return response -> {
+            if (!response.isSuccessful()) {
+                return Observable.error(new HttpException(response));
+            }
+            return Observable.just(response);
+        };
     }
 }

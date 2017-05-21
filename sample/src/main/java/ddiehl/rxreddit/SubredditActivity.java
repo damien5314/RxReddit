@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ddiehl.rxreddit.sample.R;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import rxreddit.android.SignInActivity;
 import rxreddit.api.RedditService;
 import rxreddit.model.Link;
@@ -78,7 +78,7 @@ public class SubredditActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
 
                 // Transform ListingResponse into list of Links
-                .flatMap(response -> Observable.from(response.getData().getChildren()))
+                .flatMap(response -> Observable.fromIterable(response.getData().getChildren()))
                 .map(listing -> (Link) listing)
                 .toList()
 
@@ -86,7 +86,7 @@ public class SubredditActivity extends AppCompatActivity {
                 .subscribe(onLinksLoaded(), onError());
     }
 
-    private Action1<List<Link>> onLinksLoaded() {
+    private Consumer<List<Link>> onLinksLoaded() {
         return links -> {
             mData.clear();
             mData.addAll(links);
@@ -94,7 +94,7 @@ public class SubredditActivity extends AppCompatActivity {
         };
     }
 
-    private Action1<Throwable> onError() {
+    private Consumer<Throwable> onError() {
         return error -> {
             Log.e(TAG, "Error loading links", error);
             Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT).show();
@@ -121,14 +121,14 @@ public class SubredditActivity extends AppCompatActivity {
         }
     }
 
-    private Action1<UserAccessToken> onAuthenticated() {
+    private Consumer<UserAccessToken> onAuthenticated() {
         return token -> {
             Intent intent = new Intent(this, UserDetailActivity.class);
             startActivity(intent);
         };
     }
 
-    private Action1<Throwable> onAuthenticationError() {
+    private Consumer<Throwable> onAuthenticationError() {
         return error -> {
             Log.e(TAG, "Error during authentication", error);
             Snackbar.make(mFAB, R.string.rxr_error_during_authentication, Snackbar.LENGTH_SHORT)
