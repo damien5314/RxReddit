@@ -6,11 +6,20 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+
+    ext {
+        ANDROID_GRADLE_PLUGIN = '2.3.2'
+        BUILD_TOOLS_VERSION = '25.0.3'
+        COMPILE_SDK_VERSION = 25
+        TARGET_SDK_VERSION = 25
+
+        SUPPORT_LIBRARY_VERSION = '25.3.1'
     }
 }
 
