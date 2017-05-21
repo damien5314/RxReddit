@@ -16,15 +16,15 @@ apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    def retrofit_version = "2.1.0"
-    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
-    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
-    def okhttp_version = "3.3.1"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    testCompile "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile 'junit:junit:4.12'
+
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
+
+    testCompile "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
+    testCompile "junit:junit:$JUNIT_VERSION"
 }
 
 // Adding `src/test/resources` to sourceSets.test.resources does not work for some reason
