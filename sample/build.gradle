@@ -33,7 +33,6 @@ android {
 dependencies {
     compile project(':library')
     compile project(':android')
-    debugCompile project(':mock')
 
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
