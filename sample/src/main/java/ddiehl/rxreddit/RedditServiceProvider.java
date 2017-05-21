@@ -19,7 +19,7 @@ public class RedditServiceProvider {
         if (_instance == null) {
             synchronized (RedditServiceProvider.class) {
                 if (_instance == null) {
-//          _instance = new RedditServiceMock();
+//                    _instance = new RedditServiceMock();
                     _instance = new RedditService.Builder()
                             .baseUrl("https://oauth.reddit.com")
                             .baseAuthUrl("https://www.reddit.com")

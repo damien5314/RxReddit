@@ -10,7 +10,6 @@ import java.util.Map;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -18,8 +17,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -43,6 +40,9 @@ import rxreddit.model.UserIdentity;
 import rxreddit.model.UserIdentityListing;
 import rxreddit.model.UserReport;
 import rxreddit.model.UserSettings;
+
+import static rxreddit.RxRedditUtil.checkResponse;
+import static rxreddit.RxRedditUtil.responseToBody;
 
 public class RedditService implements IRedditService {
 
@@ -570,24 +570,6 @@ public class RedditService implements IRedditService {
                     .addHeader("Authorization", "bearer " + token.getToken())
                     .build();
             return chain.proceed(newRequest);
-        };
-    }
-
-    public static <T> Function<Response<T>, Observable<T>> responseToBody() {
-        return response -> {
-            if (!response.isSuccessful()) {
-                return Observable.error(new HttpException(response));
-            }
-            return Observable.just(response.body());
-        };
-    }
-
-    public static <T> Function<Response<T>, Observable<Response<T>>> checkResponse() {
-        return response -> {
-            if (!response.isSuccessful()) {
-                return Observable.error(new HttpException(response));
-            }
-            return Observable.just(response);
         };
     }
 

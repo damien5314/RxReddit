@@ -20,8 +20,9 @@ import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
 import rxreddit.model.UserAccessToken;
 
-import static rxreddit.api.RedditService.checkResponse;
-import static rxreddit.api.RedditService.responseToBody;
+import static rxreddit.RxRedditUtil.checkResponse;
+import static rxreddit.RxRedditUtil.responseToBody;
+
 
 final class RedditAuthService implements IRedditAuthService {
 
