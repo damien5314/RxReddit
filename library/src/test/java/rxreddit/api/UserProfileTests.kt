@@ -3,12 +3,7 @@ package rxreddit.api
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.*
 import org.junit.Test
-import retrofit2.adapter.rxjava.HttpException
-import rx.observers.TestSubscriber
-import rxreddit.model.FriendInfo
-import rxreddit.model.Listing
-import rxreddit.model.ListingResponse
-import rxreddit.model.UserIdentity
+import retrofit2.HttpException
 import rxreddit.test.assertErrorEvents
 import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
@@ -19,23 +14,21 @@ class UserProfileTests : _RedditServiceTests() {
     fun testGetUserInfo() {
         val observable = service.getUserInfo("")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<UserIdentity>()
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_user_info.json"))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetUserInfo_httpError() {
         val observable = service.getUserInfo("")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<UserIdentity>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
-                HttpException::class.java, test.onErrorEvents[0].javaClass)
+                HttpException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
@@ -43,19 +36,17 @@ class UserProfileTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.getFriendInfo("")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<FriendInfo>()
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_friend_info.json"))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
+        assertNotNull("response == null", test.values()[0])
     }
 
     @Test
     fun testGetFriendInfo_noauth() {
 //    authenticateService()
         val observable = service.getFriendInfo("")
-        val test = TestSubscriber<FriendInfo>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
     }
 
@@ -63,24 +54,22 @@ class UserProfileTests : _RedditServiceTests() {
     fun testGetFriendInfo_httpError() {
         authenticateService()
         val observable = service.getFriendInfo("")
-        val test = TestSubscriber<FriendInfo>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
-                HttpException::class.java, test.onErrorEvents[0].javaClass)
+                HttpException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testGetUserTrophies() {
         val observable = service.getUserTrophies("dadmachine")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<List<Listing>>()
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_user_trophies.json"))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
-        test.onNextEvents[0].apply {
+        assertNotNull("response == null", test.values()[0])
+        test.values()[0].apply {
             assertNotEquals("no trophies loaded", 0, size)
         }
     }
@@ -88,11 +77,10 @@ class UserProfileTests : _RedditServiceTests() {
     @Test
     fun testGetUserTrophies_noUser() {
         val observable = service.getUserTrophies(null)
-        val test = TestSubscriber<List<Listing>>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+                NullPointerException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
@@ -122,12 +110,11 @@ class UserProfileTests : _RedditServiceTests() {
     private fun testLoadUserProfile(show: String) {
         val observable = service.loadUserProfile(show, "", "", "", "", "")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<ListingResponse>()
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_profile_$show.json"))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
-        assertNotNull("response == null", test.onNextEvents[0])
-        test.onNextEvents[0].apply {
+        assertNotNull("response == null", test.values()[0])
+        test.values()[0].apply {
             assertNotEquals("no listings loaded", 0, data.children.size)
         }
     }
@@ -135,32 +122,29 @@ class UserProfileTests : _RedditServiceTests() {
     @Test
     fun testLoadUserProfile_noShow() {
         val observable = service.loadUserProfile(null, "", "", "", "", "")
-        val test = TestSubscriber<ListingResponse>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+                NullPointerException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testLoadUserProfile_noUser() {
         val observable = service.loadUserProfile("", null, "", "", "", "")
-        val test = TestSubscriber<ListingResponse>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+                NullPointerException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testLoadUserProfile_httpError() {
         val observable = service.loadUserProfile("", "", "", "", "", "")
-        val test = TestSubscriber<ListingResponse>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
-                HttpException::class.java, test.onErrorEvents[0].javaClass)
+                HttpException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
@@ -168,9 +152,8 @@ class UserProfileTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.addFriend("")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<Void>()
         mockServer.enqueue(MockResponse())
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
     }
 
@@ -178,19 +161,17 @@ class UserProfileTests : _RedditServiceTests() {
     fun testAddFriend_noUser() {
         authenticateService()
         val observable = service.addFriend(null)
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("NullPointerException expected",
-                NullPointerException::class.java, test.onErrorEvents[0].javaClass)
+                NullPointerException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testAddFriend_noauth() {
 //    authenticateService()
         val observable = service.addFriend("")
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
     }
 
@@ -198,12 +179,11 @@ class UserProfileTests : _RedditServiceTests() {
     fun testAddFriend_httpError() {
         authenticateService()
         val observable = service.addFriend("")
-        val test = TestSubscriber<Void>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
-                HttpException::class.java, test.onErrorEvents[0].javaClass)
+                HttpException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
@@ -211,9 +191,8 @@ class UserProfileTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.deleteFriend("")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<Void>()
         mockServer.enqueue(MockResponse())
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
     }
 
@@ -221,19 +200,17 @@ class UserProfileTests : _RedditServiceTests() {
     fun testDeleteFriend_noUser() {
         authenticateService()
         val observable = service.deleteFriend(null)
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+                IllegalArgumentException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testDeleteFriend_noauth() {
 //    authenticateService()
         val observable = service.deleteFriend("")
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
     }
 
@@ -241,12 +218,11 @@ class UserProfileTests : _RedditServiceTests() {
     fun testDeleteFriend_httpError() {
         authenticateService()
         val observable = service.deleteFriend("")
-        val test = TestSubscriber<Void>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
-                HttpException::class.java, test.onErrorEvents[0].javaClass)
+                HttpException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
@@ -254,9 +230,8 @@ class UserProfileTests : _RedditServiceTests() {
         authenticateService()
         val observable = service.saveFriendNote("dadmachine", "likes dank memes")
         assertNotNull("observable == null", observable)
-        val test = TestSubscriber<Void>()
         mockServer.enqueue(MockResponse())
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertSuccessfulEvents(1)
     }
 
@@ -264,41 +239,37 @@ class UserProfileTests : _RedditServiceTests() {
     fun testSaveFriendNote_noUser() {
         authenticateService()
         val observable = service.saveFriendNote(null, "likes dank memes")
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+                IllegalArgumentException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testSaveFriendNote_noNote() {
         authenticateService()
         val observable = service.saveFriendNote("dadmachine", null)
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+                IllegalArgumentException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testSaveFriendNote_emptyNote() {
         authenticateService()
         val observable = service.saveFriendNote("dadmachine", "")
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("IllegalArgumentException expected",
-                IllegalArgumentException::class.java, test.onErrorEvents[0].javaClass)
+                IllegalArgumentException::class.java, test.errors()[0].javaClass)
     }
 
     @Test
     fun testSaveFriendNote_noauth() {
 //    authenticateService()
         val observable = service.saveFriendNote("dadmachine", "likes dank memes")
-        val test = TestSubscriber<Void>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
     }
 
@@ -306,11 +277,10 @@ class UserProfileTests : _RedditServiceTests() {
     fun testSaveFriendNote_httpError() {
         authenticateService()
         val observable = service.saveFriendNote("dadmachine", "likes dank memes")
-        val test = TestSubscriber<Void>()
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
         assertEquals("HttpException expected",
-                HttpException::class.java, test.onErrorEvents[0].javaClass)
+                HttpException::class.java, test.errors()[0].javaClass)
     }
 }

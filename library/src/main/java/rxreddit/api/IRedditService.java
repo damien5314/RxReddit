@@ -3,7 +3,7 @@ package rxreddit.api;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import rxreddit.model.Comment;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;

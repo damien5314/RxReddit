@@ -4,16 +4,16 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.functions.Action1;
 import rxreddit.RxRedditUtil;
 import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
@@ -134,7 +134,7 @@ final class RedditAuthService implements IRedditAuthService {
         });
     }
 
-    private Action1<UserAccessToken> saveUserAccessToken() {
+    private Consumer<UserAccessToken> saveUserAccessToken() {
         return token -> {
             if (token.getRefreshToken() == null) {
                 UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
@@ -147,7 +147,7 @@ final class RedditAuthService implements IRedditAuthService {
         };
     }
 
-    private Action1<ApplicationAccessToken> saveApplicationAccessToken() {
+    private Consumer<ApplicationAccessToken> saveApplicationAccessToken() {
         return token -> {
             mApplicationAccessToken = token;
             mAccessTokenManager.saveApplicationAccessToken(token);
@@ -218,7 +218,7 @@ final class RedditAuthService implements IRedditAuthService {
                 .client(okhttp.build())
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         return restAdapter.create(RedditAuthAPI.class);

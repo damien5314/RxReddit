@@ -1,22 +1,21 @@
 package rxreddit.test
 
+import io.reactivex.observers.TestObserver
+import io.reactivex.subscribers.TestSubscriber
 import okhttp3.mockwebserver.MockResponse
 import okio.Buffer
 import org.junit.Assert.assertEquals
-import rx.observers.TestSubscriber
 import rxreddit.api._RedditServiceTests
 
-fun <T> TestSubscriber<T>.assertSuccessfulEvents(expected: Int) {
+fun <T> TestObserver<T>.assertSuccessfulEvents(expected: Int) {
     assertNoErrors()
-    assertCompleted()
-    assertUnsubscribed()
-    assertEquals("unexpected number of onNext events", expected, onNextEvents.size)
+    assertComplete()
+    assertEquals("unexpected number of onNext events", expected, values().size)
 }
 
-fun <T> TestSubscriber<T>.assertErrorEvents(expected: Int) {
+fun <T> TestObserver<T>.assertErrorEvents(expected: Int) {
     assertNoValues()
-    assertUnsubscribed()
-    assertEquals("unexpected number of onError events", expected, onErrorEvents.size)
+    assertEquals("unexpected number of onError events", expected, errors().size)
 }
 
 fun MockResponse.setBodyFromFile(filename: String): MockResponse = setBody(

@@ -1,6 +1,6 @@
 package rxreddit.api;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import rxreddit.model.AccessToken;
 import rxreddit.model.UserAccessToken;
 

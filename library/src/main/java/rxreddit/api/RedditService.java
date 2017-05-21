@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -15,13 +17,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.HttpException;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.functions.Func1;
 import rxreddit.RxRedditUtil;
 import rxreddit.model.AbsComment;
 import rxreddit.model.AccessToken;
@@ -521,7 +521,7 @@ public class RedditService implements IRedditService {
                 .client(getOkHttpClient(userAgent, cacheSizeBytes, cachePath, loggingEnabled))
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(getGson()))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return restAdapter.create(RedditAPI.class);
     }
@@ -572,7 +572,7 @@ public class RedditService implements IRedditService {
         };
     }
 
-    public static <T> Func1<Response<T>, Observable<T>> responseToBody() {
+    public static <T> Function<Response<T>, Observable<T>> responseToBody() {
         return response -> {
             if (!response.isSuccessful()) {
                 return Observable.error(new HttpException(response));

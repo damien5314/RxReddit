@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import rxreddit.RxRedditUtil;
 import rxreddit.model.AddCommentResponse;
 import rxreddit.model.Comment;

@@ -40,11 +40,11 @@ abstract class _RedditServiceTests {
 
     protected fun authenticateService() {
         service.processAuthenticationCallback(TEST_AUTH_CALLBACK)
-                .toBlocking().subscribe()
+                .blockingSubscribe()
     }
 
     protected fun deauthenticateService() {
         service.revokeAuthentication()
-                .toBlocking().subscribe()
+                .blockingSubscribe()
     }
 }

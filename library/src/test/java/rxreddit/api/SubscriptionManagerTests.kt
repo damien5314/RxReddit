@@ -3,8 +3,6 @@ package rxreddit.api
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import rx.observers.TestSubscriber
-import rxreddit.model.ListingResponse
 import rxreddit.test.assertErrorEvents
 import rxreddit.test.assertSuccessfulEvents
 import rxreddit.test.setBodyFromFile
@@ -16,13 +14,12 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.getSubreddits("subscriber", null, null)
-        val observer = TestSubscriber.create<ListingResponse>()
 
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddits_mine_subscriber.json"))
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertSuccessfulEvents(1)
-        observer.onNextEvents[0].apply {
+        observer.values()[0].apply {
             assertNotEquals("no data loaded", 0, data.children.size)
         }
     }
@@ -31,8 +28,7 @@ class SubscriptionManagerTests : _RedditServiceTests() {
     fun testGetSubreddits_noAuth() {
 //    authenticateService()
         val observable = service.getSubreddits("subscriber", null, null)
-        val test = TestSubscriber<ListingResponse>()
-        observable.subscribe(test)
+        val test = observable.test()
         test.assertErrorEvents(1)
     }
 
@@ -41,10 +37,9 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.subscribe("AskReddit")
-        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertSuccessfulEvents(1)
     }
@@ -54,9 +49,8 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.subscribe("AskReddit")
-        val observer = TestSubscriber<Void>()
 
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertErrorEvents(1)
     }
@@ -66,10 +60,9 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.subscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertSuccessfulEvents(1)
     }
@@ -79,9 +72,8 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.subscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber<Void>()
 
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertErrorEvents(1)
     }
@@ -91,10 +83,9 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.unsubscribe("AskReddit")
-        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertSuccessfulEvents(1)
     }
@@ -104,9 +95,8 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.unsubscribe("AskReddit")
-        val observer = TestSubscriber<Void>()
 
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertErrorEvents(1)
     }
@@ -116,10 +106,9 @@ class SubscriptionManagerTests : _RedditServiceTests() {
         authenticateService()
 
         val observable = service.unsubscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber.create<Void>()
 
         mockServer.enqueue(MockResponse())
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertSuccessfulEvents(1)
     }
@@ -129,9 +118,8 @@ class SubscriptionManagerTests : _RedditServiceTests() {
 //        authenticateService()
 
         val observable = service.unsubscribe(listOf("AskReddit", "gaming", "news"))
-        val observer = TestSubscriber<Void>()
 
-        observable.subscribe(observer)
+        val observer = observable.test()
 
         observer.assertErrorEvents(1)
     }
