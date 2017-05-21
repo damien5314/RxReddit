@@ -43,5 +43,4 @@ dependencies {
 
 retrolambda {
     javaVersion JavaVersion.VERSION_1_7
-    oldJdk System.getenv("JAVA7_HOME")
 }
