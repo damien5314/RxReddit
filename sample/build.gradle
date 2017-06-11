@@ -1,15 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-    }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
@@ -38,8 +27,4 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
     compile "io.reactivex.rxjava2:rxandroid:$RXANDROID_VERSION"
-}
-
-retrolambda {
-    javaVersion JavaVersion.VERSION_1_7
 }
