@@ -3,11 +3,11 @@
 buildscript {
 
     ext {
-        KOTLIN_VERSION = "1.1.2-2"
+        KOTLIN_VERSION = "1.1.2-4"
         ANDROID_GRADLE_PLUGIN = '3.0.0-alpha3'
-        BUILD_TOOLS_VERSION = '25.0.3'
-        COMPILE_SDK_VERSION = 25
-        TARGET_SDK_VERSION = 25
+        BUILD_TOOLS_VERSION = '26.0.0'
+        COMPILE_SDK_VERSION = 26
+        TARGET_SDK_VERSION = 26
 
         SUPPORT_LIBRARY_VERSION = '25.3.1'
         RETROFIT_VERSION = "2.3.0"
@@ -16,9 +16,9 @@ buildscript {
 
         JUNIT_VERSION = "4.12"
     }
-
     repositories {
         jcenter()
+        maven { url "https://maven.google.com" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_PLUGIN"
