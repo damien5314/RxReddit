@@ -5,8 +5,6 @@ apply plugin: 'maven'
 group = 'com.github.damien5314'
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
