@@ -1,17 +1,14 @@
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
     }
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'me.tatarka.retrolambda'
 
 group = 'com.github.damien5314'
 
@@ -23,7 +20,6 @@ android {
         minSdkVersion 11
         targetSdkVersion TARGET_SDK_VERSION
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,10 +29,6 @@ android {
 dependencies {
     compile project(':library')
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
-}
-
-retrolambda {
-    javaVersion JavaVersion.VERSION_1_7
 }
 
 task sourcesJar(type: Jar) {

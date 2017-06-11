@@ -4,7 +4,7 @@ buildscript {
 
     ext {
         KOTLIN_VERSION = "1.1.2-2"
-        ANDROID_GRADLE_PLUGIN = '2.3.2'
+        ANDROID_GRADLE_PLUGIN = '3.0.0-alpha3'
         BUILD_TOOLS_VERSION = '25.0.3'
         COMPILE_SDK_VERSION = 25
         TARGET_SDK_VERSION = 25
