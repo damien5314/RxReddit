@@ -7,22 +7,21 @@ import java.util.Date;
 public abstract class AccessToken {
 
     private long created = new Date().getTime();
+    private long expirationUtc;
 
-    @SerializedName("access_token")
-    protected String token;
+    @SerializedName("access_token") String token;
+    @SerializedName("token_type") String tokenType;
+    @SerializedName("expires_in") long secondsToExpiration;
+    @SerializedName("scope") String scope;
+    @SerializedName("refresh_token") String refreshToken;
 
-    @SerializedName("token_type")
-    protected String tokenType;
-
-    @SerializedName("expires_in")
-    protected long secondsToExpiration;
-    protected long expirationUtc;
-
-    @SerializedName("scope")
-    protected String scope;
-
-    @SerializedName("refresh_token")
-    protected String refreshToken;
+    public AccessToken(String token, String tokenType, long secondsToExpiration, String scope, String refreshToken) {
+        this.token = token;
+        this.tokenType = tokenType;
+        this.secondsToExpiration = secondsToExpiration;
+        this.scope = scope;
+        this.refreshToken = refreshToken;
+    }
 
     public String getToken() {
         return token;
@@ -41,7 +40,9 @@ public abstract class AccessToken {
     }
 
     public long getExpiration() {
-        if (expirationUtc == 0) expirationUtc = secondsToExpiration * 1000 + created;
+        if (expirationUtc == 0) {
+            expirationUtc = secondsToExpiration * 1000 + created;
+        }
         return expirationUtc;
     }
 

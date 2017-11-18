@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import okhttp3.Credentials;
@@ -98,7 +99,7 @@ final class RedditAuthService implements IRedditAuthService {
                 String grantType = "https://oauth.reddit.com/grants/installed_client";
                 return mAuthService.getApplicationAuthToken(grantType, mDeviceId)
                         .flatMap(responseToBody())
-                        .doOnNext(saveApplicationAccessToken());
+                        .doOnNext(this::saveApplicationAccessToken);
             }
         });
     }
@@ -130,31 +131,33 @@ final class RedditAuthService implements IRedditAuthService {
             String grantType = "refresh_token";
             return mAuthService.refreshUserAuthToken(grantType, refreshToken)
                     .flatMap(responseToBody())
-                    .doOnNext(saveUserAccessToken())
-                    // FIXME: Should we be clearing access token for all errors?
-                    // Maybe just HTTP 403
+                    .doOnNext(this::saveUserAccessToken)
+                    // FIXME: Should we be clearing access token for all errors? Maybe just HTTP 403
                     .doOnError(error -> clearUserAccessToken());
         });
     }
 
-    private Consumer<UserAccessToken> saveUserAccessToken() {
-        return token -> {
-            if (token.getRefreshToken() == null) {
-                UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
-                if (storedToken != null) {
-                    token.setRefreshToken(storedToken.getRefreshToken());
-                }
+    private void saveUserAccessToken(UserAccessToken token) {
+        if (token.getRefreshToken() == null) {
+            UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
+            if (storedToken != null) {
+                // Refresh token doesn't come back in a refresh, so we have to use the one stored
+                token = new UserAccessToken(
+                        token.getToken(),
+                        token.getTokenType(),
+                        token.secondsUntilExpiration(),
+                        token.getScope(),
+                        storedToken.getRefreshToken()
+                );
             }
-            mUserAccessToken = token;
-            mAccessTokenManager.saveUserAccessToken(token);
-        };
+        }
+        mUserAccessToken = token;
+        mAccessTokenManager.saveUserAccessToken(token);
     }
 
-    private Consumer<ApplicationAccessToken> saveApplicationAccessToken() {
-        return token -> {
-            mApplicationAccessToken = token;
-            mAccessTokenManager.saveApplicationAccessToken(token);
-        };
+    private void saveApplicationAccessToken(ApplicationAccessToken token) {
+        mApplicationAccessToken = token;
+        mAccessTokenManager.saveApplicationAccessToken(token);
     }
 
     private void clearUserAccessToken() {
@@ -181,7 +184,7 @@ final class RedditAuthService implements IRedditAuthService {
         String grantType = "authorization_code";
         return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)
                 .flatMap(responseToBody())
-                .doOnNext(saveUserAccessToken());
+                .doOnNext(this::saveUserAccessToken);
     }
 
     @Override

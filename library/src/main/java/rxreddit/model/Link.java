@@ -25,8 +25,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         private Boolean likes;
         @SerializedName("user_reports")
         private List<UserReport> userReports;
-        @SerializedName("secure_media")
-        private SecureMedia secureMedia;
         @SerializedName("link_flair_text")
         private String linkFlairText;
         private Integer gilded;
@@ -72,223 +70,15 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         @SerializedName("num_reports")
         private Integer numReports;
         private Integer ups;
-
-        public static class MediaEmbed {
-
-            private String content;
-            private Integer width;
-            private Boolean scrolling;
-            private Integer height;
-
-            public String getContent() {
-                return content;
-            }
-
-            public Integer getWidth() {
-                return width;
-            }
-
-            public Boolean getScrolling() {
-                return scrolling;
-            }
-
-            public Integer getHeight() {
-                return height;
-            }
-        }
-        public static class Media {
-
-            @SerializedName("oembed") Oembed oembed;
-            @SerializedName("type") String type;
-            @SerializedName("reddit_video") RedditVideo redditVideo;
-
-            public Oembed getOembed() {
-                return oembed;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public RedditVideo getRedditVideo() {
-                return redditVideo;
-            }
-
-            public static class Oembed {
-
-                @SerializedName("provider_url")
-                private String providerUrl;
-                private String description;
-                private String title;
-                private String type;
-                @SerializedName("thumbnail_width")
-                private Integer thumbnailWidth;
-                private Integer height;
-                private Integer width;
-                private String html;
-                private String version;
-                @SerializedName("provider_name")
-                private String providerName;
-                @SerializedName("thumbnail_url")
-                private String thumbnailUrl;
-                @SerializedName("thumbnail_height")
-                private Integer thumbnailHeight;
-
-                public String getProviderUrl() {
-                    return providerUrl;
-                }
-
-                public String getDescription() {
-                    return description;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-
-                public String getType() {
-                    return type;
-                }
-
-                public Integer getThumbnailWidth() {
-                    return thumbnailWidth;
-                }
-
-                public Integer getHeight() {
-                    return height;
-                }
-
-                public Integer getWidth() {
-                    return width;
-                }
-
-                public String getHtml() {
-                    return html;
-                }
-
-                public String getVersion() {
-                    return version;
-                }
-
-                public String getProviderName() {
-                    return providerName;
-                }
-
-                public String getThumbnailUrl() {
-                    return thumbnailUrl;
-                }
-
-                public Integer getThumbnailHeight() {
-                    return thumbnailHeight;
-                }
-            }
-
-            public static class RedditVideo {
-
-                @SerializedName("fallback_url") String fallbackUrl;
-                @SerializedName("height") int height;
-                @SerializedName("width") int width;
-                @SerializedName("scrubber_media_url") String scrubberMediaUrl;
-                @SerializedName("dash_url") String dashUrl;
-                @SerializedName("duration") int duration;
-                @SerializedName("hls_url") String hlsUrl;
-                @SerializedName("is_gif") boolean isGif;
-                @SerializedName("transcoding_status") String transcodingStatus;
-
-                public String getFallbackUrl() {
-                    return fallbackUrl;
-                }
-
-                public int getHeight() {
-                    return height;
-                }
-
-                public int getWidth() {
-                    return width;
-                }
-
-                public String getScrubberMediaUrl() {
-                    return scrubberMediaUrl;
-                }
-
-                public String getDashUrl() {
-                    return dashUrl;
-                }
-
-                public int getDuration() {
-                    return duration;
-                }
-
-                public String getHlsUrl() {
-                    return hlsUrl;
-                }
-
-                public boolean isGif() {
-                    return isGif;
-                }
-
-                public String getTranscodingStatus() {
-                    return transcodingStatus;
-                }
-            }
-        }
     }
 
     public static class Preview {
 
-        List<Image> images;
+        @SerializedName("images") List<Image> images;
 
-        public static class Image {
-
-            Res source;
-            List<Res> resolutions;
-            Variants variants;
-            String id;
-
-            public Res getSource() {
-                return source;
-            }
-
-            public List<Res> getResolutions() {
-                return resolutions;
-            }
-
-            public Variants getVariants() {
-                return variants;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public static class Variants {
-
-                public Image nsfw;
-            }
-
-            public static class Res {
-
-                String url;
-                int width;
-                int height;
-
-                public String getUrl() {
-                    return url;
-                }
-
-                public int getWidth() {
-                    return width;
-                }
-
-                public int getHeight() {
-                    return height;
-                }
-            }
+        public List<Image> getImages() {
+            return images;
         }
-    }
-
-    public static class SecureMedia {
-
     }
 
     //region Public API
@@ -302,7 +92,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         return data.domain;
     }
 
-    public Data.MediaEmbed getMediaEmbed() {
+    public MediaEmbed getMediaEmbed() {
         return data.mediaEmbed;
     }
 
@@ -334,10 +124,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
     public List<UserReport> getUserReports() {
         return data.userReports;
-    }
-
-    public SecureMedia getSecureMedia() {
-        return data.secureMedia;
     }
 
     public Object getLinkFlairText() {
@@ -483,7 +269,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         return data.distinguished;
     }
 
-    public Data.Media getMedia() {
+    public Media getMedia() {
         return data.media;
     }
 
@@ -503,7 +289,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         return data.ups;
     }
 
-    public List<Preview.Image> getPreviewImages() {
+    public List<Image> getPreviewImages() {
         if (data.preview == null)
             return null;
         return data.preview.images;
