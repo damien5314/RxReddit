@@ -41,9 +41,6 @@ import rxreddit.model.UserIdentityListing;
 import rxreddit.model.UserReport;
 import rxreddit.model.UserSettings;
 
-import static rxreddit.RxRedditUtil.checkResponse;
-import static rxreddit.RxRedditUtil.responseToBody;
-
 public class RedditService implements IRedditService {
 
     public static final String BASE_URL = "https://oauth.reddit.com";

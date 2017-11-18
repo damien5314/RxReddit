@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import retrofit2.HttpException;
 import retrofit2.Response;
 import rxreddit.model.Comment;
