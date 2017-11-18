@@ -5,9 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -38,13 +36,13 @@ final class RedditAuthService implements IRedditAuthService {
     // Seconds within expiration we should try to retrieve a new auth token
     private static final int EXPIRATION_THRESHOLD = 60;
 
-    private final String mRedirectUri;
-    private final String mDeviceId;
-    private final String mUserAgent;
-    private final String mHttpAuthHeader;
-    private final String mAuthorizationUrl;
-    private RedditAuthAPI mAuthService;
-    private AccessTokenManager mAccessTokenManager;
+    private final String redirectUri;
+    private final String deviceId;
+    private final String userAgent;
+    private final String httpAuthHeader;
+    private final String authorizationUrl;
+    private RedditAuthAPI authService;
+    private AccessTokenManager accessTokenManager;
 
     private UserAccessToken mUserAccessToken;
     private ApplicationAccessToken mApplicationAccessToken;
@@ -52,16 +50,16 @@ final class RedditAuthService implements IRedditAuthService {
     public RedditAuthService(
             String baseUrl, String clientId, String redirectUri, String deviceId, String userAgent,
             AccessTokenManager atm, boolean loggingEnabled) {
-        mRedirectUri = redirectUri;
-        mDeviceId = deviceId;
-        mUserAgent = userAgent;
-        mHttpAuthHeader = Credentials.basic(clientId, "");
-        mAuthorizationUrl =
+        this.redirectUri = redirectUri;
+        this.deviceId = deviceId;
+        this.userAgent = userAgent;
+        httpAuthHeader = Credentials.basic(clientId, "");
+        authorizationUrl =
                 String.format("https://www.reddit.com/api/v1/authorize.compact?client_id=%s" +
                                 "&response_type=%s&duration=%s&state=%s&redirect_uri=%s&scope=%s",
                         clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, SCOPE);
-        mAuthService = buildApi(baseUrl, loggingEnabled);
-        mAccessTokenManager = atm;
+        authService = buildApi(baseUrl, loggingEnabled);
+        accessTokenManager = atm;
     }
 
     @Override
@@ -78,14 +76,14 @@ final class RedditAuthService implements IRedditAuthService {
 
     private UserAccessToken getUserAccessToken() {
         if (mUserAccessToken == null) {
-            mUserAccessToken = mAccessTokenManager.getUserAccessToken();
+            mUserAccessToken = accessTokenManager.getUserAccessToken();
         }
         return mUserAccessToken;
     }
 
     private ApplicationAccessToken getApplicationAccessToken() {
         if (mApplicationAccessToken == null) {
-            mApplicationAccessToken = mAccessTokenManager.getApplicationAccessToken();
+            mApplicationAccessToken = accessTokenManager.getApplicationAccessToken();
         }
         return mApplicationAccessToken;
     }
@@ -97,7 +95,7 @@ final class RedditAuthService implements IRedditAuthService {
                 return Observable.just(token);
             } else {
                 String grantType = "https://oauth.reddit.com/grants/installed_client";
-                return mAuthService.getApplicationAuthToken(grantType, mDeviceId)
+                return authService.getApplicationAuthToken(grantType, deviceId)
                         .flatMap(responseToBody())
                         .doOnNext(this::saveApplicationAccessToken);
             }
@@ -129,7 +127,7 @@ final class RedditAuthService implements IRedditAuthService {
                         new IllegalStateException("No refresh token available"));
             }
             String grantType = "refresh_token";
-            return mAuthService.refreshUserAuthToken(grantType, refreshToken)
+            return authService.refreshUserAuthToken(grantType, refreshToken)
                     .flatMap(responseToBody())
                     .doOnNext(this::saveUserAccessToken)
                     // FIXME: Should we be clearing access token for all errors? Maybe just HTTP 403
@@ -139,34 +137,34 @@ final class RedditAuthService implements IRedditAuthService {
 
     private void saveUserAccessToken(UserAccessToken token) {
         if (token.getRefreshToken() == null) {
-            UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
+            UserAccessToken storedToken = accessTokenManager.getUserAccessToken();
             if (storedToken != null) {
                 // Refresh token doesn't come back in a refresh, so we have to use the one stored
                 token.setRefreshToken(storedToken.getRefreshToken());
             }
         }
         mUserAccessToken = token;
-        mAccessTokenManager.saveUserAccessToken(token);
+        accessTokenManager.saveUserAccessToken(token);
     }
 
     private void saveApplicationAccessToken(ApplicationAccessToken token) {
         mApplicationAccessToken = token;
-        mAccessTokenManager.saveApplicationAccessToken(token);
+        accessTokenManager.saveApplicationAccessToken(token);
     }
 
     private void clearUserAccessToken() {
         mUserAccessToken = null;
-        mAccessTokenManager.clearSavedUserAccessToken();
+        accessTokenManager.clearSavedUserAccessToken();
     }
 
     @Override
     public String getRedirectUri() {
-        return mRedirectUri;
+        return redirectUri;
     }
 
     @Override
     public String getAuthorizationUrl() {
-        return mAuthorizationUrl;
+        return authorizationUrl;
     }
 
     @Override
@@ -176,7 +174,7 @@ final class RedditAuthService implements IRedditAuthService {
                     new IllegalStateException("State does not match, abort authentication"));
         }
         String grantType = "authorization_code";
-        return mAuthService.getUserAuthToken(grantType, authCode, mRedirectUri)
+        return authService.getUserAuthToken(grantType, authCode, redirectUri)
                 .flatMap(responseToBody())
                 .doOnNext(this::saveUserAccessToken);
     }
@@ -185,23 +183,23 @@ final class RedditAuthService implements IRedditAuthService {
     public Completable revokeUserAuthentication() {
         AccessToken token = getUserAccessToken();
         mUserAccessToken = null;
-        mAccessTokenManager.clearSavedUserAccessToken();
+        accessTokenManager.clearSavedUserAccessToken();
         return revokeAuthToken(token);
     }
 
     private Completable revokeAuthToken(AccessToken token) {
         if (token == null) return Completable.error(new NullPointerException("token == null"));
         return Observable.merge(
-                mAuthService.revokeUserAuthToken(token.getToken(), "access_token")
+                authService.revokeUserAuthToken(token.getToken(), "access_token")
                         .flatMap(checkResponse()),
-                mAuthService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token")
+                authService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token")
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
 
     private RedditAuthAPI buildApi(String baseUrl, boolean loggingEnabled) {
         OkHttpClient.Builder okhttp = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new UserAgentInterceptor(mUserAgent))
+                .addNetworkInterceptor(new UserAgentInterceptor(userAgent))
                 .addNetworkInterceptor(getHttpAuthInterceptor());
 
         if (loggingEnabled) {
@@ -233,7 +231,7 @@ final class RedditAuthService implements IRedditAuthService {
             Request originalRequest = chain.request();
             Request newRequest = originalRequest.newBuilder()
                     .removeHeader("Authorization")
-                    .addHeader("Authorization", mHttpAuthHeader)
+                    .addHeader("Authorization", httpAuthHeader)
                     .build();
             return chain.proceed(newRequest);
         };
