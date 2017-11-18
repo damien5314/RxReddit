@@ -100,7 +100,7 @@ final class RedditAuthService implements IRedditAuthService {
             } else {
                 String grantType = "https://oauth.reddit.com/grants/installed_client";
                 return authService.getApplicationAuthToken(grantType, deviceId)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
                         .doOnNext(this::saveApplicationAccessToken);
             }
         });
@@ -132,7 +132,7 @@ final class RedditAuthService implements IRedditAuthService {
             }
             String grantType = "refresh_token";
             return authService.refreshUserAuthToken(grantType, refreshToken)
-                    .flatMap(responseToBody())
+                    .flatMap(RxRedditUtil::responseToBody)
                     .doOnNext(this::saveUserAccessToken)
                     .doOnError(error -> {
                         if (error instanceof HttpException && ((HttpException) error).code() == 403) {
@@ -183,7 +183,7 @@ final class RedditAuthService implements IRedditAuthService {
         }
         String grantType = "authorization_code";
         return authService.getUserAuthToken(grantType, authCode, redirectUri)
-                .flatMap(responseToBody())
+                .flatMap(RxRedditUtil::responseToBody)
                 .doOnNext(this::saveUserAccessToken);
     }
 
@@ -199,9 +199,9 @@ final class RedditAuthService implements IRedditAuthService {
         if (token == null) return Completable.error(new NullPointerException("token == null"));
         return Observable.merge(
                 authService.revokeUserAuthToken(token.getToken(), "access_token")
-                        .flatMap(checkResponse()),
+                        .flatMap(RxRedditUtil::checkResponse),
                 authService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token")
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 

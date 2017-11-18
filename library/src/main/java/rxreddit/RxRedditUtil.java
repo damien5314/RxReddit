@@ -136,21 +136,17 @@ public class RxRedditUtil {
         return commaDelimited.toString();
     }
 
-    public static <T> Function<Response<T>, Observable<T>> responseToBody() {
-        return response -> {
-            if (!response.isSuccessful()) {
-                return Observable.error(new HttpException(response));
-            }
-            return Observable.just(response.body());
-        };
+    public static <T> Observable<T> responseToBody(Response<T> response) {
+        if (!response.isSuccessful()) {
+            return Observable.error(new HttpException(response));
+        }
+        return Observable.just(response.body());
     }
 
-    public static <T> Function<Response<T>, Observable<Response<T>>> checkResponse() {
-        return response -> {
-            if (!response.isSuccessful()) {
-                return Observable.error(new HttpException(response));
-            }
-            return Observable.just(response);
-        };
+    public static <T> Observable<Response<T>> checkResponse(Response<T> response) {
+        if (!response.isSuccessful()) {
+            return Observable.error(new HttpException(response));
+        }
+        return Observable.just(response);
     }
 }
