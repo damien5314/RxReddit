@@ -103,7 +103,7 @@ public class RedditService implements IRedditService {
     public Observable<UserIdentity> getUserIdentity() {
         return requireUserAccessToken().flatMap(
                 token -> api.getUserIdentity()
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -111,7 +111,7 @@ public class RedditService implements IRedditService {
     public Observable<UserSettings> getUserSettings() {
         return requireUserAccessToken().flatMap(
                 token -> api.getUserSettings()
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -122,7 +122,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(token ->
                 api.updateUserSettings(body)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -130,7 +130,7 @@ public class RedditService implements IRedditService {
     public Observable<ListingResponse> getSubreddits(String where, String before, String after) {
         return requireUserAccessToken().flatMap(
                 token -> api.getSubreddits(where, before, after)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -138,28 +138,28 @@ public class RedditService implements IRedditService {
     public Completable subscribe(String subreddit) {
         return requireUserAccessToken().flatMap(
                 token -> api.subscribe(subreddit, true)
-        ).flatMap(checkResponse()).ignoreElements();
+        ).flatMap(RxRedditUtil::checkResponse).ignoreElements();
     }
 
     @Override
     public Completable subscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
                 token -> api.subscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits), true)
-        ).flatMap(checkResponse()).ignoreElements();
+        ).flatMap(RxRedditUtil::checkResponse).ignoreElements();
     }
 
     @Override
     public Completable unsubscribe(String subreddit) {
         return requireUserAccessToken().flatMap(
                 token -> api.unsubscribe(subreddit)
-        ).flatMap(checkResponse()).ignoreElements();
+        ).flatMap(RxRedditUtil::checkResponse).ignoreElements();
     }
 
     @Override
     public Completable unsubscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
                 token -> api.unsubscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits))
-        ).flatMap(checkResponse()).ignoreElements();
+        ).flatMap(RxRedditUtil::checkResponse).ignoreElements();
     }
 
     @Override
@@ -169,7 +169,7 @@ public class RedditService implements IRedditService {
                 token -> {
                     String resolvedSort = sort != null ? sort : "hot";
                     return api.getLinks(resolvedSort, subreddit, timespan, before, after)
-                            .flatMap(responseToBody());
+                            .flatMap(RxRedditUtil::responseToBody);
                 }
         );
     }
@@ -186,7 +186,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getComments(subreddit, article, sort, commentId)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -203,7 +203,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getMoreChildren("t3_" + linkId, RxRedditUtil.join(",", childrenIds), sort)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -211,7 +211,7 @@ public class RedditService implements IRedditService {
     public Observable<UserIdentity> getUserInfo(String username) {
         return requireAccessToken().flatMap(
                 token -> api.getUserInfo(username)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
                         .map(UserIdentityListing::getUser)
         );
     }
@@ -220,7 +220,7 @@ public class RedditService implements IRedditService {
     public Observable<FriendInfo> getFriendInfo(String username) {
         return requireUserAccessToken().flatMap(
                 token -> api.getFriendInfo(username)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -233,7 +233,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getUserTrophies(username)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
                         .map(trophyResponse -> trophyResponse.getData().getTrophies())
         );
     }
@@ -251,7 +251,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getUserProfile(show, username, sort, timespan, before, after)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -262,7 +262,7 @@ public class RedditService implements IRedditService {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{}");
         return requireUserAccessToken().flatMap(
                 token -> api.addFriend(username, body)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -270,7 +270,7 @@ public class RedditService implements IRedditService {
     public Completable deleteFriend(String username) {
         return requireUserAccessToken().flatMap(
                 token -> api.deleteFriend(username)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -284,7 +284,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(token ->
                 api.addFriend(username, RequestBody.create(MediaType.parse("application/json"), json))
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -296,7 +296,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getSubredditInfo(subreddit)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -308,7 +308,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getSubredditRules(subreddit)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -323,7 +323,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getSubredditSidebar(subreddit)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -335,7 +335,7 @@ public class RedditService implements IRedditService {
 
         return requireAccessToken().flatMap(
                 token -> api.getSubredditSticky(subreddit)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -347,7 +347,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(token ->
                 api.vote(fullname, direction)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -360,12 +360,12 @@ public class RedditService implements IRedditService {
         if (toSave) { // Save
             return requireUserAccessToken().flatMap(
                     token -> api.save(fullname, category)
-                            .flatMap(checkResponse())
+                            .flatMap(RxRedditUtil::checkResponse)
             ).ignoreElements();
         } else { // Unsave
             return requireUserAccessToken().flatMap(
                     token -> api.unsave(fullname)
-                            .flatMap(checkResponse())
+                            .flatMap(RxRedditUtil::checkResponse)
             ).ignoreElements();
         }
     }
@@ -379,12 +379,12 @@ public class RedditService implements IRedditService {
         if (toHide) { // Hide
             return requireUserAccessToken().flatMap(
                     token -> api.hide(fullname)
-                            .flatMap(checkResponse())
+                            .flatMap(RxRedditUtil::checkResponse)
             ).ignoreElements();
         } else { // Unhide
             return requireUserAccessToken().flatMap(
                     token -> api.unhide(fullname)
-                            .flatMap(checkResponse())
+                            .flatMap(RxRedditUtil::checkResponse)
             ).ignoreElements();
         }
     }
@@ -397,7 +397,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(
                 token -> api.getReportForm(fullname)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -413,7 +413,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(
                 token -> api.report(id, reason, siteReason, otherReason)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -437,7 +437,7 @@ public class RedditService implements IRedditService {
                 token -> api.submit(
                         subreddit, kind, title, url, text, sendReplies, resubmit, "json"
                 )
-                .flatMap(responseToBody())
+                .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -453,7 +453,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(
                 token -> api.addComment(parentId, text)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
                         .map(response -> {
                             List<String> errors = response.getErrors();
 
@@ -474,7 +474,7 @@ public class RedditService implements IRedditService {
 
         return requireUserAccessToken().flatMap(
                 token -> api.getInbox(show, before, after)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -482,7 +482,7 @@ public class RedditService implements IRedditService {
     public Completable markAllMessagesRead() {
         return requireUserAccessToken().flatMap(
                 token -> api.markAllMessagesRead()
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -491,7 +491,7 @@ public class RedditService implements IRedditService {
         // TODO: This should take a List of message fullnames and construct the parameter
         return requireUserAccessToken().flatMap(
                 token -> api.markMessagesRead(commaSeparatedFullnames)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
@@ -500,7 +500,7 @@ public class RedditService implements IRedditService {
         // TODO: This should take a List of message fullnames and construct the parameter
         return requireUserAccessToken().flatMap(
                 token -> api.markMessagesUnread(commaSeparatedFullnames)
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 

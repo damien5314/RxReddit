@@ -6,11 +6,15 @@ import com.google.gson.GsonBuilder;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.HttpException;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -96,7 +100,7 @@ final class RedditAuthService implements IRedditAuthService {
             } else {
                 String grantType = "https://oauth.reddit.com/grants/installed_client";
                 return authService.getApplicationAuthToken(grantType, deviceId)
-                        .flatMap(responseToBody())
+                        .flatMap(RxRedditUtil::responseToBody)
                         .doOnNext(this::saveApplicationAccessToken);
             }
         });
@@ -128,10 +132,14 @@ final class RedditAuthService implements IRedditAuthService {
             }
             String grantType = "refresh_token";
             return authService.refreshUserAuthToken(grantType, refreshToken)
-                    .flatMap(responseToBody())
+                    .flatMap(RxRedditUtil::responseToBody)
                     .doOnNext(this::saveUserAccessToken)
-                    // FIXME: Should we be clearing access token for all errors? Maybe just HTTP 403
-                    .doOnError(error -> clearUserAccessToken());
+                    .doOnError(error -> {
+                        if (error instanceof HttpException && ((HttpException) error).code() == 403) {
+                            // 403 means our refresh token is no longer good, just discard it
+                            clearUserAccessToken();
+                        }
+                    });
         });
     }
 
@@ -175,7 +183,7 @@ final class RedditAuthService implements IRedditAuthService {
         }
         String grantType = "authorization_code";
         return authService.getUserAuthToken(grantType, authCode, redirectUri)
-                .flatMap(responseToBody())
+                .flatMap(RxRedditUtil::responseToBody)
                 .doOnNext(this::saveUserAccessToken);
     }
 
@@ -191,9 +199,9 @@ final class RedditAuthService implements IRedditAuthService {
         if (token == null) return Completable.error(new NullPointerException("token == null"));
         return Observable.merge(
                 authService.revokeUserAuthToken(token.getToken(), "access_token")
-                        .flatMap(checkResponse()),
+                        .flatMap(RxRedditUtil::checkResponse),
                 authService.revokeUserAuthToken(token.getRefreshToken(), "refresh_token")
-                        .flatMap(checkResponse())
+                        .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
 
