@@ -5,261 +5,261 @@ import com.google.gson.annotations.SerializedName;
 public class UserSettings {
 
     @SerializedName("beta")
-    Boolean mBeta;
+    Boolean beta;
     @SerializedName("clickgadget")
-    Boolean mClickgadget;
+    Boolean clickgadget;
     @SerializedName("collapse_read_messages")
-    Boolean mCollapseReadMessages;
+    Boolean collapseReadMessages;
     @SerializedName("compress")
-    Boolean mCompress;
+    Boolean compress;
     @SerializedName("creddit_autorenew")
-    Boolean mCredditAutoRenew;
+    Boolean credditAutoRenew;
     @SerializedName("default_comment_sort")
-    String mDefaultCommentSort;
+    String defaultCommentSort;
     @SerializedName("domain_details")
-    Boolean mDomainDetails;
+    Boolean domainDetails;
     @SerializedName("email_messages")
-    Boolean mEmailMessages;
+    Boolean emailMessages;
     @SerializedName("enable_default_themes")
-    Boolean mEnableDefaultThemes;
+    Boolean enableDefaultThemes;
     @SerializedName("hide_ads")
-    Boolean mHideAds;
+    Boolean hideAds;
     @SerializedName("hide_downs")
-    Boolean mHideDowns;
+    Boolean hideDowns;
     @SerializedName("hide_from_robots")
-    Boolean mHideFromRobots;
+    Boolean hideFromRobots;
     @SerializedName("hide_locationbar")
-    Boolean mHideLocationBar;
+    Boolean hideLocationBar;
     @SerializedName("hide_ups")
-    Boolean mHideUps;
+    Boolean hideUps;
     @SerializedName("highlight_controversial")
-    Boolean mHighlightControversial;
+    Boolean highlightControversial;
     @SerializedName("highlight_new_comments")
-    Boolean mHighlightNewComments;
+    Boolean highlightNewComments;
     @SerializedName("ignore_suggested_sort")
-    Boolean mIgnoreSuggestedSort;
+    Boolean ignoreSuggestedSort;
     @SerializedName("label_nsfw")
-    Boolean mLabelNsfw;
+    Boolean labelNsfw;
     @SerializedName("lang")
-    String mLang;
+    String lang;
     @SerializedName("mark_messages_read")
-    Boolean mMarkMessagesRead;
+    Boolean markMessagesRead;
     @SerializedName("media")
-    String mMedia;
+    String media;
     @SerializedName("min_comment_score")
-    Integer mMinCommentScore;
+    Integer minCommentScore;
     @SerializedName("min_link_score")
-    Integer mMinLinkScore;
+    Integer minLinkScore;
     @SerializedName("monitor_mentions")
-    Boolean mMonitorMentions;
+    Boolean monitorMentions;
     @SerializedName("newwindow")
-    Boolean mNewWindow;
+    Boolean newWindow;
     @SerializedName("no_profanity")
-    Boolean mNoProfanity;
+    Boolean noProfanity;
     @SerializedName("num_comments")
-    Integer mNumComments;
+    Integer numComments;
     @SerializedName("numsites")
-    Integer mNumLinks;
+    Integer numLinks;
     @SerializedName("organic")
-    Boolean mOrganic;
+    Boolean organic;
     @SerializedName("over_18")
-    Boolean mOver18;
+    Boolean over18;
     @SerializedName("public_feeds")
-    Boolean mPublicFeeds;
+    Boolean publicFeeds;
     @SerializedName("public_votes")
-    Boolean mPublicVotes;
+    Boolean publicVotes;
     @SerializedName("research")
-    Boolean mResearch;
+    Boolean research;
     @SerializedName("show_flair")
-    Boolean mShowFlair;
+    Boolean showFlair;
     @SerializedName("show_gold_expiration")
-    Boolean mShowGoldExpiration;
+    Boolean showGoldExpiration;
     @SerializedName("show_link_flair")
-    Boolean mShowLinkFlair;
+    Boolean showLinkFlair;
     @SerializedName("show_promote")
-    Boolean mShowPromote;
+    Boolean showPromote;
     @SerializedName("show_stylesheets")
-    Boolean mShowStylesheets;
+    Boolean showStylesheets;
     @SerializedName("show_trending")
-    Boolean mShowTrending;
+    Boolean showTrending;
     @SerializedName("store_visits")
-    Boolean mStoreVisits;
+    Boolean storeVisits;
     @SerializedName("theme_selector")
-    String mThemeSelector;
+    String themeSelector;
     @SerializedName("threaded_messages")
-    Boolean mThreadedMessages;
+    Boolean threadedMessages;
     @SerializedName("use_global_defaults")
-    Boolean mUseGlobalDefaults;
+    Boolean useGlobalDefaults;
 
     public boolean getBeta() {
-        return mBeta;
+        return beta;
     }
 
     public boolean getClickgadget() {
-        return mClickgadget;
+        return clickgadget;
     }
 
     public boolean getCollapseReadMessages() {
-        return mCollapseReadMessages;
+        return collapseReadMessages;
     }
 
     public boolean getCompress() {
-        return mCompress;
+        return compress;
     }
 
     public boolean getCredditAutoRenew() {
-        return mCredditAutoRenew;
+        return credditAutoRenew;
     }
 
     public String getDefaultCommentSort() {
-        return mDefaultCommentSort;
+        return defaultCommentSort;
     }
 
     public boolean getDomainDetails() {
-        return mDomainDetails;
+        return domainDetails;
     }
 
     public boolean getEmailMessages() {
-        return mEmailMessages;
+        return emailMessages;
     }
 
     public boolean getEnableDefaultThemes() {
-        return mEnableDefaultThemes;
+        return enableDefaultThemes;
     }
 
     public boolean getHideAds() {
-        return mHideAds;
+        return hideAds;
     }
 
     public boolean getHideDowns() {
-        return mHideDowns;
+        return hideDowns;
     }
 
     public boolean getHideFromRobots() {
-        return mHideFromRobots;
+        return hideFromRobots;
     }
 
     public boolean getHideLocationBar() {
-        return mHideLocationBar;
+        return hideLocationBar;
     }
 
     public boolean getHideUps() {
-        return mHideUps;
+        return hideUps;
     }
 
     public boolean getHighlightControversial() {
-        return mHighlightControversial;
+        return highlightControversial;
     }
 
     public boolean getHighlightNewComments() {
-        return mHighlightNewComments;
+        return highlightNewComments;
     }
 
     public boolean getIgnoreSuggestedSort() {
-        return mIgnoreSuggestedSort;
+        return ignoreSuggestedSort;
     }
 
     public boolean getLabelNsfw() {
-        return mLabelNsfw;
+        return labelNsfw;
     }
 
     public String getLang() {
-        return mLang;
+        return lang;
     }
 
     public boolean getMarkMessagesRead() {
-        return mMarkMessagesRead;
+        return markMessagesRead;
     }
 
     public String getMedia() {
-        return mMedia;
+        return media;
     }
 
     public Integer getMinCommentScore() {
-        return mMinCommentScore;
+        return minCommentScore;
     }
 
     public Integer getMinLinkScore() {
-        return mMinLinkScore;
+        return minLinkScore;
     }
 
     public boolean getMonitorMentions() {
-        return mMonitorMentions;
+        return monitorMentions;
     }
 
     public boolean getNewWindow() {
-        return mNewWindow;
+        return newWindow;
     }
 
     public boolean getNoProfanity() {
-        return mNoProfanity;
+        return noProfanity;
     }
 
     public Integer getNumComments() {
-        return mNumComments;
+        return numComments;
     }
 
     public Integer getNumLinks() {
-        return mNumLinks;
+        return numLinks;
     }
 
     public boolean getOrganic() {
-        return mOrganic;
+        return organic;
     }
 
     public boolean getOver18() {
-        return mOver18;
+        return over18;
     }
 
     public boolean getPublicFeeds() {
-        return mPublicFeeds == null ? false : mPublicFeeds;
+        return publicFeeds == null ? false : publicFeeds;
     }
 
     public boolean getPublicVotes() {
-        return mPublicVotes;
+        return publicVotes;
     }
 
     public boolean getResearch() {
-        return mResearch;
+        return research;
     }
 
     public boolean getShowFlair() {
-        return mShowFlair;
+        return showFlair;
     }
 
     public boolean getShowGoldExpiration() {
-        return mShowGoldExpiration;
+        return showGoldExpiration;
     }
 
     public boolean getShowLinkFlair() {
-        return mShowLinkFlair;
+        return showLinkFlair;
     }
 
     public boolean getShowPromote() {
-        return mShowPromote == null ? false : mShowPromote;
+        return showPromote == null ? false : showPromote;
     }
 
     public boolean getShowStylesheets() {
-        return mShowStylesheets;
+        return showStylesheets;
     }
 
     public boolean getShowTrending() {
-        return mShowTrending;
+        return showTrending;
     }
 
     public boolean getStoreVisits() {
-        return mStoreVisits;
+        return storeVisits;
     }
 
     public String getThemeSelector() {
-        return mThemeSelector;
+        return themeSelector;
     }
 
     public boolean getThreadedMessages() {
-        return mThreadedMessages;
+        return threadedMessages;
     }
 
     public boolean getUseGlobalDefaults() {
-        return mUseGlobalDefaults;
+        return useGlobalDefaults;
     }
 }

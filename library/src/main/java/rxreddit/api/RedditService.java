@@ -48,31 +48,31 @@ public class RedditService implements IRedditService {
 
     public static final String BASE_URL = "https://oauth.reddit.com";
 
-    private RedditAPI mAPI;
-    private IRedditAuthService mRedditAuthService;
+    private RedditAPI api;
+    private IRedditAuthService redditAuthService;
 
     protected RedditService(
             String baseUrl, String baseAuthUrl, String redditAppId, String redirectUri,
             String deviceId, String userAgent, AccessTokenManager atm, int cacheSizeBytes, File cacheFile,
             boolean loggingEnabled) {
-        mRedditAuthService = new RedditAuthService(
+        redditAuthService = new RedditAuthService(
                 baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm, loggingEnabled);
-        mAPI = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile, loggingEnabled);
+        api = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile, loggingEnabled);
     }
 
     @Override
     public String getRedirectUri() {
-        return mRedditAuthService.getRedirectUri();
+        return redditAuthService.getRedirectUri();
     }
 
     @Override
     public String getAuthorizationUrl() {
-        return mRedditAuthService.getAuthorizationUrl();
+        return redditAuthService.getAuthorizationUrl();
     }
 
     @Override
     public boolean isUserAuthorized() {
-        return mRedditAuthService.isUserAuthorized();
+        return redditAuthService.isUserAuthorized();
     }
 
     @Override
@@ -96,13 +96,13 @@ public class RedditService implements IRedditService {
         }
 
         String state = params.get("state");
-        return mRedditAuthService.onAuthCodeReceived(authCode, state);
+        return redditAuthService.onAuthCodeReceived(authCode, state);
     }
 
     @Override
     public Observable<UserIdentity> getUserIdentity() {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.getUserIdentity()
+                token -> api.getUserIdentity()
                         .flatMap(responseToBody())
         );
     }
@@ -110,7 +110,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<UserSettings> getUserSettings() {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.getUserSettings()
+                token -> api.getUserSettings()
                         .flatMap(responseToBody())
         );
     }
@@ -121,7 +121,7 @@ public class RedditService implements IRedditService {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
 
         return requireUserAccessToken().flatMap(token ->
-                mAPI.updateUserSettings(body)
+                api.updateUserSettings(body)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -129,7 +129,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<ListingResponse> getSubreddits(String where, String before, String after) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.getSubreddits(where, before, after)
+                token -> api.getSubreddits(where, before, after)
                         .flatMap(responseToBody())
         );
     }
@@ -137,28 +137,28 @@ public class RedditService implements IRedditService {
     @Override
     public Completable subscribe(String subreddit) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.subscribe(subreddit, true)
+                token -> api.subscribe(subreddit, true)
         ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
     public Completable subscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.subscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits), true)
+                token -> api.subscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits), true)
         ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
     public Completable unsubscribe(String subreddit) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.unsubscribe(subreddit)
+                token -> api.unsubscribe(subreddit)
         ).flatMap(checkResponse()).ignoreElements();
     }
 
     @Override
     public Completable unsubscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.unsubscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits))
+                token -> api.unsubscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits))
         ).flatMap(checkResponse()).ignoreElements();
     }
 
@@ -168,7 +168,7 @@ public class RedditService implements IRedditService {
         return requireAccessToken().flatMap(
                 token -> {
                     String resolvedSort = sort != null ? sort : "hot";
-                    return mAPI.getLinks(resolvedSort, subreddit, timespan, before, after)
+                    return api.getLinks(resolvedSort, subreddit, timespan, before, after)
                             .flatMap(responseToBody());
                 }
         );
@@ -185,7 +185,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getComments(subreddit, article, sort, commentId)
+                token -> api.getComments(subreddit, article, sort, commentId)
                         .flatMap(responseToBody())
         );
     }
@@ -202,7 +202,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getMoreChildren("t3_" + linkId, RxRedditUtil.join(",", childrenIds), sort)
+                token -> api.getMoreChildren("t3_" + linkId, RxRedditUtil.join(",", childrenIds), sort)
                         .flatMap(responseToBody())
         );
     }
@@ -210,7 +210,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<UserIdentity> getUserInfo(String username) {
         return requireAccessToken().flatMap(
-                token -> mAPI.getUserInfo(username)
+                token -> api.getUserInfo(username)
                         .flatMap(responseToBody())
                         .map(UserIdentityListing::getUser)
         );
@@ -219,7 +219,7 @@ public class RedditService implements IRedditService {
     @Override
     public Observable<FriendInfo> getFriendInfo(String username) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.getFriendInfo(username)
+                token -> api.getFriendInfo(username)
                         .flatMap(responseToBody())
         );
     }
@@ -232,7 +232,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getUserTrophies(username)
+                token -> api.getUserTrophies(username)
                         .flatMap(responseToBody())
                         .map(trophyResponse -> trophyResponse.getData().getTrophies())
         );
@@ -250,7 +250,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getUserProfile(show, username, sort, timespan, before, after)
+                token -> api.getUserProfile(show, username, sort, timespan, before, after)
                         .flatMap(responseToBody())
         );
     }
@@ -261,7 +261,7 @@ public class RedditService implements IRedditService {
             return Completable.error(new NullPointerException("username == null"));
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{}");
         return requireUserAccessToken().flatMap(
-                token -> mAPI.addFriend(username, body)
+                token -> api.addFriend(username, body)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -269,7 +269,7 @@ public class RedditService implements IRedditService {
     @Override
     public Completable deleteFriend(String username) {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.deleteFriend(username)
+                token -> api.deleteFriend(username)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -283,7 +283,7 @@ public class RedditService implements IRedditService {
         String json = new Gson().toJson(new Friend(note));
 
         return requireUserAccessToken().flatMap(token ->
-                mAPI.addFriend(username, RequestBody.create(MediaType.parse("application/json"), json))
+                api.addFriend(username, RequestBody.create(MediaType.parse("application/json"), json))
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -295,7 +295,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getSubredditInfo(subreddit)
+                token -> api.getSubredditInfo(subreddit)
                         .flatMap(responseToBody())
         );
     }
@@ -307,7 +307,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getSubredditRules(subreddit)
+                token -> api.getSubredditRules(subreddit)
                         .flatMap(responseToBody())
         );
     }
@@ -322,7 +322,7 @@ public class RedditService implements IRedditService {
         // https://github.com/reddit/reddit/pull/1424
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getSubredditSidebar(subreddit)
+                token -> api.getSubredditSidebar(subreddit)
                         .flatMap(responseToBody())
         );
     }
@@ -334,7 +334,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> mAPI.getSubredditSticky(subreddit)
+                token -> api.getSubredditSticky(subreddit)
                         .flatMap(responseToBody())
         );
     }
@@ -346,7 +346,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireUserAccessToken().flatMap(token ->
-                mAPI.vote(fullname, direction)
+                api.vote(fullname, direction)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -359,12 +359,12 @@ public class RedditService implements IRedditService {
 
         if (toSave) { // Save
             return requireUserAccessToken().flatMap(
-                    token -> mAPI.save(fullname, category)
+                    token -> api.save(fullname, category)
                             .flatMap(checkResponse())
             ).ignoreElements();
         } else { // Unsave
             return requireUserAccessToken().flatMap(
-                    token -> mAPI.unsave(fullname)
+                    token -> api.unsave(fullname)
                             .flatMap(checkResponse())
             ).ignoreElements();
         }
@@ -378,12 +378,12 @@ public class RedditService implements IRedditService {
 
         if (toHide) { // Hide
             return requireUserAccessToken().flatMap(
-                    token -> mAPI.hide(fullname)
+                    token -> api.hide(fullname)
                             .flatMap(checkResponse())
             ).ignoreElements();
         } else { // Unhide
             return requireUserAccessToken().flatMap(
-                    token -> mAPI.unhide(fullname)
+                    token -> api.unhide(fullname)
                             .flatMap(checkResponse())
             ).ignoreElements();
         }
@@ -396,7 +396,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireUserAccessToken().flatMap(
-                token -> mAPI.getReportForm(fullname)
+                token -> api.getReportForm(fullname)
                         .flatMap(responseToBody())
         );
     }
@@ -412,7 +412,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireUserAccessToken().flatMap(
-                token -> mAPI.report(id, reason, siteReason, otherReason)
+                token -> api.report(id, reason, siteReason, otherReason)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -434,7 +434,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireUserAccessToken().flatMap(
-                token -> mAPI.submit(
+                token -> api.submit(
                         subreddit, kind, title, url, text, sendReplies, resubmit, "json"
                 )
                 .flatMap(responseToBody())
@@ -452,7 +452,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireUserAccessToken().flatMap(
-                token -> mAPI.addComment(parentId, text)
+                token -> api.addComment(parentId, text)
                         .flatMap(responseToBody())
                         .map(response -> {
                             List<String> errors = response.getErrors();
@@ -473,7 +473,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireUserAccessToken().flatMap(
-                token -> mAPI.getInbox(show, before, after)
+                token -> api.getInbox(show, before, after)
                         .flatMap(responseToBody())
         );
     }
@@ -481,7 +481,7 @@ public class RedditService implements IRedditService {
     @Override
     public Completable markAllMessagesRead() {
         return requireUserAccessToken().flatMap(
-                token -> mAPI.markAllMessagesRead()
+                token -> api.markAllMessagesRead()
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -490,7 +490,7 @@ public class RedditService implements IRedditService {
     public Completable markMessagesRead(String commaSeparatedFullnames) {
         // TODO: This should take a List of message fullnames and construct the parameter
         return requireUserAccessToken().flatMap(
-                token -> mAPI.markMessagesRead(commaSeparatedFullnames)
+                token -> api.markMessagesRead(commaSeparatedFullnames)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
@@ -499,22 +499,22 @@ public class RedditService implements IRedditService {
     public Completable markMessagesUnread(String commaSeparatedFullnames) {
         // TODO: This should take a List of message fullnames and construct the parameter
         return requireUserAccessToken().flatMap(
-                token -> mAPI.markMessagesUnread(commaSeparatedFullnames)
+                token -> api.markMessagesUnread(commaSeparatedFullnames)
                         .flatMap(checkResponse())
         ).ignoreElements();
     }
 
     @Override
     public Completable revokeAuthentication() {
-        return mRedditAuthService.revokeUserAuthentication();
+        return redditAuthService.revokeUserAuthentication();
     }
 
     protected Observable<AccessToken> requireAccessToken() {
-        return mRedditAuthService.refreshAccessToken();
+        return redditAuthService.refreshAccessToken();
     }
 
     protected Observable<UserAccessToken> requireUserAccessToken() {
-        return mRedditAuthService.refreshUserAccessToken();
+        return redditAuthService.refreshUserAccessToken();
     }
 
     private RedditAPI buildApi(String baseUrl, String userAgent, int cacheSizeBytes, File cachePath, boolean loggingEnabled) {
@@ -558,13 +558,13 @@ public class RedditService implements IRedditService {
     }
 
     protected IRedditAuthService getAuthService() {
-        return mRedditAuthService;
+        return redditAuthService;
     }
 
     private Interceptor getUserAuthInterceptor() {
         return chain -> {
             Request originalRequest = chain.request();
-            AccessToken token = mRedditAuthService.getAccessToken();
+            AccessToken token = redditAuthService.getAccessToken();
             Request newRequest = originalRequest.newBuilder()
                     .removeHeader("Authorization")
                     .addHeader("Authorization", "bearer " + token.getToken())
