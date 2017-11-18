@@ -102,11 +102,11 @@ public class Link extends Listing implements Votable, Savable, Hideable {
                 return height;
             }
         }
-
         public static class Media {
 
-            private Oembed oembed;
-            private String type;
+            @SerializedName("oembed") Oembed oembed;
+            @SerializedName("type") String type;
+            @SerializedName("reddit_video") RedditVideo redditVideo;
 
             public Oembed getOembed() {
                 return oembed;
@@ -182,6 +182,55 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
                 public Integer getThumbnailHeight() {
                     return thumbnailHeight;
+                }
+            }
+
+            public static class RedditVideo {
+
+                @SerializedName("fallback_url") String fallbackUrl;
+                @SerializedName("height") int height;
+                @SerializedName("width") int width;
+                @SerializedName("scrubber_media_url") String scrubberMediaUrl;
+                @SerializedName("dash_url") String dashUrl;
+                @SerializedName("duration") int duration;
+                @SerializedName("hls_url") String hlsUrl;
+                @SerializedName("is_gif") boolean isGif;
+                @SerializedName("transcoding_status") String transcodingStatus;
+
+                public String getFallbackUrl() {
+                    return fallbackUrl;
+                }
+
+                public int getHeight() {
+                    return height;
+                }
+
+                public int getWidth() {
+                    return width;
+                }
+
+                public String getScrubberMediaUrl() {
+                    return scrubberMediaUrl;
+                }
+
+                public String getDashUrl() {
+                    return dashUrl;
+                }
+
+                public int getDuration() {
+                    return duration;
+                }
+
+                public String getHlsUrl() {
+                    return hlsUrl;
+                }
+
+                public boolean isGif() {
+                    return isGif;
+                }
+
+                public String getTranscodingStatus() {
+                    return transcodingStatus;
                 }
             }
         }
