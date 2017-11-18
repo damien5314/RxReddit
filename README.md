@@ -10,8 +10,6 @@ All apps must be registered with a reddit account in order to access the API. Th
 Note: So far I have only tested this library with apps of "installed" type. Apps with secrets will require an enhancement and should be supported eventually.
 
 ## Overview
-This library depends internally on [Retrofit 2](http://square.github.io/retrofit/) and [RxJava](https://github.com/ReactiveX/RxJava). You will get these dependencies for free after importing RxReddit.
-
 Clients can make requests to the reddit API through an instance of `RedditService`. The class is heavy, and authentication state is cached separately for each instance, so I recommend making your instance a singleton.
 
 A `RedditService` instance can be configured via `RedditService.Builder`, which requires you to set a few fields:
