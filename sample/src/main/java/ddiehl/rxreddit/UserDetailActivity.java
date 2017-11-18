@@ -16,34 +16,34 @@ import io.reactivex.schedulers.Schedulers;
 import rxreddit.api.RedditService;
 import rxreddit.model.UserIdentity;
 
-public class UserDetailActivity extends AppCompatActivity {
+public final class UserDetailActivity extends AppCompatActivity {
 
-    private RedditService mRedditService;
+    private RedditService redditService;
 
-    private TextView mUsername;
-    private TextView mJoinDate;
-    private TextView mLinkKarma;
-    private TextView mCommentKarma;
+    private TextView username;
+    private TextView joinDate;
+    private TextView linkKarma;
+    private TextView commentKarma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
 
-        mRedditService = RedditServiceProvider.get(this);
+        redditService = RedditServiceProvider.get(this);
 
-        mUsername = (TextView) findViewById(R.id.username);
-        mJoinDate = (TextView) findViewById(R.id.join_date);
-        mLinkKarma = (TextView) findViewById(R.id.link_karma);
-        mCommentKarma = (TextView) findViewById(R.id.comment_karma);
+        username = findViewById(R.id.username);
+        joinDate = findViewById(R.id.join_date);
+        linkKarma = findViewById(R.id.link_karma);
+        commentKarma = findViewById(R.id.comment_karma);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if (mRedditService.isUserAuthorized()) {
-            mRedditService.getUserIdentity()
+        if (redditService.isUserAuthorized()) {
+            redditService.getUserIdentity()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(onUserIdentityRetrieved(), onError());
@@ -52,17 +52,17 @@ public class UserDetailActivity extends AppCompatActivity {
 
     private Consumer<UserIdentity> onUserIdentityRetrieved() {
         return identity -> {
-            mUsername.setText(identity.getName());
-            mJoinDate.setText(
+            username.setText(identity.getName());
+            joinDate.setText(
                     String.format(
                             getString(R.string.username_formatter),
                             SimpleDateFormat.getDateInstance()
                                     .format(new Date(identity.getCreatedUTC() * 1000))));
-            mLinkKarma.setText(
+            linkKarma.setText(
                     String.format(
                             getString(R.string.link_karma_formatter),
                             identity.getLinkKarma()));
-            mCommentKarma.setText(
+            commentKarma.setText(
                     String.format(
                             getString(R.string.comment_karma_formatter),
                             identity.getCommentKarma()));
@@ -71,7 +71,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
     private Consumer<Throwable> onError() {
         return error -> {
-            Snackbar.make(mUsername, R.string.get_identity_error, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(username, R.string.get_identity_error, Snackbar.LENGTH_SHORT).show();
             Log.e("RxReddit", "error retrieving user identity", error);
         };
     }
