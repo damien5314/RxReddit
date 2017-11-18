@@ -31,7 +31,6 @@ public abstract class AbsComment extends Listing {
 
     public static abstract class Data extends ListingData {
 
-        @SerializedName("parent_id")
-        String parentId;
+        @SerializedName("parent_id") String parentId;
     }
 }

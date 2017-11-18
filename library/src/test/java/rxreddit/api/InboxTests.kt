@@ -35,9 +35,7 @@ class InboxTests : _RedditServiceTests() {
         val observable = service.getInbox(show, null, null)
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_inbox_$show.json"))
-        val test = observable.test()
-        test.assertValueCount(1)
-        assertNotNull(test.values()[0])
+        val test = observable.test().assertValueCount(1)
         test.values()[0].apply {
             assertNotEquals(0, data.children.size)
         }

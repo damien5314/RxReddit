@@ -15,7 +15,7 @@ public class ReportForm {
 
         static class Data {
 
-            @SerializedName("rules") List<SubredditRules.Rule> rules;
+            @SerializedName("rules") List<SubredditRule> rules;
             @SerializedName("sr_name") String subredditName;
         }
     }
@@ -24,7 +24,7 @@ public class ReportForm {
         return json.errors;
     }
 
-    public List<SubredditRules.Rule> getRules() {
+    public List<SubredditRule> getRules() {
         return json.data.rules;
     }
 

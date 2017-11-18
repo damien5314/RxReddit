@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Trophy extends Listing {
 
-    Data data;
+    @SerializedName("data") Data data;
 
     @Override
     public String getId() {
@@ -37,14 +37,11 @@ public class Trophy extends Listing {
 
     public static class Data extends ListingData {
 
-        @SerializedName("icon_70")
-        String icon70;
-        @SerializedName("icon_40")
-        String icon40;
-        String description;
-        String url;
-        String name;
-        @SerializedName("award_id")
-        String awardId;
+        @SerializedName("icon_70") String icon70;
+        @SerializedName("icon_40") String icon40;
+        @SerializedName("description") String description;
+        @SerializedName("url") String url;
+        @SerializedName("name") String name;
+        @SerializedName("award_id") String awardId;
     }
 }

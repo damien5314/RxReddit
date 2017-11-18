@@ -7,7 +7,7 @@ import rxreddit.test.setBodyFromFile
 
 class AuthServiceTests : _RedditServiceTests() {
 
-    private val authService = service.authService;
+    private val authService = service.authService
 
     @Test
     fun testRefreshAccessToken_noRefreshToken() {

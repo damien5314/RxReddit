@@ -65,7 +65,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
                 .putString(PREF_ACCESS_TOKEN, token.getToken())
                 .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
                 .putString(PREF_TOKEN_TYPE, token.getTokenType())
-                .putLong(PREF_EXPIRATION, token.getExpiration())
+                .putLong(PREF_EXPIRATION, token.getExpirationMs())
                 .putString(PREF_SCOPE, token.getScope())
                 .apply();
     }
@@ -76,7 +76,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
                 PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
                 .putString(PREF_ACCESS_TOKEN, token.getToken())
                 .putString(PREF_TOKEN_TYPE, token.getTokenType())
-                .putLong(PREF_EXPIRATION, token.getExpiration())
+                .putLong(PREF_EXPIRATION, token.getExpirationMs())
                 .putString(PREF_SCOPE, token.getScope())
                 .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
                 .apply();
