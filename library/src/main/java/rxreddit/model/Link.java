@@ -116,6 +116,10 @@ public class Link extends Listing implements Votable, Savable, Hideable {
                 return type;
             }
 
+            public RedditVideo getRedditVideo() {
+                return redditVideo;
+            }
+
             public static class Oembed {
 
                 @SerializedName("provider_url")
