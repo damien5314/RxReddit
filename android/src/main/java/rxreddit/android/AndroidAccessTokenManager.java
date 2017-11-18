@@ -32,13 +32,13 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
         SharedPreferences sp = context.getSharedPreferences(
                 PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE);
         if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
-        return new UserAccessToken(
-                sp.getString(PREF_ACCESS_TOKEN, null),
-                sp.getString(PREF_TOKEN_TYPE, null),
-                sp.getLong(PREF_EXPIRATION, 0),
-                sp.getString(PREF_SCOPE, null),
-                sp.getString(PREF_REFRESH_TOKEN, null)
-        );
+        UserAccessToken token = new UserAccessToken();
+        token.setToken(sp.getString(PREF_ACCESS_TOKEN, null));
+        token.setTokenType(sp.getString(PREF_TOKEN_TYPE, null));
+        token.setExpiration(sp.getLong(PREF_EXPIRATION, 0));
+        token.setScope(sp.getString(PREF_SCOPE, null));
+        token.setRefreshToken(sp.getString(PREF_REFRESH_TOKEN, null));
+        return token;
     }
 
     @Override
@@ -50,13 +50,13 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
         SharedPreferences sp = context.getSharedPreferences(
                 PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE);
         if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
-        return new ApplicationAccessToken(
-                sp.getString(PREF_ACCESS_TOKEN, null),
-                sp.getString(PREF_TOKEN_TYPE, null),
-                sp.getLong(PREF_EXPIRATION, 0),
-                sp.getString(PREF_SCOPE, null),
-                sp.getString(PREF_REFRESH_TOKEN, null)
-        );
+        ApplicationAccessToken token = new ApplicationAccessToken();
+        token.setToken(sp.getString(PREF_ACCESS_TOKEN, null));
+        token.setTokenType(sp.getString(PREF_TOKEN_TYPE, null));
+        token.setExpiration(sp.getLong(PREF_EXPIRATION, 0));
+        token.setScope(sp.getString(PREF_SCOPE, null));
+        token.setRefreshToken(sp.getString(PREF_REFRESH_TOKEN, null));
+        return token;
     }
 
     @Override
