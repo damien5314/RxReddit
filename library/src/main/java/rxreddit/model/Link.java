@@ -52,8 +52,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         @SerializedName("author_flair_css_class")
         private String authorFlairCssClass;
         private Integer downs;
-        @SerializedName("secure_media_embed")
-        private SecureMediaEmbed secureMediaEmbed;
         private Boolean saved;
         private Boolean stickied;
         @SerializedName("is_self")
@@ -74,10 +72,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         @SerializedName("num_reports")
         private Integer numReports;
         private Integer ups;
-
-        public static class SecureMediaEmbed {
-
-        }
 
         public static class MediaEmbed {
 
@@ -443,10 +437,6 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
     public Integer getDowns() {
         return data.downs;
-    }
-
-    public Data.SecureMediaEmbed getSecureMediaEmbed() {
-        return data.secureMediaEmbed;
     }
 
     public boolean isSaved() {
