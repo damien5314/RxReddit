@@ -142,13 +142,7 @@ final class RedditAuthService implements IRedditAuthService {
             UserAccessToken storedToken = mAccessTokenManager.getUserAccessToken();
             if (storedToken != null) {
                 // Refresh token doesn't come back in a refresh, so we have to use the one stored
-                token = new UserAccessToken(
-                        token.getToken(),
-                        token.getTokenType(),
-                        token.secondsUntilExpiration(),
-                        token.getScope(),
-                        storedToken.getRefreshToken()
-                );
+                token.setRefreshToken(storedToken.getRefreshToken());
             }
         }
         mUserAccessToken = token;
