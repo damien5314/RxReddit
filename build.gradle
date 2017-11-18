@@ -3,13 +3,13 @@
 buildscript {
 
     ext {
-        KOTLIN_VERSION = "1.1.2-4"
-        ANDROID_GRADLE_PLUGIN = '3.0.0-alpha3'
-        BUILD_TOOLS_VERSION = '26.0.0'
+        KOTLIN_VERSION = "1.1.60"
+        ANDROID_GRADLE_PLUGIN = '3.0.0'
+        BUILD_TOOLS_VERSION = '26.0.2'
         COMPILE_SDK_VERSION = 26
         TARGET_SDK_VERSION = 26
 
-        SUPPORT_LIBRARY_VERSION = '25.3.1'
+        SUPPORT_LIBRARY_VERSION = '27.0.1'
         RETROFIT_VERSION = "2.3.0"
         OKHTTP_VERSION = "3.6.0"
         RXANDROID_VERSION = "2.0.1"

@@ -8,7 +8,7 @@ import rxreddit.android.AndroidAccessTokenManager;
 import rxreddit.android.AndroidUtil;
 import rxreddit.api.RedditService;
 
-public class RedditServiceProvider {
+public final class RedditServiceProvider {
 
     private RedditServiceProvider() {
     }

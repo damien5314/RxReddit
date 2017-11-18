@@ -30,9 +30,9 @@ public class SignInFragment extends Fragment {
 
     private static final String ARG_AUTH_URL = "ARG_AUTH_URL";
 
-    private String mAuthorizationUrl;
-    private String mRedirectUri;
-    private WebView mWebView;
+    private String authorizationUrl;
+    private String redirectUri;
+    private WebView webView;
 
     public static SignInFragment newInstance(String url) {
         Bundle args = new Bundle();
@@ -49,29 +49,29 @@ public class SignInFragment extends Fragment {
         setHasOptionsMenu(true);
 
         Bundle args = getArguments();
-        mAuthorizationUrl = args.getString(ARG_AUTH_URL);
-        Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(mAuthorizationUrl);
-        mRedirectUri = params.get("redirect_uri");
+        authorizationUrl = args.getString(ARG_AUTH_URL);
+        Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(authorizationUrl);
+        redirectUri = params.get("redirect_uri");
     }
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
 
-        mWebView = (WebView) view.findViewById(R.id.rxr_web_view);
-        configureWebView(mWebView);
+        webView = view.findViewById(R.id.rxr_web_view);
+        configureWebView(webView);
 
-        mWebView.setWebViewClient(
-                new RxRedditWebViewClient(this, mRedirectUri, mAuthorizationUrl));
+        webView.setWebViewClient(
+                new RxRedditWebViewClient(this, redirectUri, authorizationUrl));
 
-        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.rxr_progress_bar);
+        final ProgressBar progressBar = view.findViewById(R.id.rxr_progress_bar);
         progressBar.setMax(100);
-        mWebView.setWebChromeClient(getProgressBarChromeClient(progressBar));
+        webView.setWebChromeClient(getProgressBarChromeClient(progressBar));
 
-        mWebView.setOnKeyListener(getBackKeyListener());
+        webView.setOnKeyListener(getBackKeyListener());
 
-        mWebView.loadUrl(mAuthorizationUrl);
+        webView.loadUrl(authorizationUrl);
 
         return view;
     }
@@ -89,10 +89,10 @@ public class SignInFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (mWebView != null) {
-            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            mWebView.removeAllViews();
-            mWebView.destroy();
+        if (webView != null) {
+            ((ViewGroup) webView.getParent()).removeView(webView);
+            webView.removeAllViews();
+            webView.destroy();
         }
         super.onDestroyView();
     }
@@ -155,8 +155,8 @@ public class SignInFragment extends Fragment {
         return (v1, keyCode, event) -> {
             // Check if the key event was the Back button and if there's history
             if (event.getAction() == KeyEvent.ACTION_UP
-                    && (keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-                mWebView.goBack();
+                    && (keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+                webView.goBack();
                 return true;
             }
             return false;
@@ -173,7 +173,7 @@ public class SignInFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            mWebView.reload();
+            webView.reload();
             return true;
         }
         return super.onOptionsItemSelected(item);

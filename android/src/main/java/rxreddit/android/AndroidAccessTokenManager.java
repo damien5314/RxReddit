@@ -17,10 +17,10 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
     private static final String PREF_SCOPE = "pref_scope";
     private static final String PREF_REFRESH_TOKEN = "pref_refresh_token";
 
-    private Context mContext;
+    private Context context;
 
     public AndroidAccessTokenManager(Context context) {
-        mContext = context.getApplicationContext();
+        this.context = context.getApplicationContext();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
     }
 
     private UserAccessToken getSavedUserAccessToken() {
-        SharedPreferences sp = mContext.getSharedPreferences(
+        SharedPreferences sp = context.getSharedPreferences(
                 PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE);
         if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
         UserAccessToken token = new UserAccessToken();
@@ -47,7 +47,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
     }
 
     private ApplicationAccessToken getSavedApplicationAccessToken() {
-        SharedPreferences sp = mContext.getSharedPreferences(
+        SharedPreferences sp = context.getSharedPreferences(
                 PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE);
         if (!sp.contains(PREF_ACCESS_TOKEN)) return null;
         ApplicationAccessToken token = new ApplicationAccessToken();
@@ -61,7 +61,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
 
     @Override
     public void saveUserAccessToken(UserAccessToken token) {
-        mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
+        context.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
                 .putString(PREF_ACCESS_TOKEN, token.getToken())
                 .putString(PREF_REFRESH_TOKEN, token.getRefreshToken())
                 .putString(PREF_TOKEN_TYPE, token.getTokenType())
@@ -72,7 +72,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
 
     @Override
     public void saveApplicationAccessToken(ApplicationAccessToken token) {
-        mContext.getSharedPreferences(
+        context.getSharedPreferences(
                 PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE).edit()
                 .putString(PREF_ACCESS_TOKEN, token.getToken())
                 .putString(PREF_TOKEN_TYPE, token.getTokenType())
@@ -84,7 +84,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
 
     @Override
     public void clearSavedUserAccessToken() {
-        mContext.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE)
+        context.getSharedPreferences(PREFS_USER_ACCESS_TOKEN, Context.MODE_PRIVATE)
                 .edit()
                 .clear()
                 .apply();
@@ -92,7 +92,7 @@ public class AndroidAccessTokenManager implements AccessTokenManager {
 
     @Override
     public void clearSavedApplicationAccessToken() {
-        mContext.getSharedPreferences(PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE)
+        context.getSharedPreferences(PREFS_APPLICATION_ACCESS_TOKEN, Context.MODE_PRIVATE)
                 .edit()
                 .clear()
                 .apply();

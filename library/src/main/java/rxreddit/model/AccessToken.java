@@ -6,63 +6,63 @@ import java.util.Date;
 
 public abstract class AccessToken {
 
-    private long mCreated = new Date().getTime();
+    private long created = new Date().getTime();
 
     @SerializedName("access_token")
-    protected String mToken;
+    protected String token;
 
     @SerializedName("token_type")
-    protected String mTokenType;
+    protected String tokenType;
 
     @SerializedName("expires_in")
-    protected long mSecondsToExpiration;
-    protected long mExpiration; // UTC
+    protected long secondsToExpiration;
+    protected long expirationUtc;
 
     @SerializedName("scope")
-    protected String mScope;
+    protected String scope;
 
     @SerializedName("refresh_token")
-    protected String mRefreshToken;
+    protected String refreshToken;
 
     public String getToken() {
-        return mToken;
+        return token;
     }
 
     public void setToken(String token) {
-        mToken = token;
+        this.token = token;
     }
 
     public String getTokenType() {
-        return mTokenType;
+        return tokenType;
     }
 
     public void setTokenType(String tokenType) {
-        mTokenType = tokenType;
+        this.tokenType = tokenType;
     }
 
     public long getExpiration() {
-        if (mExpiration == 0) mExpiration = mSecondsToExpiration * 1000 + mCreated;
-        return mExpiration;
+        if (expirationUtc == 0) expirationUtc = secondsToExpiration * 1000 + created;
+        return expirationUtc;
     }
 
     public void setExpiration(long expiration) {
-        mExpiration = expiration;
+        this.expirationUtc = expiration;
     }
 
     public String getScope() {
-        return mScope;
+        return scope;
     }
 
     public void setScope(String scope) {
-        mScope = scope;
+        this.scope = scope;
     }
 
     public String getRefreshToken() {
-        return mRefreshToken;
+        return refreshToken;
     }
 
     public void setRefreshToken(String refreshToken) {
-        mRefreshToken = refreshToken;
+        this.refreshToken = refreshToken;
     }
 
     public long secondsUntilExpiration() {

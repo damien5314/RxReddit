@@ -12,6 +12,6 @@ public class UserAccessToken extends AccessToken {
     @Override
     public String toString() {
         return "Access Token: " + (isUserAccessToken() ? "User" : "Application")
-                + " - Expires: " + new Date(mExpiration);
+                + " - Expires: " + new Date(expirationUtc);
     }
 }
