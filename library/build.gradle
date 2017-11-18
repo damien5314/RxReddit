@@ -5,14 +5,14 @@ apply plugin: 'maven'
 group = 'com.github.damien5314'
 
 dependencies {
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
-    compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+    implementation "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
-    testCompile "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
-    testCompile "junit:junit:$JUNIT_VERSION"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
+    testImplementation "junit:junit:$JUNIT_VERSION"
 }
 
 // Adding `src/test/resources` to sourceSets.test.resources does not work for some reason
