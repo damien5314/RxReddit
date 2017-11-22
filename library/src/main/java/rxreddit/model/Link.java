@@ -7,7 +7,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Link extends Listing implements Votable, Savable, Hideable {
 
-    private Data data;
+    @SerializedName("data") Data data;
 
     public static class Data extends ListingData {
 
