@@ -1,11 +1,13 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MediaEmbed {
 
-    private String content;
-    private Integer width;
-    private Boolean scrolling;
-    private Integer height;
+    @SerializedName("content") String content;
+    @SerializedName("width") Integer width;
+    @SerializedName("scrolling") Boolean scrolling;
+    @SerializedName("height") Integer height;
 
     public String getContent() {
         return content;

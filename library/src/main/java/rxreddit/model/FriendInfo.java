@@ -1,11 +1,13 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class FriendInfo {
 
-    Long date;
-    String note;
-    String name;
-    String id;
+    @SerializedName("date") Long date;
+    @SerializedName("note") String note;
+    @SerializedName("name") String name;
+    @SerializedName("id") String id;
 
     public Long getDate() {
         return date;

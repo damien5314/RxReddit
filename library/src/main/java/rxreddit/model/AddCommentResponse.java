@@ -1,12 +1,14 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class AddCommentResponse {
 
-    private Json json;
+    @SerializedName("json") Json json;
 
     public List<String> getErrors() {
         if (json == null || json.errors == null) return new ArrayList<>();
@@ -14,23 +16,35 @@ public class AddCommentResponse {
     }
 
     public Comment getComment() {
-        if (json == null
-                || json.data == null
-                || json.data.things == null
-                || json.data.things.size() == 0)
+        final List<Comment> comments = json.data.getComments();
+        if (json == null || json.data == null || comments == null || comments.size() == 0) {
             return null;
-        return json.data.things.get(0);
+        } else {
+            return comments.get(0);
+        }
     }
 
-    private static class Json {
+    static class Json {
 
-        private List<String> errors;
-        private Data data;
+        @SerializedName("data") Data data;
+        @SerializedName("errors") List<String> errors;
+
+        public Data getData() {
+            return data;
+        }
+
+        public List<String> getErrors() {
+            return errors;
+        }
     }
 
-    private static class Data {
+    static class Data {
 
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-        private List<Comment> things;
+        @SerializedName("things") List<Comment> comments;
+
+        public List<Comment> getComments() {
+            return comments;
+        }
     }
 }

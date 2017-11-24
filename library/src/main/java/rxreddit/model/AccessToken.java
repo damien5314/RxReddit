@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 public abstract class AccessToken {
 
-    private final long createdMs = System.currentTimeMillis();
-    private long expirationUtcMs;
-
     @SerializedName("access_token") String token;
     @SerializedName("token_type") String tokenType;
     @SerializedName("expires_in") long secondsToExpiration;
     @SerializedName("scope") String scope;
     @SerializedName("refresh_token") String refreshToken;
+
+    private final long createdMs = System.currentTimeMillis();
+    private long expirationUtcMs;
 
     public String getToken() {
         return token;

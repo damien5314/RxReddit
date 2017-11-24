@@ -6,11 +6,8 @@ import java.util.List;
 
 public class SubredditRules {
 
-    @SerializedName("rules")
-    List<SubredditRule> rules;
-
-    @SerializedName("site_rules")
-    List<String> siteRules;
+    @SerializedName("rules") List<SubredditRule> rules;
+    @SerializedName("site_rules") List<String> siteRules;
 
     public List<SubredditRule> getRules() {
         return rules;
@@ -19,5 +16,4 @@ public class SubredditRules {
     public List<String> getSiteRules() {
         return siteRules;
     }
-
 }

@@ -6,8 +6,7 @@ import java.util.List;
 
 public class SubmitPostResponse {
 
-    @SerializedName("json")
-    Json json;
+    @SerializedName("json") Json json;
 
     public List<String> getErrors() {
         return json.errors;
@@ -27,19 +26,14 @@ public class SubmitPostResponse {
 
     static class Json {
 
-        @SerializedName("errors")
-        List<String> errors;
-        @SerializedName("data")
-        Data data;
+        @SerializedName("errors") List<String> errors;
+        @SerializedName("data") Data data;
 
         static class Data {
 
-            @SerializedName("url")
-            String url;
-            @SerializedName("id")
-            String id;
-            @SerializedName("name")
-            String fullname;
+            @SerializedName("url") String url;
+            @SerializedName("id") String id;
+            @SerializedName("name") String fullname;
         }
     }
 }

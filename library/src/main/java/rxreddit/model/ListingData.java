@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName;
 
 public class ListingData {
 
-    @SerializedName("id") protected String id;
+    @SerializedName("id") String id;
 }

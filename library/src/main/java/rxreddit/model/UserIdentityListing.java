@@ -1,8 +1,10 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserIdentityListing extends Listing {
 
-    UserIdentity data;
+    @SerializedName("data") UserIdentity data;
 
     public UserIdentity getUser() {
         return data;
@@ -15,6 +17,6 @@ public class UserIdentityListing extends Listing {
 
     @Override
     public String toString() {
-        return getId() + " - " + getFullName() + " - Gold: " + data.isGold();
+        return String.format("%s - %s - Gold: %b", getId(), getFullName(), data.isGold());
     }
 }

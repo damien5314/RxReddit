@@ -1,9 +1,12 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class TrophyResponse {
 
-    private String kind;
-    private TrophyResponseData data;
+    // FIXME Shouldn't this be a Listing?
+    @SerializedName("kind") String kind;
+    @SerializedName("data") TrophyResponseData data;
 
     public String getKind() {
         return kind;

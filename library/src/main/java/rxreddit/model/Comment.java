@@ -7,7 +7,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Comment extends AbsComment implements Votable, Savable {
 
-    Data data;
+    @SerializedName("data") Data data;
+
     private boolean isCollapsed = false;
 
     @Override
@@ -112,7 +113,7 @@ public class Comment extends AbsComment implements Votable, Savable {
     }
 
     public String getAuthorFlairCssClass() {
-        return data.AuthorFlairCssClass;
+        return data.authorFlairCssClass;
     }
 
     public String getAuthorFlairText() {
@@ -245,65 +246,46 @@ public class Comment extends AbsComment implements Votable, Savable {
     public static class Data extends AbsComment.Data {
 
         // Attributes specific to listing views
-        @SerializedName("link_title")
-        private String linkTitle;
-        @SerializedName("removal_reason")
-        private String removalReason;
-        @SerializedName("link_author")
-        private String linkAuthor;
-        @SerializedName("link_url")
-        private String linkUrl;
+        @SerializedName("link_title") String linkTitle;
+        @SerializedName("removal_reason") String removalReason;
+        @SerializedName("link_author") String linkAuthor;
+        @SerializedName("link_url") String linkUrl;
 
         // Attributes common to all comment views
-        private ListingResponse replies;
-        @SerializedName("subreddit_id")
-        private String subredditId;
-        @SerializedName("banned_by")
-        private Object bannedBy;
-        @SerializedName("link_id")
-        private String linkId;
-        @SerializedName("likes")
-        private Boolean isLiked;
-        @SerializedName("user_reports")
-        private List<Object> userReports;
-        private Boolean saved;
-        private Integer gilded;
-        @SerializedName("archived")
-        private Boolean isArchived;
-        @SerializedName("report_reasons")
-        private Object reportReasons;
-        private String author;
-        private Integer score;
-        @SerializedName("approved_by")
-        private Object approvedBy;
-        private int controversiality;
-        private String body;
-        private String edited;
-        @SerializedName("author_flair_css_class")
-        private String AuthorFlairCssClass;
-        private int downs;
-        @SerializedName("body_html")
-        private String bodyHtml;
-        private String subreddit;
-        @SerializedName("score_hidden")
-        private Boolean hideScore;
-        private double created;
-        @SerializedName("author_flair_text")
-        private String authorFlairText;
-        @SerializedName("created_utc")
-        private double createUtc;
-        private int ups;
-        @SerializedName("mod_reports")
-        private List<Object> modReports;
-        @SerializedName("num_reports")
-        private Object numReports;
-        private String distinguished;
-        private String subject;
-        private String context;
+        @SerializedName("replies") ListingResponse replies;
+        @SerializedName("subreddit_id") String subredditId;
+        @SerializedName("banned_by") Object bannedBy;
+        @SerializedName("link_id") String linkId;
+        @SerializedName("likes") Boolean isLiked;
+        @SerializedName("user_reports") List<Object> userReports;
+        @SerializedName("saved") Boolean saved;
+        @SerializedName("gilded") Integer gilded;
+        @SerializedName("archived") Boolean isArchived;
+        @SerializedName("report_reasons") Object reportReasons;
+        @SerializedName("author") String author;
+        @SerializedName("score") Integer score;
+        @SerializedName("approved_by") Object approvedBy;
+        @SerializedName("controversiality") int controversiality;
+        @SerializedName("body") String body;
+        @SerializedName("edited") String edited;
+        @SerializedName("author_flair_css_class") String authorFlairCssClass;
+        @SerializedName("downs") int downs;
+        @SerializedName("body_html") String bodyHtml;
+        @SerializedName("subreddit") String subreddit;
+        @SerializedName("score_hidden") Boolean hideScore;
+        @SerializedName("created") double created;
+        @SerializedName("author_flair_text") String authorFlairText;
+        @SerializedName("created_utc") double createUtc;
+        @SerializedName("ups") int ups;
+        @SerializedName("mod_reports") List<Object> modReports;
+        @SerializedName("num_reports") Object numReports;
+        @SerializedName("distinguished") String distinguished;
+        @SerializedName("subject") String subject;
+        @SerializedName("context") String context;
     }
 
     @Override
     public String toString() {
-        return "Comment: " + getAuthor() + " - depth " + getDepth();
+        return String.format("Comment: %s, depth %s", getAuthor(), getDepth());
     }
 }

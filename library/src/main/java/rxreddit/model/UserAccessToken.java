@@ -11,7 +11,10 @@ public class UserAccessToken extends AccessToken {
 
     @Override
     public String toString() {
-        return "Access Token: " + (isUserAccessToken() ? "User" : "Application")
-                + " - Expires: " + new Date(getExpirationMs());
+        return String.format(
+                "Access Token: %s - Expires: %s",
+                (isUserAccessToken() ? "User" : "Application"),
+                new Date(getExpirationMs())
+        );
     }
 }

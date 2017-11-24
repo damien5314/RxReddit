@@ -11,7 +11,7 @@ public class Link extends Listing implements Votable, Savable, Hideable {
 
     public static class Data extends ListingData {
 
-        @SerializedName("preview") Preview preview; // New field for preview images
+        @SerializedName("preview") Preview preview;
         @SerializedName("domain") String domain;
         @SerializedName("banned_by") String bannedBy;
         @SerializedName("media_embed") MediaEmbed mediaEmbed;
