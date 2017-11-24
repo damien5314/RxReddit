@@ -1,24 +1,26 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class MoreChildrenResponse {
 
-    private MoreChildrenResponseJson json;
+    @SerializedName("json") MoreChildrenResponseJson json;
 
-    private static class MoreChildrenResponseJson {
+    static class MoreChildrenResponseJson {
 
-        private List<String> errors;
-        private MoreChildrenResponseData data;
+        @SerializedName("errors") List<String> errors;
+        @SerializedName("data") MoreChildrenResponseData data;
 
-        private static class MoreChildrenResponseData {
+        static class MoreChildrenResponseData {
 
-            private List<Listing> things;
+            @SerializedName("things") List<Listing> listings;
         }
     }
 
     public List<Listing> getChildComments() {
         if (json.data == null) return null;
-        return json.data.things;
+        return json.data.listings;
     }
 }

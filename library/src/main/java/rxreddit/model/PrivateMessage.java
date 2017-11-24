@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("unused")
 public class PrivateMessage extends Listing {
 
-    Data data;
+    @SerializedName("data") Data data;
 
     @Override
     public String getId() {
@@ -69,11 +69,11 @@ public class PrivateMessage extends Listing {
     }
 
     public Boolean isUnread() {
-        return data.isUnread;
+        return data.isNew;
     }
 
     public void markUnread(boolean b) {
-        data.isUnread = b;
+        data.isNew = b;
     }
 
     public String getDistinguished() {
@@ -86,31 +86,22 @@ public class PrivateMessage extends Listing {
 
     public static class Data extends ListingData {
 
-        String body;
-        @SerializedName("was_comment")
-        Boolean wasComment;
-        @SerializedName("first_message")
-        String firstMessage;
-        @SerializedName("name")
-        String fullname;
-        @SerializedName("first_message_name")
-        String firstMessageName;
-
-        Long created;
-        String dest;
-        String author;
-        @SerializedName("created_utc")
-        Long createdUtc;
-        @SerializedName("body_html")
-        String bodyHtml;
-        String subreddit;
-        @SerializedName("parent_id")
-        String parentId;
-        String context;
-        ListingResponse replies;
-        @SerializedName("new")
-        Boolean isUnread;
-        String distinguished;
-        String subject;
+        @SerializedName("body") String body;
+        @SerializedName("was_comment") Boolean wasComment;
+        @SerializedName("first_message") String firstMessage;
+        @SerializedName("name") String fullname;
+        @SerializedName("first_message_name") String firstMessageName;
+        @SerializedName("created") Long created;
+        @SerializedName("dest") String dest;
+        @SerializedName("author") String author;
+        @SerializedName("created_utc") Long createdUtc;
+        @SerializedName("body_html") String bodyHtml;
+        @SerializedName("subreddit") String subreddit;
+        @SerializedName("parent_id") String parentId;
+        @SerializedName("context") String context;
+        @SerializedName("replies") ListingResponse replies;
+        @SerializedName("new") Boolean isNew;
+        @SerializedName("distinguished") String distinguished;
+        @SerializedName("subject") String subject;
     }
 }

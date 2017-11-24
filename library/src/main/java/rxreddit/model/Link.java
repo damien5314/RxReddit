@@ -7,69 +7,51 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Link extends Listing implements Votable, Savable, Hideable {
 
-    private Data data;
+    @SerializedName("data") Data data;
 
     public static class Data extends ListingData {
 
-        private Preview preview; // New field for preview images
-        private String domain;
-        @SerializedName("banned_by")
-        private String bannedBy;
-        @SerializedName("media_embed")
-        private MediaEmbed mediaEmbed;
-        private String subreddit;
-        @SerializedName("selftext_html")
-        private String selftextHtml;
-        private String selftext;
-        private String edited;
-        private Boolean likes;
-        @SerializedName("user_reports")
-        private List<UserReport> userReports;
-        @SerializedName("link_flair_text")
-        private String linkFlairText;
-        private Integer gilded;
-        @SerializedName("archived")
-        private Boolean isArchived;
-        private Boolean clicked;
-        private String author;
-        @SerializedName("num_comments")
-        private Integer numComments;
-        private Integer score;
-        @SerializedName("approved_by")
-        private String approvedBy;
-        @SerializedName("over_18")
-        private Boolean over18;
-        private Boolean hidden;
-        private String thumbnail;
-        @SerializedName("subreddit_id")
-        private String subredditId;
-        @SerializedName("hide_score")
-        private Boolean hideScore;
-        @SerializedName("link_flair_css_class")
-        private String linkFlairCssClass;
-        @SerializedName("author_flair_css_class")
-        private String authorFlairCssClass;
-        private Integer downs;
-        private Boolean saved;
-        private Boolean stickied;
-        @SerializedName("is_self")
-        private Boolean isSelf;
-        private String permalink;
-        private Double created;
-        private String url;
-        @SerializedName("author_flair_text")
-        private String authorFlairText;
-        private String title;
-        @SerializedName("created_utc")
-        private Double createdUtc;
-        private String distinguished;
-        private Media media;
-        @SerializedName("mod_reports")
-        private List<ModReport> modReports;
-        private Boolean visited;
-        @SerializedName("num_reports")
-        private Integer numReports;
-        private Integer ups;
+        @SerializedName("preview") Preview preview;
+        @SerializedName("domain") String domain;
+        @SerializedName("banned_by") String bannedBy;
+        @SerializedName("media_embed") MediaEmbed mediaEmbed;
+        @SerializedName("subreddit") String subreddit;
+        @SerializedName("selftext_html") String selftextHtml;
+        @SerializedName("selftext") String selftext;
+        @SerializedName("edited") String edited;
+        @SerializedName("likes") Boolean likes;
+        @SerializedName("user_reports") List<UserReport> userReports;
+        @SerializedName("link_flair_text") String linkFlairText;
+        @SerializedName("gilded") Integer gilded;
+        @SerializedName("archived") Boolean isArchived;
+        @SerializedName("clicked") Boolean clicked;
+        @SerializedName("author") String author;
+        @SerializedName("num_comments") Integer numComments;
+        @SerializedName("score") Integer score;
+        @SerializedName("approved_by") String approvedBy;
+        @SerializedName("over_18") Boolean over18;
+        @SerializedName("hidden") Boolean hidden;
+        @SerializedName("thumbnail") String thumbnail;
+        @SerializedName("subreddit_id") String subredditId;
+        @SerializedName("hide_score") Boolean hideScore;
+        @SerializedName("link_flair_css_class") String linkFlairCssClass;
+        @SerializedName("author_flair_css_class") String authorFlairCssClass;
+        @SerializedName("downs") Integer downs;
+        @SerializedName("saved") Boolean saved;
+        @SerializedName("stickied") Boolean stickied;
+        @SerializedName("is_self") Boolean isSelf;
+        @SerializedName("permalink") String permalink;
+        @SerializedName("created") Double created;
+        @SerializedName("url") String url;
+        @SerializedName("author_flair_text") String authorFlairText;
+        @SerializedName("title") String title;
+        @SerializedName("created_utc") Double createdUtc;
+        @SerializedName("distinguished") String distinguished;
+        @SerializedName("media") Media media;
+        @SerializedName("mod_reports") List<ModReport> modReports;
+        @SerializedName("visited") Boolean visited;
+        @SerializedName("num_reports") Integer numReports;
+        @SerializedName("ups") Integer ups;
     }
 
     public static class Preview {

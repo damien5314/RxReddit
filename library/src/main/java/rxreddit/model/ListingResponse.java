@@ -1,11 +1,13 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class ListingResponse {
 
-    String kind;
-    ListingResponseData data;
+    @SerializedName("kind") String kind;
+    @SerializedName("data") ListingResponseData data;
 
     public ListingResponse() {
     }

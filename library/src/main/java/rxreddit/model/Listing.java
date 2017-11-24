@@ -1,8 +1,10 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public abstract class Listing {
 
-    protected String kind;
+    @SerializedName("kind") String kind;
 
     public abstract String getId();
 

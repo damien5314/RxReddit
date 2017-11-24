@@ -6,14 +6,10 @@ import java.util.List;
 
 public class Image {
 
-    @SerializedName("source")
-    Res source;
-    @SerializedName("resolutions")
-    List<Res> resolutions;
-    @SerializedName("variants")
-    Variants variants;
-    @SerializedName("id")
-    String id;
+    @SerializedName("source") Res source;
+    @SerializedName("resolutions") List<Res> resolutions;
+    @SerializedName("variants") Variants variants;
+    @SerializedName("id") String id;
 
     public Res getSource() {
         return source;
@@ -33,8 +29,7 @@ public class Image {
 
     public static class Variants {
 
-        @SerializedName("nsfw")
-        Image nsfw;
+        @SerializedName("nsfw") Image nsfw;
 
         public Image getNsfw() {
             return nsfw;
@@ -43,12 +38,9 @@ public class Image {
 
     public static class Res {
 
-        @SerializedName("url")
-        String url;
-        @SerializedName("width")
-        int width;
-        @SerializedName("height")
-        int height;
+        @SerializedName("url") String url;
+        @SerializedName("width") int width;
+        @SerializedName("height") int height;
 
         public String getUrl() {
             return url;

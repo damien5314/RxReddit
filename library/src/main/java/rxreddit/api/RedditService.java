@@ -1,6 +1,5 @@
 package rxreddit.api;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -545,7 +544,6 @@ public class RedditService implements IRedditService {
 
     public Gson getGson() {
         return new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(ListingResponse.class, new ListingResponseDeserializer())
                 .registerTypeAdapter(Listing.class, new ListingDeserializer())
                 .registerTypeAdapter(AbsComment.class, new CommentDeserializer())
