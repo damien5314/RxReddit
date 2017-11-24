@@ -1,8 +1,20 @@
 Change Log
 ==========
 
-Version 0.8 *(2016-11-06)*
+Version 0.10 *(2017-11-24)*
 ----------------------------------
+* Removed mock API module, this will no longer be supported.
+* Added methods for reporting submissions.
+* Added RedditVideo in Link model.
+* Fixed bug where we were clearing the access token in the case of non-403 errors.
+* Added `@SerializedName` annotations to every model to ensure compatibility with ProGuard.
+* Updated to RxJava2.
+* Updated build tools and other dependencies.
+
+Version 0.9 *(2016-11-06)*
+----------------------------------
+* Added methods for accessing /r/subreddit/about/sticky endpoint.
+* Added methods for retrieving subreddit rules.
 * Added API methods for retrieving subreddit subscriptions.
 * Remove cookies when loading SignInFragment.
 
