@@ -91,7 +91,6 @@ public class PrivateMessage extends Listing {
         @SerializedName("first_message") String firstMessage;
         @SerializedName("name") String fullname;
         @SerializedName("first_message_name") String firstMessageName;
-
         @SerializedName("created") Long created;
         @SerializedName("dest") String dest;
         @SerializedName("author") String author;
