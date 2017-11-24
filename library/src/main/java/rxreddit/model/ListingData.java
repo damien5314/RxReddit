@@ -1,6 +1,8 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ListingData {
 
-    protected String id;
+    @SerializedName("id") protected String id;
 }

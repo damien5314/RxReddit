@@ -1,14 +1,16 @@
 package rxreddit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class ListingResponseData {
 
-    List<Listing> children;
-    String after;
-    String before;
-    String modhash;
+    @SerializedName("children") List<Listing> children;
+    @SerializedName("after") String after;
+    @SerializedName("before") String before;
+    @SerializedName("modhash") String modhash;
 
     public ListingResponseData() {
     }
