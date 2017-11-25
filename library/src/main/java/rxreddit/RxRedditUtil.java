@@ -3,17 +3,12 @@ package rxreddit;
 import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import io.reactivex.Observable;
 import retrofit2.HttpException;
 import retrofit2.Response;
-import rxreddit.model.Comment;
-import rxreddit.model.CommentStub;
-import rxreddit.model.Listing;
-import rxreddit.model.ListingResponse;
 
 public class RxRedditUtil {
 
@@ -36,34 +31,6 @@ public class RxRedditUtil {
     public static String getUserAgent(
             String platform, String pkgName, String versionName, String username) {
         return String.format("%s:%s:%s (by /u/%s)", platform, pkgName, versionName, username);
-    }
-
-    /**
-     * Flattens list of comments, marking each comment with depth
-     */
-    public static void flattenCommentList(List<Listing> commentList) {
-        int i = 0;
-        while (i < commentList.size()) {
-            Listing listing = commentList.get(i);
-            if (listing instanceof Comment) {
-                Comment comment = (Comment) listing;
-                ListingResponse repliesListing = comment.getReplies();
-                if (repliesListing != null) {
-                    List<Listing> replies = repliesListing.getData().getChildren();
-                    flattenCommentList(replies);
-                }
-                comment.setDepth(comment.getDepth() + 1); // Increase depth by 1
-                if (comment.getReplies() != null) {
-                    // Add all of the replies to commentList
-                    commentList.addAll(i + 1, comment.getReplies().getData().getChildren());
-                    comment.setReplies(null); // Remove replies for comment
-                }
-            } else { // Listing is a CommentStub
-                CommentStub moreComments = (CommentStub) listing;
-                moreComments.setDepth(moreComments.getDepth() + 1); // Increase depth by 1
-            }
-            i++;
-        }
     }
 
     /**
