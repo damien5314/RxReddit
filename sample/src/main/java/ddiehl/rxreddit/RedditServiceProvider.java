@@ -3,10 +3,10 @@ package ddiehl.rxreddit;
 import android.content.Context;
 
 import ddiehl.rxreddit.sample.BuildConfig;
-import rxreddit.RxRedditUtil;
 import rxreddit.android.AndroidAccessTokenManager;
 import rxreddit.android.AndroidUtil;
 import rxreddit.api.RedditService;
+import rxreddit.util.RxRedditUtil;
 
 public final class RedditServiceProvider {
 

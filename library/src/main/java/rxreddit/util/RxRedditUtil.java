@@ -1,4 +1,4 @@
-package rxreddit;
+package rxreddit.util;
 
 import java.net.URI;
 import java.util.Collections;
@@ -33,50 +33,6 @@ public class RxRedditUtil {
         return String.format("%s:%s:%s (by /u/%s)", platform, pkgName, versionName, username);
     }
 
-    /**
-     * Returns a string containing the tokens joined by delimiters.
-     *
-     * @param tokens an array objects to be joined. Strings will be formed from
-     *               the objects by calling object.toString().
-     */
-    public static String join(CharSequence delimiter, Object[] tokens) {
-        StringBuilder sb = new StringBuilder();
-        boolean firstTime = true;
-        for (Object token : tokens) {
-            if (firstTime) {
-                firstTime = false;
-            } else {
-                sb.append(delimiter);
-            }
-            sb.append(token);
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Returns a string containing the tokens joined by delimiters.
-     *
-     * @param tokens an array objects to be joined. Strings will be formed from
-     *               the objects by calling object.toString().
-     */
-    public static String join(CharSequence delimiter, Iterable tokens) {
-        StringBuilder sb = new StringBuilder();
-        boolean firstTime = true;
-        for (Object token : tokens) {
-            if (firstTime) {
-                firstTime = false;
-            } else {
-                sb.append(delimiter);
-            }
-            sb.append(token);
-        }
-        return sb.toString();
-    }
-
-    public static boolean isEmpty(String string) {
-        return string == null || "".equals(string);
-    }
-
     public static Map<String, String> getQueryParametersFromUrl(String url)
             throws IllegalArgumentException {
         if (url == null) throw new IllegalArgumentException("url == null");
@@ -91,15 +47,6 @@ public class RxRedditUtil {
             if (mid != -1) paramMap.put(param.substring(0, mid), param.substring(mid + 1));
         }
         return paramMap;
-    }
-
-    public static String getCommaDelimitedString(Iterable<String> string) {
-        StringBuilder commaDelimited = new StringBuilder();
-        for (String subreddit : string) {
-            commaDelimited.append(subreddit).append(",");
-        }
-        commaDelimited.deleteCharAt(commaDelimited.length()-1);
-        return commaDelimited.toString();
     }
 
     public static <T> Observable<T> responseToBody(Response<T> response) {

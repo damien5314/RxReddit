@@ -21,7 +21,7 @@ import android.widget.ProgressBar;
 
 import java.util.Map;
 
-import rxreddit.RxRedditUtil;
+import rxreddit.util.RxRedditUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static rxreddit.android.SignInActivity.EXTRA_CALLBACK_URL;

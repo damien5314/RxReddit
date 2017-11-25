@@ -19,7 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rxreddit.RxRedditUtil;
 import rxreddit.model.AbsComment;
 import rxreddit.model.AccessToken;
 import rxreddit.model.Comment;
@@ -39,6 +38,7 @@ import rxreddit.model.UserIdentity;
 import rxreddit.model.UserIdentityListing;
 import rxreddit.model.UserReport;
 import rxreddit.model.UserSettings;
+import rxreddit.util.RxRedditUtil;
 
 public class RedditService implements IRedditService {
 
@@ -140,7 +140,7 @@ public class RedditService implements IRedditService {
     @Override
     public Completable subscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
-                token -> api.subscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits), true)
+                token -> api.subscribeAll(StringUtils.getCommaDelimitedString(subreddits), true)
         ).flatMap(RxRedditUtil::checkResponse).ignoreElements();
     }
 
@@ -154,7 +154,7 @@ public class RedditService implements IRedditService {
     @Override
     public Completable unsubscribe(Iterable<String> subreddits) {
         return requireUserAccessToken().flatMap(
-                token -> api.unsubscribeAll(RxRedditUtil.getCommaDelimitedString(subreddits))
+                token -> api.unsubscribeAll(StringUtils.getCommaDelimitedString(subreddits))
         ).flatMap(RxRedditUtil::checkResponse).ignoreElements();
     }
 
@@ -198,7 +198,7 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> api.getMoreChildren("t3_" + linkId, RxRedditUtil.join(",", childrenIds), sort)
+                token -> api.getMoreChildren("t3_" + linkId, StringUtils.join(",", childrenIds), sort)
                         .flatMap(RxRedditUtil::responseToBody)
         );
     }
@@ -272,7 +272,7 @@ public class RedditService implements IRedditService {
 
     @Override
     public Completable saveFriendNote(String username, String note) {
-        if (RxRedditUtil.isEmpty(note)) {
+        if (StringUtils.isEmpty(note)) {
             return Completable.error(new IllegalArgumentException("user note should be non-empty"));
         }
 

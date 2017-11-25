@@ -15,10 +15,10 @@ import retrofit2.HttpException;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rxreddit.RxRedditUtil;
 import rxreddit.model.AccessToken;
 import rxreddit.model.ApplicationAccessToken;
 import rxreddit.model.UserAccessToken;
+import rxreddit.util.RxRedditUtil;
 
 
 final class RedditAuthService implements IRedditAuthService {
@@ -27,7 +27,7 @@ final class RedditAuthService implements IRedditAuthService {
     static final String RESPONSE_TYPE = "code";
     static final String DURATION = "permanent";
     static final String STATE = RxRedditUtil.getRandomString();
-    static final String SCOPE = RxRedditUtil.join(",",
+    static final String SCOPE = StringUtils.join(",",
             new String[] {
                     "identity", "mysubreddits", "privatemessages", "read", "report", "save",
                     "submit", "vote", "history", "account", "subscribe" });
