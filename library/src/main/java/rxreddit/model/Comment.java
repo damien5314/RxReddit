@@ -283,9 +283,4 @@ public class Comment extends AbsComment implements Votable, Savable {
         @SerializedName("subject") String subject;
         @SerializedName("context") String context;
     }
-
-    @Override
-    public String toString() {
-        return String.format("Comment: %s, depth %s", getAuthor(), getDepth());
-    }
 }
