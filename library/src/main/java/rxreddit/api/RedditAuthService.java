@@ -42,8 +42,8 @@ final class RedditAuthService implements IRedditAuthService {
     private RedditAuthAPI authService;
     private AccessTokenManager accessTokenManager;
 
-    private UserAccessToken mUserAccessToken;
-    private ApplicationAccessToken mApplicationAccessToken;
+    private UserAccessToken userAccessToken;
+    private ApplicationAccessToken applicationAccessToken;
 
     public RedditAuthService(
             String baseUrl, String clientId, String redirectUri, String deviceId, String userAgent,
@@ -73,17 +73,17 @@ final class RedditAuthService implements IRedditAuthService {
     }
 
     private UserAccessToken getUserAccessToken() {
-        if (mUserAccessToken == null) {
-            mUserAccessToken = accessTokenManager.getUserAccessToken();
+        if (userAccessToken == null) {
+            userAccessToken = accessTokenManager.getUserAccessToken();
         }
-        return mUserAccessToken;
+        return userAccessToken;
     }
 
     private ApplicationAccessToken getApplicationAccessToken() {
-        if (mApplicationAccessToken == null) {
-            mApplicationAccessToken = accessTokenManager.getApplicationAccessToken();
+        if (applicationAccessToken == null) {
+            applicationAccessToken = accessTokenManager.getApplicationAccessToken();
         }
-        return mApplicationAccessToken;
+        return applicationAccessToken;
     }
 
     private Observable<ApplicationAccessToken> refreshApplicationAccessToken() {
@@ -145,17 +145,17 @@ final class RedditAuthService implements IRedditAuthService {
                 token.setRefreshToken(storedToken.getRefreshToken());
             }
         }
-        mUserAccessToken = token;
+        userAccessToken = token;
         accessTokenManager.saveUserAccessToken(token);
     }
 
     private void saveApplicationAccessToken(ApplicationAccessToken token) {
-        mApplicationAccessToken = token;
+        applicationAccessToken = token;
         accessTokenManager.saveApplicationAccessToken(token);
     }
 
     private void clearUserAccessToken() {
-        mUserAccessToken = null;
+        userAccessToken = null;
         accessTokenManager.clearSavedUserAccessToken();
     }
 
@@ -184,7 +184,7 @@ final class RedditAuthService implements IRedditAuthService {
     @Override
     public Completable revokeUserAuthentication() {
         AccessToken token = getUserAccessToken();
-        mUserAccessToken = null;
+        userAccessToken = null;
         accessTokenManager.clearSavedUserAccessToken();
         return revokeAuthToken(token);
     }
