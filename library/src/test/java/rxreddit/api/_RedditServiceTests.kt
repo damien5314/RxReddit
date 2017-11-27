@@ -2,8 +2,8 @@ package rxreddit.api
 
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import rxreddit.RxRedditUtil
 import rxreddit.test.MockAuthServerDispatcher
+import rxreddit.util.RxRedditUtil
 
 abstract class _RedditServiceTests {
 
