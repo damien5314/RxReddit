@@ -4,7 +4,7 @@ buildscript {
 
     ext {
         KOTLIN_VERSION = '1.2.21'
-        ANDROID_GRADLE_PLUGIN = '3.0.0'
+        ANDROID_GRADLE_PLUGIN = '3.0.1'
         BUILD_TOOLS_VERSION = '27.0.3'
         COMPILE_SDK_VERSION = 27
         TARGET_SDK_VERSION = 27
@@ -23,15 +23,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_PLUGIN"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
     }
 }
 
