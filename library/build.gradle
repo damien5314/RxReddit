@@ -4,6 +4,10 @@ apply plugin: 'maven'
 
 group = 'com.github.damien5314'
 
+repositories {
+    jcenter()
+}
+
 dependencies {
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
