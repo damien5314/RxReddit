@@ -32,7 +32,7 @@ class InboxTests : _RedditServiceTests() {
 
     private fun testGetInbox(show: String) {
         authenticateService()
-        val observable = service.getInbox(show, null, null)
+        val observable = service.getInbox(show, true, null, null)
         assertNotNull("observable == null", observable)
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_inbox_$show.json"))
         val test = observable.test().assertValueCount(1)
@@ -44,7 +44,7 @@ class InboxTests : _RedditServiceTests() {
     @Test
     fun testGetInbox_noauth() {
 //    authenticateService()
-        val observable = service.getInbox("comments", null, null)
+        val observable = service.getInbox("comments", true, null, null)
         val test = observable.test()
         test.assertError(IllegalStateException::class.java)
     }
@@ -52,7 +52,7 @@ class InboxTests : _RedditServiceTests() {
     @Test
     fun testGetInbox_noShow() {
         authenticateService()
-        val observable = service.getInbox(null, null, null)
+        val observable = service.getInbox(null, true, null, null)
         val test = observable.test()
         test.assertError(NullPointerException::class.java)
     }
@@ -60,7 +60,7 @@ class InboxTests : _RedditServiceTests() {
     @Test
     fun testGetInbox_httpError() {
         authenticateService()
-        val observable = service.getInbox("comments", null, null)
+        val observable = service.getInbox("comments", true, null, null)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
         val test = observable.test()
         test.assertError(HttpException::class.java)
