@@ -224,7 +224,7 @@ interface RedditAPI {
     @GET("/message/{show}")
     Observable<Response<ListingResponse>> getInbox(
             @Path("show") String show,
-            @Query("mark") boolean markRead,
+            @Query("mark") boolean markUnreads,
             @Query("before") String before,
             @Query("after") String after
     );
