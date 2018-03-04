@@ -463,13 +463,17 @@ public class RedditService implements IRedditService {
     }
 
     @Override
-    public Observable<ListingResponse> getInbox(String show, String before, String after) {
+    public Observable<ListingResponse> getInbox(
+            String show,
+            boolean markUnreads,
+            String before,
+            String after) {
         if (show == null) {
             return Observable.error(new NullPointerException("show == null"));
         }
 
         return requireUserAccessToken().flatMap(
-                token -> api.getInbox(show, before, after)
+                token -> api.getInbox(show, markUnreads, before, after)
                         .flatMap(RxRedditUtil::responseToBody)
         );
     }
