@@ -12,6 +12,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+    implementation "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
     implementation "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
     testImplementation "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
