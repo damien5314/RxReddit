@@ -165,9 +165,21 @@ public class RedditService implements IRedditService {
                 token -> {
                     String resolvedSort = sort != null ? sort : "hot";
                     return api.getLinks(resolvedSort, subreddit, timespan, before, after)
-                            .flatMap(RxRedditUtil::responseToBody);
+                            .flatMap(RxRedditUtil::responseToBody)
+                            .flatMap((ListingResponse input) -> checkForSubreddit(input, subreddit));
                 }
         );
+    }
+
+    private static Observable<ListingResponse> checkForSubreddit(ListingResponse input, String name) {
+        final List<Listing> listings = input.getData().getChildren();
+        final Listing listing = listings.get(0);
+        if (!"t3".equals(listing.getKind())) {
+            // Subreddit search returned, throw an error
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
     }
 
     @Override
