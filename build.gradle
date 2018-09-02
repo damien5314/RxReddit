@@ -12,7 +12,7 @@ buildscript {
         SUPPORT_LIBRARY_VERSION = '27.1.1'
         RETROFIT_VERSION = '2.4.0'
         OKHTTP_VERSION = '3.10.0'
-        RXANDROID_VERSION = '2.0.1'
+        RXANDROID_VERSION = '2.1.0'
 
         JUNIT_VERSION = '4.12'
     }
