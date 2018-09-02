@@ -6,8 +6,8 @@ buildscript {
         KOTLIN_VERSION = '1.2.61'
         ANDROID_GRADLE_PLUGIN = '3.0.1'
         BUILD_TOOLS_VERSION = '27.0.3'
-        COMPILE_SDK_VERSION = 27
-        TARGET_SDK_VERSION = 27
+        COMPILE_SDK_VERSION = 28
+        TARGET_SDK_VERSION = 28
 
         SUPPORT_LIBRARY_VERSION = '27.1.1'
         RETROFIT_VERSION = '2.4.0'
