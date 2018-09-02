@@ -170,6 +170,17 @@ class SubredditTests : _RedditServiceTests() {
     }
 
     @Test
+    fun testGetSubredditRules_invalidSubreddit() {
+        val gibberish = "ljawdkljawdkawdawhkdawkdchawcdhakjw"
+        val observable = service.getSubredditRules(gibberish)
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_about_rules-gibberish.json"))
+
+        val test = observable.test()
+
+        test.assertError(NoSuchSubredditException::class.java)
+    }
+
+    @Test
     fun testGetSubredditRules_httpError() {
         val observable = service.getSubredditRules("gaming")
         assertNotNull("observable == null", observable)
