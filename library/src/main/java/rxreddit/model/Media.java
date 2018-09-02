@@ -4,9 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Media {
 
-    @SerializedName("oembed") Oembed oembed;
-    @SerializedName("type") String type;
-    @SerializedName("reddit_video") RedditVideo redditVideo;
+    @SerializedName("oembed")
+    Oembed oembed;
+    @SerializedName("type")
+    String type;
+    @SerializedName("reddit_video")
+    RedditVideo redditVideo;
 
     public Oembed getOembed() {
         return oembed;
@@ -22,18 +25,30 @@ public class Media {
 
     public static class Oembed {
 
-        @SerializedName("provider_url") String providerUrl;
-        @SerializedName("description") String description;
-        @SerializedName("title") String title;
-        @SerializedName("type") String type;
-        @SerializedName("thumbnail_width") Integer thumbnailWidth;
-        @SerializedName("height") Integer height;
-        @SerializedName("width") Integer width;
-        @SerializedName("html") String html;
-        @SerializedName("version") String version;
-        @SerializedName("provider_name") String providerName;
-        @SerializedName("thumbnail_url") String thumbnailUrl;
-        @SerializedName("thumbnail_height") Integer thumbnailHeight;
+        @SerializedName("provider_url")
+        String providerUrl;
+        @SerializedName("description")
+        String description;
+        @SerializedName("title")
+        String title;
+        @SerializedName("type")
+        String type;
+        @SerializedName("thumbnail_width")
+        Integer thumbnailWidth;
+        @SerializedName("height")
+        Integer height;
+        @SerializedName("width")
+        Integer width;
+        @SerializedName("html")
+        String html;
+        @SerializedName("version")
+        String version;
+        @SerializedName("provider_name")
+        String providerName;
+        @SerializedName("thumbnail_url")
+        String thumbnailUrl;
+        @SerializedName("thumbnail_height")
+        Integer thumbnailHeight;
 
         public String getProviderUrl() {
             return providerUrl;
@@ -86,15 +101,24 @@ public class Media {
 
     public static class RedditVideo {
 
-        @SerializedName("fallback_url") String fallbackUrl;
-        @SerializedName("height") int height;
-        @SerializedName("width") int width;
-        @SerializedName("scrubber_media_url") String scrubberMediaUrl;
-        @SerializedName("dash_url") String dashUrl;
-        @SerializedName("duration") int duration;
-        @SerializedName("hls_url") String hlsUrl;
-        @SerializedName("is_gif") boolean isGif;
-        @SerializedName("transcoding_status") String transcodingStatus;
+        @SerializedName("fallback_url")
+        String fallbackUrl;
+        @SerializedName("height")
+        int height;
+        @SerializedName("width")
+        int width;
+        @SerializedName("scrubber_media_url")
+        String scrubberMediaUrl;
+        @SerializedName("dash_url")
+        String dashUrl;
+        @SerializedName("duration")
+        int duration;
+        @SerializedName("hls_url")
+        String hlsUrl;
+        @SerializedName("is_gif")
+        boolean isGif;
+        @SerializedName("transcoding_status")
+        String transcodingStatus;
 
         public String getFallbackUrl() {
             return fallbackUrl;

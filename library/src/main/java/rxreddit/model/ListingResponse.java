@@ -6,8 +6,10 @@ import java.util.List;
 
 public class ListingResponse {
 
-    @SerializedName("kind") String kind;
-    @SerializedName("data") ListingResponseData data;
+    @SerializedName("kind")
+    String kind;
+    @SerializedName("data")
+    ListingResponseData data;
 
     public ListingResponse() {
     }

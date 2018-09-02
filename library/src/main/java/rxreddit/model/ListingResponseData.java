@@ -7,10 +7,14 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ListingResponseData {
 
-    @SerializedName("children") List<Listing> children;
-    @SerializedName("after") String after;
-    @SerializedName("before") String before;
-    @SerializedName("modhash") String modhash;
+    @SerializedName("children")
+    List<Listing> children;
+    @SerializedName("after")
+    String after;
+    @SerializedName("before")
+    String before;
+    @SerializedName("modhash")
+    String modhash;
 
     public ListingResponseData() {
     }

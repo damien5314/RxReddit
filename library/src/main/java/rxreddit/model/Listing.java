@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public abstract class Listing {
 
-    @SerializedName("kind") String kind;
+    @SerializedName("kind")
+    String kind;
 
     public abstract String getId();
 

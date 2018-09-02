@@ -7,7 +7,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Subreddit extends Listing {
 
-    @SerializedName("data") Data data;
+    @SerializedName("data")
+    Data data;
 
     @Override
     public String getId() {
@@ -16,6 +17,10 @@ public class Subreddit extends Listing {
 
     public String getName() {
         return data.name;
+    }
+
+    public void setName(String name) {
+        data.name = name;
     }
 
     public String getBannerImageUrl() {
@@ -126,12 +131,12 @@ public class Subreddit extends Listing {
         return data.iconSize.get(0);
     }
 
-    public int getIconHeight() {
-        return data.iconSize.get(1);
-    }
-
     public void setIconWidth(int i) {
         data.iconSize.set(0, i);
+    }
+
+    public int getIconHeight() {
+        return data.iconSize.get(1);
     }
 
     public void setIconHeight(int i) {
@@ -226,10 +231,6 @@ public class Subreddit extends Listing {
         data.lang = lang;
     }
 
-    public void setName(String name) {
-        data.name = name;
-    }
-
     public Long getCreated() {
         return data.created;
     }
@@ -274,12 +275,12 @@ public class Subreddit extends Listing {
         return data.bannerSize.get(0);
     }
 
-    public int getBannerHeight() {
-        return data.bannerSize.get(1);
-    }
-
     public void setBannerWidth(int i) {
         data.bannerSize.set(0, i);
+    }
+
+    public int getBannerHeight() {
+        return data.bannerSize.get(1);
     }
 
     public void setBannerHeight(int i) {
@@ -336,43 +337,81 @@ public class Subreddit extends Listing {
 
     public static class Data extends ListingData {
 
-        @SerializedName("banner_img") String bannerImage;
-        @SerializedName("submit_text_html") String submitTextHtml;
-        @SerializedName("user_is_banned") Boolean userIsBanned;
-        @SerializedName("user_is_contributor") Boolean userIsContributor;
-        @SerializedName("submit_text") String submitText;
-        @SerializedName("display_name") String displayName;
-        @SerializedName("header_img") String headerImageUrl;
-        @SerializedName("description_html") String descriptionHtml;
-        @SerializedName("title") String title;
-        @SerializedName("collapse_deleted_comments") Boolean collapseDeletedComments;
-        @SerializedName("public_description") String publicDescription;
-        @SerializedName("over18") Boolean over18;
-        @SerializedName("public_description_html") String publicDescriptionHtml;
-        @SerializedName("icon_size") List<Integer> iconSize;
-        @SerializedName("icon_img") String iconImg;
-        @SerializedName("header_title") String headerTitle;
-        @SerializedName("description") String description;
-        @SerializedName("user_is_muted") Boolean userIsMuted;
-        @SerializedName("submit_link_label") String submitLinkLabel;
-        @SerializedName("header_size") Integer[] headerSize;
-        @SerializedName("public_traffic") Boolean publicTraffic;
-        @SerializedName("accounts_active") Integer accountsActive;
-        @SerializedName("subscribers") Integer subscribers;
-        @SerializedName("submit_text_label") String submitTextLabel;
-        @SerializedName("lang") String lang;
-        @SerializedName("name") String name;
-        @SerializedName("created") Long created;
-        @SerializedName("url") String url;
-        @SerializedName("quarantine") Boolean quarantine;
-        @SerializedName("hide_ads") Boolean hideAds;
-        @SerializedName("created_utc") Long createdUtc;
-        @SerializedName("banner_size") List<Integer> bannerSize;
-        @SerializedName("user_is_moderator") Boolean userIsModerator;
-        @SerializedName("user_sr_theme_enabled") Boolean userSrThemeEnabled;
-        @SerializedName("comment_score_hide_mins") Integer commentScoreHideMins;
-        @SerializedName("subreddit_type") String subredditType;
-        @SerializedName("submission_type") String submissionType;
-        @SerializedName("user_is_subscriber") Boolean userIsSubscriber;
+        @SerializedName("banner_img")
+        String bannerImage;
+        @SerializedName("submit_text_html")
+        String submitTextHtml;
+        @SerializedName("user_is_banned")
+        Boolean userIsBanned;
+        @SerializedName("user_is_contributor")
+        Boolean userIsContributor;
+        @SerializedName("submit_text")
+        String submitText;
+        @SerializedName("display_name")
+        String displayName;
+        @SerializedName("header_img")
+        String headerImageUrl;
+        @SerializedName("description_html")
+        String descriptionHtml;
+        @SerializedName("title")
+        String title;
+        @SerializedName("collapse_deleted_comments")
+        Boolean collapseDeletedComments;
+        @SerializedName("public_description")
+        String publicDescription;
+        @SerializedName("over18")
+        Boolean over18;
+        @SerializedName("public_description_html")
+        String publicDescriptionHtml;
+        @SerializedName("icon_size")
+        List<Integer> iconSize;
+        @SerializedName("icon_img")
+        String iconImg;
+        @SerializedName("header_title")
+        String headerTitle;
+        @SerializedName("description")
+        String description;
+        @SerializedName("user_is_muted")
+        Boolean userIsMuted;
+        @SerializedName("submit_link_label")
+        String submitLinkLabel;
+        @SerializedName("header_size")
+        Integer[] headerSize;
+        @SerializedName("public_traffic")
+        Boolean publicTraffic;
+        @SerializedName("accounts_active")
+        Integer accountsActive;
+        @SerializedName("subscribers")
+        Integer subscribers;
+        @SerializedName("submit_text_label")
+        String submitTextLabel;
+        @SerializedName("lang")
+        String lang;
+        @SerializedName("name")
+        String name;
+        @SerializedName("created")
+        Long created;
+        @SerializedName("url")
+        String url;
+        @SerializedName("quarantine")
+        Boolean quarantine;
+        @SerializedName("hide_ads")
+        Boolean hideAds;
+        @SerializedName("created_utc")
+        Long createdUtc;
+        @SerializedName("banner_size")
+        List<Integer> bannerSize;
+        @SerializedName("user_is_moderator")
+        Boolean userIsModerator;
+        @SerializedName("user_sr_theme_enabled")
+        Boolean userSrThemeEnabled;
+        @SerializedName("comment_score_hide_mins")
+        Integer commentScoreHideMins;
+        @SerializedName("subreddit_type")
+        String subredditType;
+        @SerializedName("submission_type")
+        String submissionType;
+        @SerializedName("user_is_subscriber")
+        Boolean userIsSubscriber;
     }
 }

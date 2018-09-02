@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/action_refresh"
-            android:title="@string/rxr_action_refresh"
-            android:icon="@drawable/ic_refresh"
-            android:showAsAction="ifRoom"/>
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:showAsAction="ifRoom"
+        android:title="@string/rxr_action_refresh" />
 
 </menu>

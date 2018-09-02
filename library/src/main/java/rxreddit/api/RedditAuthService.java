@@ -27,10 +27,13 @@ final class RedditAuthService implements IRedditAuthService {
     static final String RESPONSE_TYPE = "code";
     static final String DURATION = "permanent";
     static final String STATE = RxRedditUtil.getRandomString();
-    static final String SCOPE = StringUtils.join(",",
-            new String[] {
+    static final String SCOPE = StringUtils.join(
+            ",",
+            new String[]{
                     "identity", "mysubreddits", "privatemessages", "read", "report", "save",
-                    "submit", "vote", "history", "account", "subscribe" });
+                    "submit", "vote", "history", "account", "subscribe"
+            }
+    );
     // Seconds within expiration we should try to retrieve a new auth token
     private static final int EXPIRATION_THRESHOLD = 60;
 
@@ -55,7 +58,8 @@ final class RedditAuthService implements IRedditAuthService {
         authorizationUrl =
                 String.format("https://www.reddit.com/api/v1/authorize.compact?client_id=%s" +
                                 "&response_type=%s&duration=%s&state=%s&redirect_uri=%s&scope=%s",
-                        clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, SCOPE);
+                        clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, SCOPE
+                );
         authService = buildApi(baseUrl, loggingEnabled);
         accessTokenManager = atm;
     }

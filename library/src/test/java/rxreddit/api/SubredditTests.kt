@@ -191,17 +191,20 @@ class SubredditTests : _RedditServiceTests() {
         test.assertError(HttpException::class.java)
     }
 
-    @Test @Ignore("/r/subreddit/about/sidebar is broken")
+    @Test
+    @Ignore("/r/subreddit/about/sidebar is broken")
     fun testGetSubredditSidebar() {
 
     }
 
-    @Test @Ignore("/r/subreddit/about/sidebar is broken")
+    @Test
+    @Ignore("/r/subreddit/about/sidebar is broken")
     fun testGetSubredditSidebar_null() {
 
     }
 
-    @Test @Ignore("/r/subreddit/about/sidebar is broken")
+    @Test
+    @Ignore("/r/subreddit/about/sidebar is broken")
     fun testGetSubredditSidebar_httpError() {
 
     }
@@ -430,7 +433,7 @@ class SubredditTests : _RedditServiceTests() {
 
     private fun getSubmitObservable() =
         service.submit(
-                "damien5314apitest", "link", "foo", "foo://127.0.0.1", "bar", false, false
+            "damien5314apitest", "link", "foo", "foo://127.0.0.1", "bar", false, false
         )
 
     @Test
@@ -454,14 +457,16 @@ class SubredditTests : _RedditServiceTests() {
 
     @Test
     fun submit_nullKind_throwsError() {
-        val observable = service.submit("AskReddit", null, "foo", "foo://127.0.0.1", "bar", false, false)
+        val observable =
+            service.submit("AskReddit", null, "foo", "foo://127.0.0.1", "bar", false, false)
         val observer = observable.test()
         observer.assertError(NullPointerException::class.java)
     }
 
     @Test
     fun submit_nullTitle_throwsError() {
-        val observable = service.submit("AskReddit", "link", null, "foo://127.0.0.1", "bar", false, false)
+        val observable =
+            service.submit("AskReddit", "link", null, "foo://127.0.0.1", "bar", false, false)
         val observer = observable.test()
         observer.assertError(NullPointerException::class.java)
     }

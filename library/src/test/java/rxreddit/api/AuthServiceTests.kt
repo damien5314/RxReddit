@@ -12,13 +12,15 @@ class AuthServiceTests : _RedditServiceTests() {
     @Test
     fun testRefreshAccessToken_noRefreshToken() {
         mockAuthServer.enqueue(
-                MockResponse().setBodyFromFile("model/user_access_token_no_refresh.json"))
+            MockResponse().setBodyFromFile("model/user_access_token_no_refresh.json")
+        )
         authenticateService()
         val test = authService.refreshUserAccessToken().test()
         test.assertError(IllegalStateException::class.java)
     }
 
-    @Test @Ignore("incomplete")
+    @Test
+    @Ignore("incomplete")
     fun testRefreshAccessToken_expiredToken() {
         authenticateService()
     }

@@ -4,22 +4,38 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserIdentity extends ListingData {
 
-    @SerializedName("has_mail") Boolean hasMail;
-    @SerializedName("name") String name;
-    @SerializedName("created") Long created;
-    @SerializedName("hide_from_robots") Boolean hideFromRobots;
-    @SerializedName("gold_creddits") Integer goldCreddits;
-    @SerializedName("created_utc") Long createdUTC;
-    @SerializedName("has_mod_mail") Boolean hasModMail;
-    @SerializedName("link_karma") Integer linkKarma;
-    @SerializedName("comment_karma") Integer commentKarma;
-    @SerializedName("over_18") Boolean isOver18;
-    @SerializedName("is_gold") Boolean isGold;
-    @SerializedName("is_mod") Boolean isMod;
-    @SerializedName("gold_expiration") Long goldExpiration;
-    @SerializedName("has_verified_email") Boolean hasVerifiedEmail;
-    @SerializedName("inbox_count") Integer inboxCount;
-    @SerializedName("is_friend") Boolean isFriend;
+    @SerializedName("has_mail")
+    Boolean hasMail;
+    @SerializedName("name")
+    String name;
+    @SerializedName("created")
+    Long created;
+    @SerializedName("hide_from_robots")
+    Boolean hideFromRobots;
+    @SerializedName("gold_creddits")
+    Integer goldCreddits;
+    @SerializedName("created_utc")
+    Long createdUTC;
+    @SerializedName("has_mod_mail")
+    Boolean hasModMail;
+    @SerializedName("link_karma")
+    Integer linkKarma;
+    @SerializedName("comment_karma")
+    Integer commentKarma;
+    @SerializedName("over_18")
+    Boolean isOver18;
+    @SerializedName("is_gold")
+    Boolean isGold;
+    @SerializedName("is_mod")
+    Boolean isMod;
+    @SerializedName("gold_expiration")
+    Long goldExpiration;
+    @SerializedName("has_verified_email")
+    Boolean hasVerifiedEmail;
+    @SerializedName("inbox_count")
+    Integer inboxCount;
+    @SerializedName("is_friend")
+    Boolean isFriend;
 
     public Boolean hasMail() {
         return this.hasMail != null && this.hasMail;

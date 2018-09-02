@@ -14,7 +14,10 @@ import rxreddit.model.UserReport;
 class UserReportDeserializer implements JsonDeserializer<UserReport> {
 
     @Override
-    public UserReport deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public UserReport deserialize(
+            JsonElement json,
+            Type typeOfT,
+            JsonDeserializationContext context)
             throws JsonParseException {
         JsonArray array = json.getAsJsonArray();
 

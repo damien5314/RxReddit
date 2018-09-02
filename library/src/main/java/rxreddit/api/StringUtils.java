@@ -52,7 +52,7 @@ class StringUtils {
         for (String subreddit : string) {
             commaDelimited.append(subreddit).append(",");
         }
-        commaDelimited.deleteCharAt(commaDelimited.length()-1);
+        commaDelimited.deleteCharAt(commaDelimited.length() - 1);
         return commaDelimited.toString();
     }
 }

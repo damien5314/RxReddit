@@ -113,30 +113,6 @@ public class SignInFragment extends Fragment {
         }
     }
 
-    protected static class RxRedditWebViewClient extends WebViewClient {
-
-        private final SignInFragment mSignInFragment;
-        private final String mRedirectUri;
-        private final String mAuthorizationUrl;
-
-        public RxRedditWebViewClient(
-                @NonNull SignInFragment fragment, @NonNull String redirectUri, @NonNull String authorizationUrl) {
-            mSignInFragment = fragment;
-            mRedirectUri = redirectUri;
-            mAuthorizationUrl = authorizationUrl;
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains(mRedirectUri) && !url.equals(mAuthorizationUrl)) {
-                mSignInFragment.onCallbackUrlReceived(url);
-                return true;
-            }
-
-            return false;
-        }
-    }
-
     protected WebChromeClient getProgressBarChromeClient(final ProgressBar progressBar) {
         return new WebChromeClient() {
             @Override
@@ -177,5 +153,31 @@ public class SignInFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected static class RxRedditWebViewClient extends WebViewClient {
+
+        private final SignInFragment mSignInFragment;
+        private final String mRedirectUri;
+        private final String mAuthorizationUrl;
+
+        public RxRedditWebViewClient(
+                @NonNull SignInFragment fragment,
+                @NonNull String redirectUri,
+                @NonNull String authorizationUrl) {
+            mSignInFragment = fragment;
+            mRedirectUri = redirectUri;
+            mAuthorizationUrl = authorizationUrl;
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.contains(mRedirectUri) && !url.equals(mAuthorizationUrl)) {
+                mSignInFragment.onCallbackUrlReceived(url);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

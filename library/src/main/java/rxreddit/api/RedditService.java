@@ -48,12 +48,48 @@ public class RedditService implements IRedditService {
     private IRedditAuthService redditAuthService;
 
     protected RedditService(
-            String baseUrl, String baseAuthUrl, String redditAppId, String redirectUri,
-            String deviceId, String userAgent, AccessTokenManager atm, int cacheSizeBytes, File cacheFile,
+            String baseUrl,
+            String baseAuthUrl,
+            String redditAppId,
+            String redirectUri,
+            String deviceId,
+            String userAgent,
+            AccessTokenManager atm,
+            int cacheSizeBytes,
+            File cacheFile,
             boolean loggingEnabled) {
         redditAuthService = new RedditAuthService(
                 baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm, loggingEnabled);
         api = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile, loggingEnabled);
+    }
+
+    private static Observable<ListingResponse> verifyLoadLinks(ListingResponse input, String name) {
+        final List<Listing> listings = input.getData().getChildren();
+        final Listing listing = listings.get(0);
+        if (!"t3".equals(listing.getKind())) {
+            // Subreddit search returned, throw an error
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
+    }
+
+    private static Observable<Subreddit> verifyGetSubredditInfo(Subreddit input, String name) {
+        if (input.getId() == null) {
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
+    }
+
+    private static Observable<SubredditRules> verifyGetSubredditRules(
+            SubredditRules input,
+            String name) {
+        if (input.getRules() == null && input.getSiteRules() == null) {
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
     }
 
     @Override
@@ -82,7 +118,8 @@ public class RedditService implements IRedditService {
 
         if (params.containsKey("error")) {
             return Observable.error(
-                    new IllegalStateException("Error during user authentication: " + params.get("error"))
+                    new IllegalStateException("Error during user authentication: " + params.get(
+                            "error"))
             );
         }
 
@@ -171,17 +208,6 @@ public class RedditService implements IRedditService {
         );
     }
 
-    private static Observable<ListingResponse> verifyLoadLinks(ListingResponse input, String name) {
-        final List<Listing> listings = input.getData().getChildren();
-        final Listing listing = listings.get(0);
-        if (!"t3".equals(listing.getKind())) {
-            // Subreddit search returned, throw an error
-            return Observable.error(new NoSuchSubredditException(name));
-        } else {
-            return Observable.just(input);
-        }
-    }
-
     @Override
     public Observable<List<ListingResponse>> loadLinkComments(
             String subreddit, String article, String sort, String commentId) {
@@ -210,7 +236,11 @@ public class RedditService implements IRedditService {
         }
 
         return requireAccessToken().flatMap(
-                token -> api.getMoreChildren("t3_" + linkId, StringUtils.join(",", childrenIds), sort)
+                token -> api.getMoreChildren(
+                        "t3_" + linkId,
+                        StringUtils.join(",", childrenIds),
+                        sort
+                )
                         .flatMap(RxRedditUtil::responseToBody)
         );
     }
@@ -248,7 +278,12 @@ public class RedditService implements IRedditService {
 
     @Override
     public Observable<ListingResponse> loadUserProfile(
-            String show, String username, String sort, String timespan, String before, String after) {
+            String show,
+            String username,
+            String sort,
+            String timespan,
+            String before,
+            String after) {
         if (show == null) {
             return Observable.error(new NullPointerException("show == null"));
         }
@@ -291,7 +326,10 @@ public class RedditService implements IRedditService {
         String json = new Gson().toJson(new Friend(note));
 
         return requireUserAccessToken().flatMap(token ->
-                api.addFriend(username, RequestBody.create(MediaType.parse("application/json"), json))
+                api.addFriend(
+                        username,
+                        RequestBody.create(MediaType.parse("application/json"), json)
+                )
                         .flatMap(RxRedditUtil::checkResponse)
         ).ignoreElements();
     }
@@ -309,14 +347,6 @@ public class RedditService implements IRedditService {
         );
     }
 
-    private static Observable<Subreddit> verifyGetSubredditInfo(Subreddit input, String name) {
-        if (input.getId() == null) {
-            return Observable.error(new NoSuchSubredditException(name));
-        } else {
-            return Observable.just(input);
-        }
-    }
-
     @Override
     public Observable<SubredditRules> getSubredditRules(String subreddit) {
         if (subreddit == null) {
@@ -328,16 +358,6 @@ public class RedditService implements IRedditService {
                         .flatMap(RxRedditUtil::responseToBody)
                         .flatMap(input -> verifyGetSubredditRules(input, subreddit))
         );
-    }
-
-    private static Observable<SubredditRules> verifyGetSubredditRules(
-            SubredditRules input,
-            String name) {
-        if (input.getRules() == null && input.getSiteRules() == null) {
-            return Observable.error(new NoSuchSubredditException(name));
-        } else {
-            return Observable.just(input);
-        }
     }
 
     @Override
@@ -465,7 +485,7 @@ public class RedditService implements IRedditService {
                 token -> api.submit(
                         subreddit, kind, title, url, text, sendReplies, resubmit, "json"
                 )
-                .flatMap(RxRedditUtil::responseToBody)
+                        .flatMap(RxRedditUtil::responseToBody)
         );
     }
 
@@ -486,7 +506,8 @@ public class RedditService implements IRedditService {
                             List<String> errors = response.getErrors();
 
                             if (errors.size() > 0) {
-                                throw new IllegalStateException("an error occurred: " + response.getErrors().get(0));
+                                throw new IllegalStateException("an error occurred: " + response.getErrors().get(
+                                        0));
                             }
 
                             return response.getComment();
@@ -549,7 +570,12 @@ public class RedditService implements IRedditService {
         return redditAuthService.refreshUserAccessToken();
     }
 
-    private RedditAPI buildApi(String baseUrl, String userAgent, int cacheSizeBytes, File cachePath, boolean loggingEnabled) {
+    private RedditAPI buildApi(
+            String baseUrl,
+            String userAgent,
+            int cacheSizeBytes,
+            File cachePath,
+            boolean loggingEnabled) {
         Retrofit restAdapter = new Retrofit.Builder()
                 .client(getOkHttpClient(userAgent, cacheSizeBytes, cachePath, loggingEnabled))
                 .baseUrl(baseUrl)
@@ -559,7 +585,11 @@ public class RedditService implements IRedditService {
         return restAdapter.create(RedditAPI.class);
     }
 
-    protected OkHttpClient getOkHttpClient(String userAgent, int cacheSizeBytes, File cachePath, boolean loggingEnabled) {
+    protected OkHttpClient getOkHttpClient(
+            String userAgent,
+            int cacheSizeBytes,
+            File cachePath,
+            boolean loggingEnabled) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new UserAgentInterceptor(userAgent))
                 .addNetworkInterceptor(new RawResponseInterceptor())
@@ -670,7 +700,8 @@ public class RedditService implements IRedditService {
             if (mUserAgent == null) throw new IllegalStateException("user agent must be set");
             return new RedditService(
                     mBaseUrl, mBaseAuthUrl, mAppId, mRedirectUri, mDeviceId, mUserAgent,
-                    mAccessTokenManager, mCacheSizeBytes, mCacheFile, mLoggingEnabled);
+                    mAccessTokenManager, mCacheSizeBytes, mCacheFile, mLoggingEnabled
+            );
         }
     }
 }

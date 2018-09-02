@@ -7,63 +7,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Link extends Listing implements Votable, Savable, Hideable {
 
-    @SerializedName("data") Data data;
-
-    public static class Data extends ListingData {
-
-        @SerializedName("preview") Preview preview;
-        @SerializedName("domain") String domain;
-        @SerializedName("banned_by") String bannedBy;
-        @SerializedName("media_embed") MediaEmbed mediaEmbed;
-        @SerializedName("subreddit") String subreddit;
-        @SerializedName("selftext_html") String selftextHtml;
-        @SerializedName("selftext") String selftext;
-        @SerializedName("edited") String edited;
-        @SerializedName("likes") Boolean likes;
-        @SerializedName("user_reports") List<UserReport> userReports;
-        @SerializedName("link_flair_text") String linkFlairText;
-        @SerializedName("gilded") Integer gilded;
-        @SerializedName("archived") Boolean isArchived;
-        @SerializedName("clicked") Boolean clicked;
-        @SerializedName("author") String author;
-        @SerializedName("num_comments") Integer numComments;
-        @SerializedName("score") Integer score;
-        @SerializedName("approved_by") String approvedBy;
-        @SerializedName("over_18") Boolean over18;
-        @SerializedName("hidden") Boolean hidden;
-        @SerializedName("thumbnail") String thumbnail;
-        @SerializedName("subreddit_id") String subredditId;
-        @SerializedName("hide_score") Boolean hideScore;
-        @SerializedName("link_flair_css_class") String linkFlairCssClass;
-        @SerializedName("author_flair_css_class") String authorFlairCssClass;
-        @SerializedName("downs") Integer downs;
-        @SerializedName("saved") Boolean saved;
-        @SerializedName("stickied") Boolean stickied;
-        @SerializedName("is_self") Boolean isSelf;
-        @SerializedName("permalink") String permalink;
-        @SerializedName("created") Double created;
-        @SerializedName("url") String url;
-        @SerializedName("author_flair_text") String authorFlairText;
-        @SerializedName("title") String title;
-        @SerializedName("created_utc") Double createdUtc;
-        @SerializedName("distinguished") String distinguished;
-        @SerializedName("media") Media media;
-        @SerializedName("mod_reports") List<ModReport> modReports;
-        @SerializedName("visited") Boolean visited;
-        @SerializedName("num_reports") Integer numReports;
-        @SerializedName("ups") Integer ups;
-    }
-
-    public static class Preview {
-
-        @SerializedName("images") List<Image> images;
-
-        public List<Image> getImages() {
-            return images;
-        }
-    }
-
-    //region Public API
+    @SerializedName("data")
+    Data data;
 
     @Override
     public String getId() {
@@ -73,6 +18,8 @@ public class Link extends Listing implements Votable, Savable, Hideable {
     public String getDomain() {
         return data.domain;
     }
+
+    //region Public API
 
     public MediaEmbed getMediaEmbed() {
         return data.mediaEmbed;
@@ -275,6 +222,102 @@ public class Link extends Listing implements Votable, Savable, Hideable {
         if (data.preview == null)
             return null;
         return data.preview.images;
+    }
+
+    public static class Data extends ListingData {
+
+        @SerializedName("preview")
+        Preview preview;
+        @SerializedName("domain")
+        String domain;
+        @SerializedName("banned_by")
+        String bannedBy;
+        @SerializedName("media_embed")
+        MediaEmbed mediaEmbed;
+        @SerializedName("subreddit")
+        String subreddit;
+        @SerializedName("selftext_html")
+        String selftextHtml;
+        @SerializedName("selftext")
+        String selftext;
+        @SerializedName("edited")
+        String edited;
+        @SerializedName("likes")
+        Boolean likes;
+        @SerializedName("user_reports")
+        List<UserReport> userReports;
+        @SerializedName("link_flair_text")
+        String linkFlairText;
+        @SerializedName("gilded")
+        Integer gilded;
+        @SerializedName("archived")
+        Boolean isArchived;
+        @SerializedName("clicked")
+        Boolean clicked;
+        @SerializedName("author")
+        String author;
+        @SerializedName("num_comments")
+        Integer numComments;
+        @SerializedName("score")
+        Integer score;
+        @SerializedName("approved_by")
+        String approvedBy;
+        @SerializedName("over_18")
+        Boolean over18;
+        @SerializedName("hidden")
+        Boolean hidden;
+        @SerializedName("thumbnail")
+        String thumbnail;
+        @SerializedName("subreddit_id")
+        String subredditId;
+        @SerializedName("hide_score")
+        Boolean hideScore;
+        @SerializedName("link_flair_css_class")
+        String linkFlairCssClass;
+        @SerializedName("author_flair_css_class")
+        String authorFlairCssClass;
+        @SerializedName("downs")
+        Integer downs;
+        @SerializedName("saved")
+        Boolean saved;
+        @SerializedName("stickied")
+        Boolean stickied;
+        @SerializedName("is_self")
+        Boolean isSelf;
+        @SerializedName("permalink")
+        String permalink;
+        @SerializedName("created")
+        Double created;
+        @SerializedName("url")
+        String url;
+        @SerializedName("author_flair_text")
+        String authorFlairText;
+        @SerializedName("title")
+        String title;
+        @SerializedName("created_utc")
+        Double createdUtc;
+        @SerializedName("distinguished")
+        String distinguished;
+        @SerializedName("media")
+        Media media;
+        @SerializedName("mod_reports")
+        List<ModReport> modReports;
+        @SerializedName("visited")
+        Boolean visited;
+        @SerializedName("num_reports")
+        Integer numReports;
+        @SerializedName("ups")
+        Integer ups;
+    }
+
+    public static class Preview {
+
+        @SerializedName("images")
+        List<Image> images;
+
+        public List<Image> getImages() {
+            return images;
+        }
     }
 
     //endregion
