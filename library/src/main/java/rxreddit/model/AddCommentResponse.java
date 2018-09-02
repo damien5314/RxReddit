@@ -8,7 +8,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class AddCommentResponse {
 
-    @SerializedName("json") Json json;
+    @SerializedName("json")
+    Json json;
 
     public List<String> getErrors() {
         if (json == null || json.errors == null) return new ArrayList<>();
@@ -26,8 +27,10 @@ public class AddCommentResponse {
 
     static class Json {
 
-        @SerializedName("data") Data data;
-        @SerializedName("errors") List<String> errors;
+        @SerializedName("data")
+        Data data;
+        @SerializedName("errors")
+        List<String> errors;
 
         public Data getData() {
             return data;
@@ -41,7 +44,8 @@ public class AddCommentResponse {
     static class Data {
 
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-        @SerializedName("things") List<Comment> comments;
+        @SerializedName("things")
+        List<Comment> comments;
 
         public List<Comment> getComments() {
             return comments;

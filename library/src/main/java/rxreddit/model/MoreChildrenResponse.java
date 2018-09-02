@@ -6,21 +6,25 @@ import java.util.List;
 
 public class MoreChildrenResponse {
 
-    @SerializedName("json") MoreChildrenResponseJson json;
-
-    static class MoreChildrenResponseJson {
-
-        @SerializedName("errors") List<String> errors;
-        @SerializedName("data") MoreChildrenResponseData data;
-
-        static class MoreChildrenResponseData {
-
-            @SerializedName("things") List<Listing> listings;
-        }
-    }
+    @SerializedName("json")
+    MoreChildrenResponseJson json;
 
     public List<Listing> getChildComments() {
         if (json.data == null) return null;
         return json.data.listings;
+    }
+
+    static class MoreChildrenResponseJson {
+
+        @SerializedName("errors")
+        List<String> errors;
+        @SerializedName("data")
+        MoreChildrenResponseData data;
+
+        static class MoreChildrenResponseData {
+
+            @SerializedName("things")
+            List<Listing> listings;
+        }
     }
 }

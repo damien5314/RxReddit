@@ -6,7 +6,8 @@ import java.util.List;
 
 public class TrophyResponseData {
 
-    @SerializedName("trophies") List<Listing> trophies;
+    @SerializedName("trophies")
+    List<Listing> trophies;
 
     public List<Listing> getTrophies() {
         return trophies;

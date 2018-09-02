@@ -11,12 +11,12 @@ class MockAuthServerDispatcher : QueueDispatcher() {
             "/api/v1/access_token" -> {
                 // TODO How can we read fields from the request to return either application or user access token as appropriate?
                 return MockResponse()
-                        .setResponseCode(200)
-                        .setBodyFromFile("model/user_access_token.json")
+                    .setResponseCode(200)
+                    .setBodyFromFile("model/user_access_token.json")
             }
             "/api/v1/revoke_token" -> {
                 return MockResponse()
-                        .setResponseCode(204)
+                    .setResponseCode(204)
             }
             else -> System.err.println("Unrecognized path: ${request.path}")
         }

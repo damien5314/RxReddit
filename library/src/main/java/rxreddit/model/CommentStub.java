@@ -7,7 +7,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class CommentStub extends AbsComment {
 
-    @SerializedName("data") Data data;
+    @SerializedName("data")
+    Data data;
 
     @Override
     public String getId() {
@@ -50,14 +51,16 @@ public class CommentStub extends AbsComment {
         throw new UnsupportedOperationException("Cannot collapse a comment stub");
     }
 
-    static class Data extends AbsComment.Data {
-
-        @SerializedName("count") Integer count;
-        @SerializedName("children") List<String> children;
-    }
-
     @Override
     public String toString() {
         return String.format("MoreComments (%s)", getCount());
+    }
+
+    static class Data extends AbsComment.Data {
+
+        @SerializedName("count")
+        Integer count;
+        @SerializedName("children")
+        List<String> children;
     }
 }

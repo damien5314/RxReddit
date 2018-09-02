@@ -4,8 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserReport {
 
-    @SerializedName("text") String text;
-    @SerializedName("quantity") int quantity;
+    @SerializedName("text")
+    String text;
+    @SerializedName("quantity")
+    int quantity;
 
     public UserReport(String text, int quantity) {
         this.text = text;

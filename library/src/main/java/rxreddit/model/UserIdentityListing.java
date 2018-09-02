@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserIdentityListing extends Listing {
 
-    @SerializedName("data") UserIdentity data;
+    @SerializedName("data")
+    UserIdentity data;
 
     public UserIdentity getUser() {
         return data;

@@ -98,7 +98,11 @@ interface IRedditService {
 
     Observable<Comment> addComment(String parentId, String text);
 
-    Observable<ListingResponse> getInbox(String show, boolean markUnreads, String before, String after);
+    Observable<ListingResponse> getInbox(
+            String show,
+            boolean markUnreads,
+            String before,
+            String after);
 
     Completable markAllMessagesRead();
 

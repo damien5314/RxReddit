@@ -4,10 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class MediaEmbed {
 
-    @SerializedName("content") String content;
-    @SerializedName("width") Integer width;
-    @SerializedName("scrolling") Boolean scrolling;
-    @SerializedName("height") Integer height;
+    @SerializedName("content")
+    String content;
+    @SerializedName("width")
+    Integer width;
+    @SerializedName("scrolling")
+    Boolean scrolling;
+    @SerializedName("height")
+    Integer height;
 
     public String getContent() {
         return content;

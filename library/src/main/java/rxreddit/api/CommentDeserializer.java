@@ -16,7 +16,8 @@ final class CommentDeserializer implements JsonDeserializer<Listing> {
 
     @Override
     public Listing deserialize(
-            JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
+            JsonParseException {
         JsonObject o = json.getAsJsonObject();
         String kind = o.get("kind").getAsString();
         Listing listing;
