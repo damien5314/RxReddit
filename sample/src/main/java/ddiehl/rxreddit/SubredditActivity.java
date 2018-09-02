@@ -28,6 +28,10 @@ public final class SubredditActivity extends AppCompatActivity {
     private static final String TAG = SubredditActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 0x0000001;
 
+    private static final String SUBREDDIT = "androiddev";
+    private static final String SORT = "top";
+    private static final String TIMESPAN = "week";
+
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
 
@@ -63,7 +67,7 @@ public final class SubredditActivity extends AppCompatActivity {
         super.onStart();
 
         // Get Observable from RedditService
-        redditService.loadLinks("androiddev", "top", "week", null, null)
+        redditService.loadLinks(SUBREDDIT, SORT, TIMESPAN, null, null)
 
                 // Set timeout if you wish
                 .timeout(15, TimeUnit.SECONDS)
