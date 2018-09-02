@@ -310,7 +310,7 @@ public class RedditService implements IRedditService {
     }
 
     private static Observable<Subreddit> verifyGetSubredditInfo(Subreddit input, String name) {
-        if (!"t3".equals(input.getKind())) {
+        if (!"t5".equals(input.getKind())) {
             // Subreddit search returned, throw an error
             return Observable.error(new NoSuchSubredditException(name));
         } else {
