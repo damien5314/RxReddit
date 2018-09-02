@@ -120,6 +120,16 @@ class SubredditTests : _RedditServiceTests() {
     }
 
     @Test
+    fun testGetSubredditInfo_invalidSubreddit() {
+        val gibberish = "ljawdkljawdkawdawhkdawkdchawcdhakjw"
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_info-gibberish.json"))
+
+        val test = service.getSubredditInfo(gibberish).test()
+
+        test.assertError(NoSuchSubredditException::class.java)
+    }
+
+    @Test
     fun testGetSubredditInfo_httpError() {
         val observable = service.getSubredditInfo("")
         assertNotNull("observable == null", observable)

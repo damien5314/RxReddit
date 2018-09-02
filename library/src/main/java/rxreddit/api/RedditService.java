@@ -166,12 +166,12 @@ public class RedditService implements IRedditService {
                     String resolvedSort = sort != null ? sort : "hot";
                     return api.getLinks(resolvedSort, subreddit, timespan, before, after)
                             .flatMap(RxRedditUtil::responseToBody)
-                            .flatMap((ListingResponse input) -> checkForSubreddit(input, subreddit));
+                            .flatMap((ListingResponse input) -> verifyLoadLinks(input, subreddit));
                 }
         );
     }
 
-    private static Observable<ListingResponse> checkForSubreddit(ListingResponse input, String name) {
+    private static Observable<ListingResponse> verifyLoadLinks(ListingResponse input, String name) {
         final List<Listing> listings = input.getData().getChildren();
         final Listing listing = listings.get(0);
         if (!"t3".equals(listing.getKind())) {
@@ -305,7 +305,17 @@ public class RedditService implements IRedditService {
         return requireAccessToken().flatMap(
                 token -> api.getSubredditInfo(subreddit)
                         .flatMap(RxRedditUtil::responseToBody)
+                        .flatMap(result -> verifyGetSubredditInfo(result, subreddit))
         );
+    }
+
+    private static Observable<Subreddit> verifyGetSubredditInfo(Subreddit input, String name) {
+        if (!"t3".equals(input.getKind())) {
+            // Subreddit search returned, throw an error
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
     }
 
     @Override
