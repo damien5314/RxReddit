@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.11 *(2018-09-02)*
+----------------------------------
+* Added "mark" parameter to inbox endpoint
+* Emit NoSuchSubredditException when requesting info for subreddit that doesn't exist
+* Updated dependencies
+
 Version 0.10 *(2017-11-24)*
 ----------------------------------
 * Removed mock API module, this will no longer be supported.
