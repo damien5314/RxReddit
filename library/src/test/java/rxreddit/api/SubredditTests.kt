@@ -22,7 +22,7 @@ class SubredditTests : _RedditServiceTests() {
 
     @Test
     fun testLoadLinks_invalidSubreddit() {
-        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_hot-gibberish.json"))
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit-doesnotexist.json"))
 
         val test = service.loadLinks(null, null, null, null, null).test()
 
@@ -131,7 +131,7 @@ class SubredditTests : _RedditServiceTests() {
     @Test
     fun testGetSubredditInfo_invalidSubreddit() {
         val gibberish = "ljawdkljawdkawdawhkdawkdchawcdhakjw"
-        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_info-gibberish.json"))
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit-doesnotexist.json"))
 
         val test = service.getSubredditInfo(gibberish).test()
 
@@ -173,7 +173,7 @@ class SubredditTests : _RedditServiceTests() {
     fun testGetSubredditRules_invalidSubreddit() {
         val gibberish = "ljawdkljawdkawdawhkdawkdchawcdhakjw"
         val observable = service.getSubredditRules(gibberish)
-        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_about_rules-gibberish.json"))
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit-doesnotexist.json"))
 
         val test = observable.test()
 
