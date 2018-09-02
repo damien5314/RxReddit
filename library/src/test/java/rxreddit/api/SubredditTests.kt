@@ -16,8 +16,17 @@ class SubredditTests : _RedditServiceTests() {
         val test = observable.test()
         test.assertValueCount(1)
         test.values()[0].apply {
-            assertNotEquals("no links loaded", 0, data.children.size)
+            assertEquals(25, data.children.size)
         }
+    }
+
+    @Test
+    fun testLoadLinks_invalidSubreddit() {
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit-doesnotexist.json"))
+
+        val test = service.loadLinks(null, null, null, null, null).test()
+
+        test.assertError(NoSuchSubredditException::class.java)
     }
 
     @Test
@@ -101,7 +110,7 @@ class SubredditTests : _RedditServiceTests() {
 
     @Test
     fun testGetSubredditInfo() {
-        val observable = service.getSubredditInfo("")
+        val observable = service.getSubredditInfo("AskReddit")
         assertNotNull("observable == null", observable)
 
         mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit_info.json"))
@@ -117,6 +126,16 @@ class SubredditTests : _RedditServiceTests() {
         val test = observable.test()
 
         test.assertError(NullPointerException::class.java)
+    }
+
+    @Test
+    fun testGetSubredditInfo_invalidSubreddit() {
+        val gibberish = "ljawdkljawdkawdawhkdawkdchawcdhakjw"
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit-doesnotexist.json"))
+
+        val test = service.getSubredditInfo(gibberish).test()
+
+        test.assertError(NoSuchSubredditException::class.java)
     }
 
     @Test
@@ -148,6 +167,17 @@ class SubredditTests : _RedditServiceTests() {
         val test = observable.test()
 
         test.assertError(NullPointerException::class.java)
+    }
+
+    @Test
+    fun testGetSubredditRules_invalidSubreddit() {
+        val gibberish = "ljawdkljawdkawdawhkdawkdchawcdhakjw"
+        val observable = service.getSubredditRules(gibberish)
+        mockServer.enqueue(MockResponse().setBodyFromFile("test/GET_subreddit-doesnotexist.json"))
+
+        val test = observable.test()
+
+        test.assertError(NoSuchSubredditException::class.java)
     }
 
     @Test

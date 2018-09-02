@@ -165,9 +165,21 @@ public class RedditService implements IRedditService {
                 token -> {
                     String resolvedSort = sort != null ? sort : "hot";
                     return api.getLinks(resolvedSort, subreddit, timespan, before, after)
-                            .flatMap(RxRedditUtil::responseToBody);
+                            .flatMap(RxRedditUtil::responseToBody)
+                            .flatMap(input -> verifyLoadLinks(input, subreddit));
                 }
         );
+    }
+
+    private static Observable<ListingResponse> verifyLoadLinks(ListingResponse input, String name) {
+        final List<Listing> listings = input.getData().getChildren();
+        final Listing listing = listings.get(0);
+        if (!"t3".equals(listing.getKind())) {
+            // Subreddit search returned, throw an error
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
     }
 
     @Override
@@ -293,7 +305,16 @@ public class RedditService implements IRedditService {
         return requireAccessToken().flatMap(
                 token -> api.getSubredditInfo(subreddit)
                         .flatMap(RxRedditUtil::responseToBody)
+                        .flatMap(result -> verifyGetSubredditInfo(result, subreddit))
         );
+    }
+
+    private static Observable<Subreddit> verifyGetSubredditInfo(Subreddit input, String name) {
+        if (input.getId() == null) {
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
     }
 
     @Override
@@ -305,7 +326,18 @@ public class RedditService implements IRedditService {
         return requireAccessToken().flatMap(
                 token -> api.getSubredditRules(subreddit)
                         .flatMap(RxRedditUtil::responseToBody)
+                        .flatMap(input -> verifyGetSubredditRules(input, subreddit))
         );
+    }
+
+    private static Observable<SubredditRules> verifyGetSubredditRules(
+            SubredditRules input,
+            String name) {
+        if (input.getRules() == null && input.getSiteRules() == null) {
+            return Observable.error(new NoSuchSubredditException(name));
+        } else {
+            return Observable.just(input);
+        }
     }
 
     @Override
