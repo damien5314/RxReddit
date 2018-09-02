@@ -10,10 +10,10 @@ import rxreddit.util.RxRedditUtil;
 
 public final class RedditServiceProvider {
 
+    private static RedditService _instance;
+
     private RedditServiceProvider() {
     }
-
-    private static RedditService _instance;
 
     public static RedditService get(Context context) {
         if (_instance == null) {
@@ -27,7 +27,11 @@ public final class RedditServiceProvider {
                             .redirectUri(BuildConfig.REDDIT_REDIRECT_URI)
                             .deviceId(AndroidUtil.getDeviceId(context))
                             .userAgent(RxRedditUtil.getUserAgent(
-                                    "android", "ddiehl.rxreddit.sampleapp", BuildConfig.VERSION_NAME, "damien5314"))
+                                    "android",
+                                    "ddiehl.rxreddit.sampleapp",
+                                    BuildConfig.VERSION_NAME,
+                                    "damien5314"
+                            ))
                             .accessTokenManager(new AndroidAccessTokenManager(context))
                             .loggingEnabled(true)
                             .build();

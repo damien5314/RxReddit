@@ -57,15 +57,18 @@ public final class UserDetailActivity extends AppCompatActivity {
                     String.format(
                             getString(R.string.username_formatter),
                             SimpleDateFormat.getDateInstance()
-                                    .format(new Date(identity.getCreatedUTC() * 1000))));
+                                    .format(new Date(identity.getCreatedUTC() * 1000))
+                    ));
             linkKarma.setText(
                     String.format(
                             getString(R.string.link_karma_formatter),
-                            identity.getLinkKarma()));
+                            identity.getLinkKarma()
+                    ));
             commentKarma.setText(
                     String.format(
                             getString(R.string.comment_karma_formatter),
-                            identity.getCommentKarma()));
+                            identity.getCommentKarma()
+                    ));
         };
     }
 

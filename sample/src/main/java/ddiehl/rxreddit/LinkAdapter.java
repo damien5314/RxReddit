@@ -51,7 +51,9 @@ final class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.VH> {
             titleText.setText(link.getTitle());
             authorText.setText(
                     String.format(
-                            itemView.getContext().getString(R.string.author_formatter), link.getAuthor()));
+                            itemView.getContext().getString(R.string.author_formatter),
+                            link.getAuthor()
+                    ));
         }
     }
 }
