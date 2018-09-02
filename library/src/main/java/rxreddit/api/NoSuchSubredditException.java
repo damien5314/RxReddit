@@ -3,7 +3,7 @@ package rxreddit.api;
 /**
  * Exception indicating no subreddit exists for the given query.
  */
-class NoSuchSubredditException extends RuntimeException {
+public class NoSuchSubredditException extends RuntimeException {
 
     private String name;
 

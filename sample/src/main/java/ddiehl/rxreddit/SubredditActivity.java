@@ -19,6 +19,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import rxreddit.android.SignInActivity;
+import rxreddit.api.NoSuchSubredditException;
 import rxreddit.api.RedditService;
 import rxreddit.model.Link;
 import rxreddit.model.UserAccessToken;
@@ -92,8 +93,12 @@ public final class SubredditActivity extends AppCompatActivity {
     }
 
     void onError(Throwable error) {
-        Log.e(TAG, "Error loading links", error);
-        Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT).show();
+        if (error instanceof NoSuchSubredditException) {
+            Toast.makeText(this, "no such subreddit", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e(TAG, "Error loading links", error);
+            Toast.makeText(this, "an error occurred", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
