@@ -19,7 +19,7 @@ public class Comment extends AbsComment implements Votable, Savable {
 
     public String getUrl() {
         return String.format(
-                "http://www.reddit.com/r/%s/comments/%s?comment=%s",
+                "https://www.reddit.com/r/%s/comments/%s?comment=%s",
                 getSubreddit(),
                 getLinkId(), // Remove the type prefix (t3_, etc)
                 getId()
