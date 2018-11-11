@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.12 *(2018-11-11)*
+----------------------------------
+* Use HTTPS when sharing comments
+* Fix format for shared comment URLs
+
 Version 0.11 *(2018-09-02)*
 ----------------------------------
 * Added "mark" parameter to inbox endpoint
