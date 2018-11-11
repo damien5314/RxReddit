@@ -17,11 +17,11 @@ public class Comment extends AbsComment implements Votable, Savable {
         return data.id;
     }
 
+    // https://www.reddit.com//comments/9w3l1s//e9hd1u2/
     public String getUrl() {
         return String.format(
-                "https://www.reddit.com/r/%s/comments/%s?comment=%s",
-                getSubreddit(),
-                getLinkId(), // Remove the type prefix (t3_, etc)
+                "https://www.reddit.com//comments/%s//%s",
+                getLinkId(),
                 getId()
         );
     }
