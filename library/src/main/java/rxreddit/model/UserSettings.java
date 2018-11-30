@@ -140,7 +140,7 @@ public class UserSettings {
     }
 
     public boolean getHideLocationBar() {
-        return hideLocationBar;
+        return hideLocationBar == null ? false : hideLocationBar;
     }
 
     public boolean getHideUps() {
