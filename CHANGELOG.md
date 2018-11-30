@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 0.13 *(2018-11-29)*
+----------------------------------
+* Fix NullPointerException when hideLocationBar is returns null from settings endpoint
+
 Version 0.12 *(2018-11-11)*
 ----------------------------------
 * Use HTTPS when sharing comments
