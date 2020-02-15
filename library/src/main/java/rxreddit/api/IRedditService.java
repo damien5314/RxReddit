@@ -3,8 +3,8 @@ package rxreddit.api;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Completable;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import rxreddit.model.Comment;
 import rxreddit.model.FriendInfo;
 import rxreddit.model.Listing;

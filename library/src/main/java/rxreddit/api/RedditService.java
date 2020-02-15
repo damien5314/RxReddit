@@ -7,8 +7,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Completable;
-import io.reactivex.Observable;
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -17,7 +18,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rxreddit.model.AbsComment;
 import rxreddit.model.AccessToken;
@@ -580,7 +580,7 @@ public class RedditService implements IRedditService {
                 .client(getOkHttpClient(userAgent, cacheSizeBytes, cachePath, loggingEnabled))
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(getGson()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         return restAdapter.create(RedditAPI.class);
     }
