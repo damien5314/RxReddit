@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.14 *(2020-02-14)*
+----------------------------------
+* Update to RxJava 3.0.0
+* Update to Kotlin 1.3.60
+
 Version 0.13 *(2018-11-29)*
 ----------------------------------
 * Fix NullPointerException when hideLocationBar is returns null from settings endpoint

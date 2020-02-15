@@ -1,6 +1,6 @@
 package rxreddit.api
 
-import io.reactivex.subscribers.TestSubscriber
+import io.reactivex.rxjava3.subscribers.TestSubscriber
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.*
 import org.junit.Test

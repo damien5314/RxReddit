@@ -10,9 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ddiehl.rxreddit.sample.R;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import rxreddit.api.RedditService;
 import rxreddit.model.UserIdentity;
 

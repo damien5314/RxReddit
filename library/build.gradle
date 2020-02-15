@@ -9,9 +9,12 @@ repositories {
 }
 
 dependencies {
+    implementation "io.reactivex.rxjava3:rxjava:$RXJAVA_VERSION"
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+    // TODO: Replace with Retrofit's version once they release one
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$RXJAVA_CALLADAPTER_VERSION"
+//    implementation "com.squareup.retrofit2:adapter-rxjava3:$RETROFIT_VERSION"
     implementation "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
     implementation "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
