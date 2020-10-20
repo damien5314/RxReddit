@@ -10,33 +10,33 @@ import rxreddit.util.RxRedditUtil;
 
 public final class RedditServiceProvider {
 
-  private static RedditService _instance;
+    private static RedditService _instance;
 
-  private RedditServiceProvider() {
-  }
-
-  public static RedditService get(Context context) {
-    if (_instance == null) {
-      synchronized (RedditServiceProvider.class) {
-        if (_instance == null) {
-          _instance = new RedditService.Builder()
-              .baseAuthUrl("https://www.reddit.com")
-              .baseUrl("https://oauth.reddit.com")
-              .appId(BuildConfig.REDDIT_APP_ID)
-              .redirectUri(BuildConfig.REDDIT_REDIRECT_URI)
-              .deviceId(AndroidUtil.getDeviceId(context))
-              .userAgent(RxRedditUtil.getUserAgent(
-                  "android",
-                  "ddiehl.rxreddit.sampleapp2",
-                  BuildConfig.VERSION_NAME,
-                  "damien5314"
-              ))
-              .accessTokenManager(new AndroidAccessTokenManager(context))
-              .loggingEnabled(true)
-              .build();
-        }
-      }
+    private RedditServiceProvider() {
     }
-    return _instance;
-  }
+
+    public static RedditService get(Context context) {
+        if (_instance == null) {
+            synchronized (RedditServiceProvider.class) {
+                if (_instance == null) {
+                    _instance = new RedditService.Builder()
+                            .baseAuthUrl("https://www.reddit.com")
+                            .baseUrl("https://oauth.reddit.com")
+                            .appId(BuildConfig.REDDIT_APP_ID)
+                            .redirectUri(BuildConfig.REDDIT_REDIRECT_URI)
+                            .deviceId(AndroidUtil.getDeviceId(context))
+                            .userAgent(RxRedditUtil.getUserAgent(
+                                    "android",
+                                    "ddiehl.rxreddit.sampleapp2",
+                                    BuildConfig.VERSION_NAME,
+                                    "damien5314"
+                            ))
+                            .accessTokenManager(new AndroidAccessTokenManager(context))
+                            .loggingEnabled(true)
+                            .build();
+                }
+            }
+        }
+        return _instance;
+    }
 }
