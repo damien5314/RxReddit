@@ -58,21 +58,13 @@ public class SignInFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rxr_web_view_fragment, container, false);
-
         webView = view.findViewById(R.id.rxr_web_view);
         configureWebView(webView);
-
-        webView.setWebViewClient(
-                new RxRedditWebViewClient(this, redirectUri, authorizationUrl));
-
+        webView.setWebViewClient(new RxRedditWebViewClient(this, redirectUri));
         final ProgressBar progressBar = view.findViewById(R.id.rxr_progress_bar);
-        progressBar.setMax(100);
         webView.setWebChromeClient(getProgressBarChromeClient(progressBar));
-
         webView.setOnKeyListener(getBackKeyListener());
-
         webView.loadUrl(authorizationUrl);
-
         return view;
     }
 
@@ -85,6 +77,8 @@ public class SignInFragment extends Fragment {
         WebSettings settings = webView.getSettings();
         settings.setSaveFormData(false);
         settings.setSavePassword(false); // Not needed for API level 18 or greater (deprecated)
+        settings.setDomStorageEnabled(true);
+        settings.setJavaScriptEnabled(true);
     }
 
     @Override
@@ -159,24 +153,21 @@ public class SignInFragment extends Fragment {
 
         private final SignInFragment mSignInFragment;
         private final String mRedirectUri;
-        private final String mAuthorizationUrl;
 
         public RxRedditWebViewClient(
                 @NonNull SignInFragment fragment,
-                @NonNull String redirectUri,
-                @NonNull String authorizationUrl) {
+                @NonNull String redirectUri) {
             mSignInFragment = fragment;
             mRedirectUri = redirectUri;
-            mAuthorizationUrl = authorizationUrl;
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains(mRedirectUri) && !url.equals(mAuthorizationUrl)) {
+            Map<String, String> params = RxRedditUtil.getQueryParametersFromUrl(url);
+            if (url.startsWith(mRedirectUri) && params.containsKey("code")) {
                 mSignInFragment.onCallbackUrlReceived(url);
                 return true;
             }
-
             return false;
         }
     }
