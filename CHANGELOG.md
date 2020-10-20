@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 0.15 *(2020-10-20)*
+----------------------------------
+* Fix bug in SignInFragment causing a refresh loop when signing into an account with 2FA enabled
+
 Version 0.14 *(2020-02-14)*
 ----------------------------------
 * Update to RxJava 3.0.0
