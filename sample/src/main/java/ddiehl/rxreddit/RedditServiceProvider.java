@@ -19,16 +19,15 @@ public final class RedditServiceProvider {
         if (_instance == null) {
             synchronized (RedditServiceProvider.class) {
                 if (_instance == null) {
-//                    _instance = new RedditServiceMock();
                     _instance = new RedditService.Builder()
-                            .baseUrl("https://oauth.reddit.com")
                             .baseAuthUrl("https://www.reddit.com")
+                            .baseUrl("https://oauth.reddit.com")
                             .appId(BuildConfig.REDDIT_APP_ID)
                             .redirectUri(BuildConfig.REDDIT_REDIRECT_URI)
                             .deviceId(AndroidUtil.getDeviceId(context))
                             .userAgent(RxRedditUtil.getUserAgent(
                                     "android",
-                                    "ddiehl.rxreddit.sampleapp",
+                                    "ddiehl.rxreddit.sampleapp2",
                                     BuildConfig.VERSION_NAME,
                                     "damien5314"
                             ))

@@ -60,8 +60,8 @@ class InboxTests : _RedditServiceTests() {
     @Test
     fun testGetInbox_httpError() {
         authenticateService()
-        val observable = service.getInbox("comments", true, null, null)
         mockServer.enqueue(MockResponse().setResponseCode(HTTP_ERROR_CODE))
+        val observable = service.getInbox("comments", true, null, null)
         val test = observable.test()
         test.assertError(HttpException::class.java)
     }
