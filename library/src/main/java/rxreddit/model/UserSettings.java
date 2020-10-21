@@ -2,6 +2,8 @@ package rxreddit.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.Nullable;
+
 public class UserSettings {
 
     @SerializedName("beta")
@@ -91,175 +93,218 @@ public class UserSettings {
     @SerializedName("use_global_defaults")
     Boolean useGlobalDefaults;
 
-    public boolean getBeta() {
+    @Nullable
+    public Boolean getBeta() {
         return beta;
     }
 
-    public boolean getClickgadget() {
+    @Nullable
+    public Boolean getClickgadget() {
         return clickgadget;
     }
 
-    public boolean getCollapseReadMessages() {
+    @Nullable
+    public Boolean getCollapseReadMessages() {
         return collapseReadMessages;
     }
 
-    public boolean getCompress() {
+    @Nullable
+    public Boolean getCompress() {
         return compress;
     }
 
-    public boolean getCredditAutoRenew() {
+    @Nullable
+    public Boolean getCredditAutoRenew() {
         return credditAutoRenew;
     }
 
+    @Nullable
     public String getDefaultCommentSort() {
         return defaultCommentSort;
     }
 
-    public boolean getDomainDetails() {
+    @Nullable
+    public Boolean getDomainDetails() {
         return domainDetails;
     }
 
-    public boolean getEmailMessages() {
+    @Nullable
+    public Boolean getEmailMessages() {
         return emailMessages;
     }
 
-    public boolean getEnableDefaultThemes() {
+    @Nullable
+    public Boolean getEnableDefaultThemes() {
         return enableDefaultThemes;
     }
 
-    public boolean getHideAds() {
+    @Nullable
+    public Boolean getHideAds() {
         return hideAds;
     }
 
-    public boolean getHideDowns() {
+    @Nullable
+    public Boolean getHideDowns() {
         return hideDowns;
     }
 
-    public boolean getHideFromRobots() {
+    @Nullable
+    public Boolean getHideFromRobots() {
         return hideFromRobots;
     }
 
-    public boolean getHideLocationBar() {
-        return hideLocationBar == null ? false : hideLocationBar;
+    @Nullable
+    public Boolean getHideLocationBar() {
+        return hideLocationBar;
     }
 
-    public boolean getHideUps() {
+    @Nullable
+    public Boolean getHideUps() {
         return hideUps;
     }
 
-    public boolean getHighlightControversial() {
+    @Nullable
+    public Boolean getHighlightControversial() {
         return highlightControversial;
     }
 
-    public boolean getHighlightNewComments() {
+    @Nullable
+    public Boolean getHighlightNewComments() {
         return highlightNewComments;
     }
 
-    public boolean getIgnoreSuggestedSort() {
+    @Nullable
+    public Boolean getIgnoreSuggestedSort() {
         return ignoreSuggestedSort;
     }
 
-    public boolean getLabelNsfw() {
+    @Nullable
+    public Boolean getLabelNsfw() {
         return labelNsfw;
     }
 
+    @Nullable
     public String getLang() {
         return lang;
     }
 
-    public boolean getMarkMessagesRead() {
+    @Nullable
+    public Boolean getMarkMessagesRead() {
         return markMessagesRead;
     }
 
+    @Nullable
     public String getMedia() {
         return media;
     }
 
+    @Nullable
     public Integer getMinCommentScore() {
         return minCommentScore;
     }
 
+    @Nullable
     public Integer getMinLinkScore() {
         return minLinkScore;
     }
 
-    public boolean getMonitorMentions() {
+    @Nullable
+    public Boolean getMonitorMentions() {
         return monitorMentions;
     }
 
-    public boolean getNewWindow() {
+    @Nullable
+    public Boolean getNewWindow() {
         return newWindow;
     }
 
-    public boolean getNoProfanity() {
+    @Nullable
+    public Boolean getNoProfanity() {
         return noProfanity;
     }
 
+    @Nullable
     public Integer getNumComments() {
         return numComments;
     }
 
+    @Nullable
     public Integer getNumLinks() {
         return numLinks;
     }
 
-    public boolean getOrganic() {
+    @Nullable
+    public Boolean getOrganic() {
         return organic;
     }
 
-    public boolean getOver18() {
+    @Nullable
+    public Boolean getOver18() {
         return over18;
     }
 
-    public boolean getPublicFeeds() {
-        return publicFeeds == null ? false : publicFeeds;
+    @Nullable
+    public Boolean getPublicFeeds() {
+        return publicFeeds;
     }
 
-    public boolean getPublicVotes() {
+    @Nullable
+    public Boolean getPublicVotes() {
         return publicVotes;
     }
 
-    public boolean getResearch() {
+    @Nullable
+    public Boolean getResearch() {
         return research;
     }
 
-    public boolean getShowFlair() {
+    @Nullable
+    public Boolean getShowFlair() {
         return showFlair;
     }
 
-    public boolean getShowGoldExpiration() {
+    @Nullable
+    public Boolean getShowGoldExpiration() {
         return showGoldExpiration;
     }
 
-    public boolean getShowLinkFlair() {
+    @Nullable
+    public Boolean getShowLinkFlair() {
         return showLinkFlair;
     }
 
-    public boolean getShowPromote() {
-        return showPromote == null ? false : showPromote;
+    @Nullable
+    public Boolean getShowPromote() {
+        return showPromote;
     }
 
-    public boolean getShowStylesheets() {
+    @Nullable
+    public Boolean getShowStylesheets() {
         return showStylesheets;
     }
 
-    public boolean getShowTrending() {
+    @Nullable
+    public Boolean getShowTrending() {
         return showTrending;
     }
 
-    public boolean getStoreVisits() {
+    @Nullable
+    public Boolean getStoreVisits() {
         return storeVisits;
     }
 
+    @Nullable
     public String getThemeSelector() {
         return themeSelector;
     }
 
-    public boolean getThreadedMessages() {
+    @Nullable
+    public Boolean getThreadedMessages() {
         return threadedMessages;
     }
 
-    public boolean getUseGlobalDefaults() {
+    @Nullable
+    public Boolean getUseGlobalDefaults() {
         return useGlobalDefaults;
     }
 }
