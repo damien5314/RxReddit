@@ -3,6 +3,10 @@ Change Log
 
 Version 0.16 *(2020-10-20)*
 ----------------------------------
+* Clear access token when we receive any 4xx response, to fix a bug where we keep trying to refresh tokens that are invalid due to a password change
+
+Version 0.16 *(2020-10-20)*
+----------------------------------
 * Fix nullability issue with credditAutorenew in UserSettings
 
 Version 0.15 *(2020-10-20)*

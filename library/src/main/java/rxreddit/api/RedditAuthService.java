@@ -133,9 +133,12 @@ final class RedditAuthService implements IRedditAuthService {
                     .flatMap(RxRedditUtil::responseToBody)
                     .doOnNext(this::saveUserAccessToken)
                     .doOnError(error -> {
-                        if (error instanceof HttpException && ((HttpException) error).code() == 403) {
-                            // 403 means our refresh token is no longer good, just discard it
-                            clearUserAccessToken();
+                        if (error instanceof HttpException) {
+                            final int errorCode = ((HttpException) error).code();
+                            if (errorCode >= 400 && errorCode < 500) {
+                                // 4xx means our refresh token is no longer good, just discard it
+                                clearUserAccessToken();
+                            }
                         }
                     });
         });
