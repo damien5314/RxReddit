@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public class RedditService implements IRedditService {
             String baseAuthUrl,
             String redditAppId,
             String redirectUri,
+            List<String> scopeList,
             String deviceId,
             String userAgent,
             AccessTokenManager atm,
@@ -59,7 +62,15 @@ public class RedditService implements IRedditService {
             File cacheFile,
             boolean loggingEnabled) {
         redditAuthService = new RedditAuthService(
-                baseAuthUrl, redditAppId, redirectUri, deviceId, userAgent, atm, loggingEnabled);
+                baseAuthUrl,
+                redditAppId,
+                redirectUri,
+                scopeList,
+                deviceId,
+                userAgent,
+                atm,
+                loggingEnabled
+        );
         api = buildApi(baseUrl, userAgent, cacheSizeBytes, cacheFile, loggingEnabled);
     }
 
@@ -640,6 +651,7 @@ public class RedditService implements IRedditService {
         private String mBaseAuthUrl = "https://www.reddit.com/";
         private String mAppId;
         private String mRedirectUri;
+        private List<String> mScopeList;
         private String mDeviceId;
         private String mUserAgent;
         private AccessTokenManager mAccessTokenManager = AccessTokenManager.NONE;
@@ -664,6 +676,11 @@ public class RedditService implements IRedditService {
 
         public Builder redirectUri(String redirectUri) {
             mRedirectUri = redirectUri;
+            return this;
+        }
+
+        public Builder scopes(Collection<String> scopeList) {
+            mScopeList = new ArrayList<>(scopeList);
             return this;
         }
 
@@ -699,8 +716,17 @@ public class RedditService implements IRedditService {
             if (mDeviceId == null) throw new IllegalStateException("device id must be set");
             if (mUserAgent == null) throw new IllegalStateException("user agent must be set");
             return new RedditService(
-                    mBaseUrl, mBaseAuthUrl, mAppId, mRedirectUri, mDeviceId, mUserAgent,
-                    mAccessTokenManager, mCacheSizeBytes, mCacheFile, mLoggingEnabled
+                    mBaseUrl,
+                    mBaseAuthUrl,
+                    mAppId,
+                    mRedirectUri,
+                    mScopeList,
+                    mDeviceId,
+                    mUserAgent,
+                    mAccessTokenManager,
+                    mCacheSizeBytes,
+                    mCacheFile,
+                    mLoggingEnabled
             );
         }
     }

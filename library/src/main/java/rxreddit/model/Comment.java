@@ -2,6 +2,8 @@ package rxreddit.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -21,7 +23,7 @@ public class Comment extends AbsComment implements Votable, Savable {
         return String.format(
                 "https://www.reddit.com//comments/%s//%s",
                 getLinkId(),
-                getId()
+                data.id
         );
     }
 
@@ -61,14 +63,15 @@ public class Comment extends AbsComment implements Votable, Savable {
         }
     }
 
+    @Nullable
     @Override
-    public Boolean isLiked() {
+    public Boolean getLiked() {
         return data.isLiked;
     }
 
     @Override
-    public void isLiked(Boolean b) {
-        data.isLiked = b;
+    public void setLiked(@Nullable Boolean value) {
+        data.isLiked = value;
     }
 
     public ListingResponse getReplies() {
@@ -85,12 +88,12 @@ public class Comment extends AbsComment implements Votable, Savable {
 
     @Override
     public boolean isSaved() {
-        return data.saved == null ? false : data.saved;
+        return data.saved != null && data.saved;
     }
 
     @Override
-    public void isSaved(boolean b) {
-        data.saved = b;
+    public void setSaved(boolean value) {
+        data.saved = value;
     }
 
     public Integer getGilded() {
@@ -98,8 +101,8 @@ public class Comment extends AbsComment implements Votable, Savable {
     }
 
     @Override
-    public boolean isArchived() {
-        return data.isArchived == null ? false : data.isArchived;
+    public boolean getArchived() {
+        return data.isArchived != null && data.isArchived;
     }
 
     public Object getReportReasons() {
@@ -191,13 +194,13 @@ public class Comment extends AbsComment implements Votable, Savable {
         int scoreDiff = direction - getLikedScore();
         switch (direction) {
             case 0:
-                isLiked(null);
+                setLiked(null);
                 break;
             case 1:
-                isLiked(true);
+                setLiked(true);
                 break;
             case -1:
-                isLiked(false);
+                setLiked(false);
                 break;
         }
         if (data.score == null) return;
@@ -205,9 +208,9 @@ public class Comment extends AbsComment implements Votable, Savable {
     }
 
     private int getLikedScore() {
-        if (isLiked() == null)
+        if (getLiked() == null)
             return 0;
-        else if (isLiked())
+        else if (getLiked())
             return 1;
         else
             return -1;

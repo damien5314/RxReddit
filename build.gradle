@@ -3,9 +3,8 @@
 buildscript {
 
     ext {
-        KOTLIN_VERSION = '1.4.10'
+        KOTLIN_VERSION = '1.6.21'
         ANDROID_GRADLE_PLUGIN = '4.1.0'
-        BUILD_TOOLS_VERSION = '27.0.3'
         COMPILE_SDK_VERSION = 28
         TARGET_SDK_VERSION = 28
 
@@ -19,7 +18,7 @@ buildscript {
         JUNIT_VERSION = '4.12'
     }
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
     dependencies {

@@ -4,6 +4,8 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.Credentials;
@@ -27,17 +29,11 @@ final class RedditAuthService implements IRedditAuthService {
     static final String RESPONSE_TYPE = "code";
     static final String DURATION = "permanent";
     static final String STATE = RxRedditUtil.getRandomString();
-    static final String SCOPE = StringUtils.join(
-            ",",
-            new String[]{
-                    "identity", "mysubreddits", "privatemessages", "read", "report", "save",
-                    "submit", "vote", "history", "account", "subscribe"
-            }
-    );
     // Seconds within expiration we should try to retrieve a new auth token
     private static final int EXPIRATION_THRESHOLD = 60;
 
     private final String redirectUri;
+    private final String scope;
     private final String deviceId;
     private final String userAgent;
     private final String httpAuthHeader;
@@ -49,16 +45,24 @@ final class RedditAuthService implements IRedditAuthService {
     private ApplicationAccessToken applicationAccessToken;
 
     public RedditAuthService(
-            String baseUrl, String clientId, String redirectUri, String deviceId, String userAgent,
-            AccessTokenManager atm, boolean loggingEnabled) {
+            String baseUrl,
+            String clientId,
+            String redirectUri,
+            List<String> scopeList,
+            String deviceId,
+            String userAgent,
+            AccessTokenManager atm,
+            boolean loggingEnabled
+    ) {
         this.redirectUri = redirectUri;
+        this.scope = StringUtils.join(",", scopeList);
         this.deviceId = deviceId;
         this.userAgent = userAgent;
         httpAuthHeader = Credentials.basic(clientId, "");
         authorizationUrl =
                 String.format("https://www.reddit.com/api/v1/authorize.compact?client_id=%s" +
                                 "&response_type=%s&duration=%s&state=%s&redirect_uri=%s&scope=%s",
-                        clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, SCOPE
+                        clientId, RESPONSE_TYPE, DURATION, STATE, redirectUri, scope
                 );
         authService = buildApi(baseUrl, loggingEnabled);
         accessTokenManager = atm;
