@@ -1,6 +1,6 @@
-package rxreddit.model;
+package rxreddit.model
 
-public interface Archivable {
+interface Archivable {
 
-    boolean isArchived();
+    val archived: Boolean
 }

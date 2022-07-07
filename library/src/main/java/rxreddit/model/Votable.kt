@@ -1,14 +1,10 @@
-package rxreddit.model;
+package rxreddit.model
 
-public interface Votable extends Archivable {
+interface Votable : Archivable {
 
-    void applyVote(int direction);
+    val kind: String?
 
-    Boolean isLiked();
+    var liked: Boolean?
 
-    void isLiked(Boolean b);
-
-    String getId();
-
-    String getKind();
+    fun applyVote(direction: Int)
 }

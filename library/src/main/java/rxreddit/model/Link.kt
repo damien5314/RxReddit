@@ -1,324 +1,284 @@
-package rxreddit.model;
+package rxreddit.model
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
-import java.util.List;
+data class Link(
+    @SerializedName("data") val data: Data,
+) : Listing(), Votable, Savable, Hideable {
 
-@SuppressWarnings("unused")
-public class Link extends Listing implements Votable, Savable, Hideable {
+    override val id: String
+        get() = data.id
 
-    @SerializedName("data")
-    Data data;
+    val domain: String?
+        get() = data.domain
 
-    @Override
-    public String getId() {
-        return data.id;
-    }
+    val mediaEmbed: MediaEmbed?
+        get() = data.mediaEmbed
 
-    public String getDomain() {
-        return data.domain;
-    }
+    val subreddit: String?
+        get() = data.subreddit
 
-    //region Public API
+    val selftextHtml: String?
+        get() = data.selftextHtml
 
-    public MediaEmbed getMediaEmbed() {
-        return data.mediaEmbed;
-    }
+    val selftext: String?
+        get() = data.selftext
 
-    public String getSubreddit() {
-        return data.subreddit;
-    }
+    override var liked: Boolean? by data::liked
 
-    public String getSelftextHtml() {
-        return data.selftextHtml;
-    }
+    val userReports: List<UserReport>?
+        get() = data.userReports
 
-    public String getSelftext() {
-        return data.selftext;
-    }
+    val linkFlairText: Any?
+        get() = data.linkFlairText
 
-    public String isEdited() {
-        return data.edited;
-    }
+    val gilded: Int?
+        get() = data.gilded
 
-    @Override
-    public Boolean isLiked() {
-        return data.likes;
-    }
+    override val archived: Boolean
+        get() = data.isArchived ?: false
 
-    @Override
-    public void isLiked(Boolean b) {
-        data.likes = b;
-    }
+    val clicked: Boolean
+        get() = data.clicked ?: false
 
-    public List<UserReport> getUserReports() {
-        return data.userReports;
-    }
+    val author: String?
+        get() = data.author
 
-    public Object getLinkFlairText() {
-        return data.linkFlairText;
-    }
+    val numComments: Int?
+        get() = data.numComments
 
-    public Integer getGilded() {
-        return data.gilded;
-    }
+    var score: Int? by data::score
 
-    public boolean isArchived() {
-        return data.isArchived == null ? false : data.isArchived;
-    }
-
-    public boolean getClicked() {
-        return data.clicked == null ? false : data.clicked;
-    }
-
-    public String getAuthor() {
-        return data.author;
-    }
-
-    public Integer getNumComments() {
-        return data.numComments;
-    }
-
-    public Integer getScore() {
-        return data.score;
-    }
-
-    public void setScore(Integer score) {
-        data.score = score;
-    }
-
-    @Override
-    public void applyVote(int direction) {
-        int scoreDiff = direction - getLikedScore();
-        switch (direction) {
-            case 0:
-                isLiked(null);
-                break;
-            case 1:
-                isLiked(true);
-                break;
-            case -1:
-                isLiked(false);
-                break;
+    override fun applyVote(direction: Int) {
+        val scoreDiff = direction - likedScore
+        data.liked = when (direction) {
+            0 -> null
+            1 -> true
+            -1 -> false
+            else -> null
         }
-        if (data.score == null) return;
-        data.score += scoreDiff;
+        if (data.score == null) return
+        data.score = data.score?.plus(scoreDiff) ?: 0
     }
 
-    private int getLikedScore() {
-        if (isLiked() == null)
-            return 0;
-        else if (isLiked())
-            return 1;
-        else
-            return -1;
-    }
+    private val likedScore: Int
+        get() = if (liked == null) 0 else if (liked == true) 1 else -1
 
-    public Object getApprovedBy() {
-        return data.approvedBy;
-    }
+    val approvedBy: Any?
+        get() = data.approvedBy
 
-    public boolean getOver18() {
-        return data.over18 == null ? false : data.over18;
-    }
+    val over18: Boolean
+        get() = data.over18 ?: false
 
-    public boolean isHidden() {
-        return data.hidden == null ? false : data.hidden;
-    }
+    override var hidden: Boolean
+        get() = data.hidden ?: false
+        set(value) {
+            data.hidden = value
+        }
 
-    public void isHidden(Boolean b) {
-        data.hidden = b;
-    }
+    val thumbnail: String?
+        get() = data.thumbnail
 
-    public String getThumbnail() {
-        return data.thumbnail;
-    }
+    val subredditId: String?
+        get() = data.subredditId
 
-    public String getSubredditId() {
-        return data.subredditId;
-    }
+    val isScoreHidden: Boolean
+        get() = data.hideScore ?: false
 
-    public boolean isScoreHidden() {
-        return data.hideScore == null ? false : data.hideScore;
-    }
+    val linkFlairCssClass: Any?
+        get() = data.linkFlairCssClass
 
-    public Object getLinkFlairCssClass() {
-        return data.linkFlairCssClass;
-    }
+    val authorFlairCssClass: Any?
+        get() = data.authorFlairCssClass
 
-    public Object getAuthorFlairCssClass() {
-        return data.authorFlairCssClass;
-    }
+    val downs: Int?
+        get() = data.downs
 
-    public Integer getDowns() {
-        return data.downs;
-    }
+    override var isSaved: Boolean
+        get() = if (data.saved == null) false else data.saved!!
+        set(value) {
+            data.saved = value
+        }
 
-    public boolean isSaved() {
-        return data.saved == null ? false : data.saved;
-    }
+    val stickied: Boolean
+        get() = data.stickied ?: false
 
-    public void isSaved(boolean b) {
-        data.saved = b;
-    }
+    val isSelf: Boolean
+        get() = data.isSelf ?: false
 
-    public boolean getStickied() {
-        return data.stickied == null ? false : data.stickied;
-    }
+    val permalink: String?
+        get() = data.permalink
 
-    public boolean isSelf() {
-        return data.isSelf == null ? false : data.isSelf;
-    }
+    val created: Double?
+        get() = data.created
 
-    public String getPermalink() {
-        return data.permalink;
-    }
+    val url: String?
+        get() = data.url
 
-    public Double getCreated() {
-        return data.created;
-    }
+    val authorFlairText: Any?
+        get() = data.authorFlairText
 
-    public String getUrl() {
-        return data.url;
-    }
+    val title: String?
+        get() = data.title
 
-    public Object getAuthorFlairText() {
-        return data.authorFlairText;
-    }
+    val createdUtc: Double?
+        get() = data.createdUtc
 
-    public String getTitle() {
-        return data.title;
-    }
+    val distinguished: String?
+        get() = data.distinguished
 
-    public Double getCreatedUtc() {
-        return data.createdUtc;
-    }
+    val media: Media?
+        get() = data.media
 
-    public String getDistinguished() {
-        return data.distinguished;
-    }
+    val modReports: List<ModReport>?
+        get() = data.modReports
 
-    public Media getMedia() {
-        return data.media;
-    }
+    val visited: Boolean
+        get() = data.visited ?: false
 
-    public List<ModReport> getModReports() {
-        return data.modReports;
-    }
+    val numReports: Any?
+        get() = data.numReports
 
-    public boolean getVisited() {
-        return data.visited == null ? false : data.visited;
-    }
+    val ups: Int?
+        get() = data.ups
 
-    public Object getNumReports() {
-        return data.numReports;
-    }
+    val previewImages: List<Image>?
+        get() = if (data.preview == null) null else data.preview!!.images
 
-    public Integer getUps() {
-        return data.ups;
-    }
-
-    public List<Image> getPreviewImages() {
-        if (data.preview == null)
-            return null;
-        return data.preview.images;
-    }
-
-    public static class Data extends ListingData {
-
+    data class Data(
         @SerializedName("preview")
-        Preview preview;
+        val preview: Preview? = null,
+
         @SerializedName("domain")
-        String domain;
+        val domain: String? = null,
+
         @SerializedName("banned_by")
-        String bannedBy;
+        val bannedBy: String? = null,
+
         @SerializedName("media_embed")
-        MediaEmbed mediaEmbed;
+        val mediaEmbed: MediaEmbed? = null,
+
         @SerializedName("subreddit")
-        String subreddit;
+        val subreddit: String? = null,
+
         @SerializedName("selftext_html")
-        String selftextHtml;
+        val selftextHtml: String? = null,
+
         @SerializedName("selftext")
-        String selftext;
+        val selftext: String? = null,
+
         @SerializedName("edited")
-        String edited;
+        val isEdited: String?,
+
+        // TODO: Remove mutability here
         @SerializedName("likes")
-        Boolean likes;
+        var liked: Boolean? = null,
+
         @SerializedName("user_reports")
-        List<UserReport> userReports;
+        val userReports: List<UserReport>? = null,
+
         @SerializedName("link_flair_text")
-        String linkFlairText;
+        val linkFlairText: String? = null,
+
         @SerializedName("gilded")
-        Integer gilded;
+        val gilded: Int? = null,
+
         @SerializedName("archived")
-        Boolean isArchived;
+        val isArchived: Boolean? = null,
+
         @SerializedName("clicked")
-        Boolean clicked;
+        val clicked: Boolean? = null,
+
         @SerializedName("author")
-        String author;
+        val author: String? = null,
+
         @SerializedName("num_comments")
-        Integer numComments;
+        val numComments: Int? = null,
+
+        // TODO: Remove mutability here
         @SerializedName("score")
-        Integer score;
+        var score: Int? = null,
+
         @SerializedName("approved_by")
-        String approvedBy;
+        val approvedBy: String? = null,
+
         @SerializedName("over_18")
-        Boolean over18;
+        val over18: Boolean? = null,
+
+        // TODO: Remove mutability here
         @SerializedName("hidden")
-        Boolean hidden;
+        var hidden: Boolean? = null,
+
         @SerializedName("thumbnail")
-        String thumbnail;
+        val thumbnail: String? = null,
+
         @SerializedName("subreddit_id")
-        String subredditId;
+        val subredditId: String? = null,
+
         @SerializedName("hide_score")
-        Boolean hideScore;
+        val hideScore: Boolean? = null,
+
         @SerializedName("link_flair_css_class")
-        String linkFlairCssClass;
+        val linkFlairCssClass: String? = null,
+
         @SerializedName("author_flair_css_class")
-        String authorFlairCssClass;
+        val authorFlairCssClass: String? = null,
+
         @SerializedName("downs")
-        Integer downs;
+        val downs: Int? = null,
+
+        // TODO: Remove mutability here
         @SerializedName("saved")
-        Boolean saved;
+        var saved: Boolean? = null,
+
         @SerializedName("stickied")
-        Boolean stickied;
+        val stickied: Boolean? = null,
+
         @SerializedName("is_self")
-        Boolean isSelf;
+        val isSelf: Boolean? = null,
+
         @SerializedName("permalink")
-        String permalink;
+        val permalink: String? = null,
+
         @SerializedName("created")
-        Double created;
+        val created: Double? = null,
+
         @SerializedName("url")
-        String url;
+        val url: String? = null,
+
         @SerializedName("author_flair_text")
-        String authorFlairText;
+        val authorFlairText: String? = null,
+
         @SerializedName("title")
-        String title;
+        val title: String? = null,
+
         @SerializedName("created_utc")
-        Double createdUtc;
+        val createdUtc: Double? = null,
+
         @SerializedName("distinguished")
-        String distinguished;
+        val distinguished: String? = null,
+
         @SerializedName("media")
-        Media media;
+        val media: Media? = null,
+
         @SerializedName("mod_reports")
-        List<ModReport> modReports;
+        val modReports: List<ModReport>? = null,
+
         @SerializedName("visited")
-        Boolean visited;
+        val visited: Boolean? = null,
+
         @SerializedName("num_reports")
-        Integer numReports;
+        val numReports: Int? = null,
+
         @SerializedName("ups")
-        Integer ups;
-    }
+        val ups: Int? = null,
 
-    public static class Preview {
+        @SerializedName("is_gallery")
+        val isGallery: Boolean? = null,
+    ) : ListingData()
 
+    data class Preview(
         @SerializedName("images")
-        List<Image> images;
-
-        public List<Image> getImages() {
-            return images;
-        }
-    }
-
-    //endregion
+        val images: List<Image>? = emptyList(),
+    )
 }

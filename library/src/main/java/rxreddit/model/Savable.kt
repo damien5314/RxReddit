@@ -1,10 +1,8 @@
-package rxreddit.model;
+package rxreddit.model
 
-public interface Savable {
+interface Savable {
 
-    boolean isSaved();
+    var isSaved: Boolean
 
-    void isSaved(boolean b);
-
-    String getFullName();
+    val fullName: String?
 }

@@ -1,19 +1,14 @@
-package rxreddit.model;
+package rxreddit.model
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
-public abstract class Listing {
+abstract class Listing {
 
     @SerializedName("kind")
-    String kind;
+    var kind: String? = null
 
-    public abstract String getId();
+    abstract val id: String
 
-    public String getFullName() {
-        return getKind() + "_" + getId();
-    }
-
-    public String getKind() {
-        return kind;
-    }
+    val fullName: String
+        get() = kind + "_" + id
 }
