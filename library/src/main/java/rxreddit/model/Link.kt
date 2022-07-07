@@ -155,6 +155,9 @@ data class Link(
     val previewImages: List<Image>?
         get() = if (data.preview == null) null else data.preview.images
 
+    val isGallery: Boolean
+        get() = data.isGallery ?: false
+
     val galleryItems: List<GalleryItem>
         get() = if (data.isGallery == true) {
             data.galleryItems.mapNotNull { galleryItemJson ->
