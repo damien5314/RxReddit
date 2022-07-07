@@ -24,6 +24,9 @@ data class Link(
     val selftext: String?
         get() = data.selftext
 
+    val edited: Boolean
+        get() = data.edited ?: false
+
     override var liked: Boolean? by data::liked
 
     val userReports: List<UserReport>?
@@ -168,7 +171,7 @@ data class Link(
         val selftext: String? = null,
 
         @SerializedName("edited")
-        val isEdited: String?,
+        val edited: Boolean?,
 
         // TODO: Remove mutability here
         @SerializedName("likes")
