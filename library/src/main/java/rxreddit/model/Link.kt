@@ -153,7 +153,18 @@ data class Link(
         get() = data.ups
 
     val previewImages: List<Image>?
-        get() = if (data.preview == null) null else data.preview!!.images
+        get() = if (data.preview == null) null else data.preview.images
+
+    val galleryItems: List<GalleryItem>
+        get() = if (data.isGallery == true) {
+            data.galleryItems.mapNotNull { galleryItemJson ->
+                return@mapNotNull data.mediaMetadata[galleryItemJson.id]?.let { mediaMetadata ->
+                    GalleryItem(
+                        url = mediaMetadata.s.u,
+                    )
+                }
+            }
+        } else emptyList()
 
     data class Data(
         @SerializedName("preview")
@@ -285,6 +296,12 @@ data class Link(
 
         @SerializedName("is_gallery")
         val isGallery: Boolean? = null,
+
+        @SerializedName("gallery_data")
+        internal val galleryItems: List<GalleryItemJson>,
+
+        @SerializedName("media_metadata")
+        internal val mediaMetadata: Map<String, MediaMetadata>,
     ) : ListingData()
 
     data class Preview(
