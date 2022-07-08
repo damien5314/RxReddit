@@ -160,7 +160,7 @@ data class Link(
 
     val galleryItems: List<GalleryItem>
         get() = if (data.isGallery == true) {
-            data.galleryItems.mapNotNull { galleryItemJson ->
+            data.galleryItems.items.mapNotNull { galleryItemJson ->
                 return@mapNotNull data.mediaMetadata[galleryItemJson.id]?.let { mediaMetadata ->
                     GalleryItem(
                         url = mediaMetadata.s.u,
@@ -301,7 +301,7 @@ data class Link(
         val isGallery: Boolean? = null,
 
         @SerializedName("gallery_data")
-        internal val galleryItems: List<GalleryItemJson>,
+        internal val galleryItems: GalleryItems,
 
         @SerializedName("media_metadata")
         internal val mediaMetadata: Map<String, MediaMetadata>,
