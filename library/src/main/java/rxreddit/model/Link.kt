@@ -161,9 +161,9 @@ data class Link(
     val galleryItems: List<GalleryItem>
         get() = if (data.isGallery == true) {
             data.galleryItems.items.mapNotNull { galleryItemJson ->
-                return@mapNotNull data.mediaMetadata[galleryItemJson.id]?.let { mediaMetadata ->
+                return@mapNotNull data.mediaMetadata[galleryItemJson.mediaId]?.let { media ->
                     GalleryItem(
-                        url = mediaMetadata.s.u,
+                        url = media.s.u,
                     )
                 }
             }
