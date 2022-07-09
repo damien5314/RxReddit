@@ -3,7 +3,7 @@ package rxreddit.model
 import com.google.gson.annotations.SerializedName
 
 data class Link(
-    @SerializedName("data") val data: Data,
+    @SerializedName("data") internal val data: Data,
 ) : Listing(), Votable, Savable, Hideable {
 
     override val id: String
