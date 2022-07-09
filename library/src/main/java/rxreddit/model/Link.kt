@@ -3,7 +3,7 @@ package rxreddit.model
 import com.google.gson.annotations.SerializedName
 
 data class Link(
-    @SerializedName("data") val data: Data,
+    @SerializedName("data") internal val data: Data,
 ) : Listing(), Votable, Savable, Hideable {
 
     override val id: String
@@ -153,7 +153,21 @@ data class Link(
         get() = data.ups
 
     val previewImages: List<Image>?
-        get() = if (data.preview == null) null else data.preview!!.images
+        get() = if (data.preview == null) null else data.preview.images
+
+    val isGallery: Boolean
+        get() = data.isGallery ?: false
+
+    val galleryItems: List<GalleryItem>
+        get() = if (data.isGallery == true) {
+            data.galleryItems.items.mapNotNull { galleryItemJson ->
+                return@mapNotNull data.mediaMetadata[galleryItemJson.mediaId]?.let { media ->
+                    GalleryItem(
+                        url = media.s.u,
+                    )
+                }
+            }
+        } else emptyList()
 
     data class Data(
         @SerializedName("preview")
@@ -285,6 +299,12 @@ data class Link(
 
         @SerializedName("is_gallery")
         val isGallery: Boolean? = null,
+
+        @SerializedName("gallery_data")
+        internal val galleryItems: GalleryItems,
+
+        @SerializedName("media_metadata")
+        internal val mediaMetadata: Map<String, MediaMetadata>,
     ) : ListingData()
 
     data class Preview(
